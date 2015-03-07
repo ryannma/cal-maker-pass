@@ -16,6 +16,11 @@ Background: items have been added to the database
     And I am on the inventory page
 
 Scenario: find item with name
+    When I search 'capacitor'
+    Then I should see 'capacitor'
+    And I should not see 'resistor'
 
 Scenario: can't find item with name
+    When I search 'cable'
+    Then I should see 'item not found'
 
