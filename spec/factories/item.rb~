@@ -5,7 +5,7 @@ FactoryGirl define do
     quantity 2
     status "sell"
     type "tools"
-    location factory: :location, name: "item's location"
+    association :location, factory: :location, name: "item's location"
  
     
     
