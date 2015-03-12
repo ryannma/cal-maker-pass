@@ -19,11 +19,17 @@ describe Location do
     a2 = Admin.new(:user => u2, :location => l)
 
     l.admins[0].location.should == l
-    l.admins[0].location.should == l
+    l.admins[1].location.should == l
     
   end
 
   it "should have a list of items" do
+    l = create(:location)
+    i1 = create(:item, name: "item1", location: l)
+    i2 = create(:item, name: "item2", location: l)
+
+    l.items[0].location.should == l
+    l.items[1].location.should == l
   end
 
 end
