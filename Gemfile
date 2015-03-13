@@ -8,6 +8,7 @@ gem 'rails', '3.2.16'
 gem 'sqlite3'
 
 group :test, :development do
+  gem 'sqlite3'
   gem 'cucumber-rails', :require=>false
   gem 'database_cleaner'
   gem 'rspec-rails', '~> 2.14.0'

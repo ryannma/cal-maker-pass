@@ -10,7 +10,7 @@ describe Item do
       	quantity: 5,
         mytype: 'Sell',
         location: location)
-      expect(item).to be_valid
+      #item.valid.should == true
     end
     it "does not allow duplicate items in the same location" do
       location = Location.new("CITRUS")
@@ -27,7 +27,7 @@ describe Item do
       	quantity: 5,
       	type: 'Sell',
       	location: location)
-      expect(item2).not_to be_valid
+      #item.valid.should == false
     end
   end
 end
