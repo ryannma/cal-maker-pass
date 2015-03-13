@@ -1,0 +1,44 @@
+.table-container
+  %input#search-bar{ :autofocus => true , :placeholder => "Search..."}
+    = inline_svg "eye.svg", class: "eye-svg"
+  #buttons-container
+    = inline_svg "plus.svg", class: "plus-svg"
+
+  %table#inventory-table
+    %thead
+      %tr
+        %th Item
+        %th Quantity
+        %th Price
+        %th Status
+        %th Location
+    %tbody
+      %tr
+        %td Resistor 10 Ohms
+        %td 10
+        %td $28
+        %td Buy/Rent
+        %td Inventions Lab
+      %tr
+        %td Resistor 10 Ohms
+        %td 10
+        %td $28
+        %td Buy/Rent
+        %td Inventions Lab
+#modal
+  #modal-overlay
+  #modal-content
+    #new-item-container
+      .new-item-label Name
+      %input#new-item-name.new-item-input
+      .new-item-label Quantity
+      %input#new-item-quantity.new-item-input
+      .new-item-label Price
+      %input#new-item-price.new-item-input
+      .new-item-label Status
+      %input#new-item-status.new-item-input
+      .new-item-label Location
+      %input#new-item-location.new-item-input
+      #new-item-buttons-container
+        #new-item-add.new-item-button Add
+        #new-item-cancel.new-item-button Cancel
