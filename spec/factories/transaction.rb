@@ -6,3 +6,4 @@ FactoryGirl define do
     mytype "sold"
     purpose "blank" 
   end
+end

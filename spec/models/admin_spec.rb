@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Admin do
-  it "should have a user and location"
+  it "should have a user and location" do
     a = create(:admin)
     a.user.first_name.should == "first"
     a.location.name.should == "location_name"

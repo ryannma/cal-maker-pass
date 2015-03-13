@@ -6,6 +6,9 @@ FactoryGirl define do
     status "sell"
     mytype "tools"
     association :location, factory: :location, name: "item's location"
+  end
+end
+
  
     
     

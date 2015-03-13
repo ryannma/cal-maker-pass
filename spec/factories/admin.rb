@@ -3,3 +3,4 @@ FactoryGirl define do
     user
     location  
   end
+end

@@ -4,4 +4,5 @@ FactoryGirl define do
     last_name "last"
     sid 12345678
   end
+end
 

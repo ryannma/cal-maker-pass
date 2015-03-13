@@ -5,4 +5,5 @@ describe Admin do
     a = create(:admin)
     a.user.first_name.should == "first"
     a.location.name.should == "location_name"
+  end
 end
