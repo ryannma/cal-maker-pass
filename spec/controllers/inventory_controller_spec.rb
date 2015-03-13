@@ -6,7 +6,9 @@ describe InventoryController do
 
     it 'should not allow duplicate items to be added' do
 
-    capacitor_item = mock('item', :name => "capacitor")
+    item = mock('item', :name => "capacitor")
+    Item.should_receive
+
 
 
       
