@@ -8,7 +8,7 @@ describe Item do
       	name: 'Component',
       	price: 4.20,
       	quantity: 5,
-        mytype: 'Sell',
+        type: 'Sell',
         location: location)
       expect(item).to be_valid
     end
@@ -19,7 +19,7 @@ describe Item do
       	name: 'component',
       	price: 4.20,
       	quantity: 5,
-      	mytype: 'Sell', 
+      	type: 'Sell', 
       	location: location)
       item2 = Item.new(
       	name: 'component', 

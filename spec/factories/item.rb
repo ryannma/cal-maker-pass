@@ -4,7 +4,7 @@ FactoryGirl define do
     price 4.99
     quantity 2
     status "sell"
-    type "tools"
+    mytype "tools"
     association :location, factory: :location, name: "item's location"
  
     
