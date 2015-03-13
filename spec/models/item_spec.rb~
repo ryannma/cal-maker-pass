@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe Item do
   context "newly created item" do
@@ -8,7 +8,7 @@ describe Item do
       	name: 'Component',
       	price: 4.20,
       	quantity: 5,
-        mytype: 'Sell',
+        type: 'Sell',
         location: location)
       expect(item).to be_valid
     end
@@ -19,7 +19,7 @@ describe Item do
       	name: 'component',
       	price: 4.20,
       	quantity: 5,
-      	mytype: 'Sell', 
+      	type: 'Sell', 
       	location: location)
       item2 = Item.new(
       	name: 'component', 
@@ -30,5 +30,4 @@ describe Item do
       expect(item2).not_to be_valid
     end
   end
-
 end

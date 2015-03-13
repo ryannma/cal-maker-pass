@@ -1,5 +1,12 @@
 require 'spec_helper'
 
 describe Transaction do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it "should have all it's required feilds"
+    t = create(:transaction)
+    t.user.first_name.should == "first"
+    t.admin.location.should == "location_name"
+    t.item.name.should == "item_name"
+    t.mytype.should == "sold"
+    t.purpose.should == "blank"
+  end
 end
