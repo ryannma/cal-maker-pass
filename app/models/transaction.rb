@@ -3,8 +3,9 @@ class Transaction < ActiveRecord::Base
   belongs_to :item
   belongs_to :user
   belongs_to :admin
-  #validates :mytype, :inclusion=> { :in => @allowed_types }
-  #@allowed_types = ["lent", "sold"]
+  allowed_types = ["lent", "sold"]
+  validates :mytype, :inclusion=> { :in => allowed_types }
+  
 end
 
 def is_valid
