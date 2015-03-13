@@ -1,5 +1,9 @@
 require 'spec_helper'
 
 describe Admin do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it "should have a user and location"
+    a = create(:admin)
+    a.user.first_name.should == "first"
+    a.location.name.should == "location_name"
+  end
 end
