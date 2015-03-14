@@ -10,7 +10,11 @@ class ItemsController < ApplicationController
 
     def create
       item = params[:item]
-      Item.create(item)
+      i = Item.new
+      for key, val in item
+        item.key = val
+      end
+      i.create
       flash[:notice] = "Successfully added item"
       redirect items_path
     end
