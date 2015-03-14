@@ -1,5 +1,5 @@
 class Item < ActiveRecord::Base
-  attr_accessible :name, :price, :price, :quantity, :status, :mytype
+  attr_accessible :name, :price, :quantity, :status, :type
   belongs_to :location
   has_many :transactions
   allowed_types = ["lend", "sell", "both"]
