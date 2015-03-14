@@ -1,5 +1,5 @@
 class Transaction < ActiveRecord::Base
-  attr_accessible :purpose, :type
+  attr_accessible :purpose, :kind
   belongs_to :item
   belongs_to :user
   belongs_to :admin
