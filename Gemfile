@@ -31,6 +31,11 @@ end
 gem 'jquery-rails'
 
 
+#views
+gem 'haml'
+gem 'inline_svg'
+gem 'turbolinks'
+
 gem 'sunspot_rails'
 gem 'sunspot_solr' 
 # To use ActiveModel has_secure_password
