@@ -1,0 +1,1 @@
+Makerpass::Application.config.secret_token = "dd85ee096119461be33367b0bdc8c8dbf118e0077ca4e235cd1af7356716cffb7603430014e6126a6a49eb0f9423e04e52487d53c5b2cd6f06e2da257c4e57f7"
