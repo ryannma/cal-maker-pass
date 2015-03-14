@@ -10,13 +10,16 @@ class ItemsController < ApplicationController
 
     def create
       item = params[:item]
-      i = Item.new
-      for key, val in item
-        item.key = val
-      end
-      i.create
+      # i = Item.new
+      # item.each do |key, val|
+      #   if val and val != "" 
+      #     i.key = val
+      #   end
+      # end
+      # i.create!
+      Item.create!(item)
       flash[:notice] = "Successfully added item"
-      redirect items_path
+      redirect_to items_path
     end
 
     def checkout
