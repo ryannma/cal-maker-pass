@@ -28,7 +28,7 @@
         = label :item, :title, 'Name', class: "new-item-label"
         = text_field :item, 'title', class: "new-item-input"
         = label :item, :price, 'Price', class: "new-item-label"
-        = text_field :movie, 'price', class: "new-item-input"
+        = text_field :item, 'price', class: "new-item-input"
         = label :item, :quantity, 'Quantity', class: "new-item-label"
         = text_field :item, 'quantity', class: "new-item-input"
         = label :item, :status, 'Status', class: "new-item-label"
@@ -36,6 +36,8 @@
         = label :item, :type, 'Type', class: "new-item-label"
         = text_field :item, 'type', class: "new-item-input"
         #new-item-buttons-container
-          #new-item-add.new-item-button Add
+          = submit_tag 'Add', id: "new-item-add", class: "new-item-button"
           #new-item-cancel.new-item-button Cancel
+          
+          
     
