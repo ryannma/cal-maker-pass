@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe ItemController do
+describe ItemsController do
 
 	describe '#find' do
 		context 'when the admin correctly finds a single item' do
@@ -11,6 +11,7 @@ describe ItemController do
       			response.should render_template('find_result')
       		end
       	end
+
       	context 'when the admin tries find an unavailable item' do
 			it 'redirects to index and says item unavailable' do
 				# something
@@ -65,7 +66,7 @@ describe ItemController do
 		end
 	end
 
-	describe '#show'
+	describe '#show' do
 		context '' do
 			it '' do
 			end
