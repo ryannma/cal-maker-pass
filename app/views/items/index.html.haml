@@ -10,15 +10,15 @@
         %th Item
         %th Quantity
         %th Price
+        %th Type
         %th Status
-        %th Location
     %tbody
       - @items.each do |item|
         %tr
           %td= link_to item.name, item_path(item)
           %td= item.price 
           %td= item.quantity
-          %td= item.type
+          %td= item.kind
           %td= item.status
 #modal
   #modal-overlay
@@ -33,8 +33,8 @@
         = text_field :item, 'quantity', class: "new-item-input"
         = label :item, :status, 'Status', class: "new-item-label"
         = text_field :item, 'status', class: "new-item-input"
-        = label :item, :type, 'Type', class: "new-item-label"
-        = text_field :item, 'type', class: "new-item-input"
+        = label :item, :kind, 'Type', class: "new-item-label"
+        = text_field :item, 'kind', class: "new-item-input"
         #new-item-buttons-container
           = submit_tag 'Add', id: "new-item-add", class: "new-item-button"
           #new-item-cancel.new-item-button Cancel

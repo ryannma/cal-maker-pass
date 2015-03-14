@@ -11,7 +11,7 @@
     #navbar
       #title Maker Pass
       #navbar-menu
-        #inventory-menu.navbar-menu-item Inventory
+        = link_to 'Inventory', items_path, id: '#inventory-menu', class: '.navbar-menu-item'
         #students-menu.navbar-menu-item Students
     #main
       - if flash[:notice]
