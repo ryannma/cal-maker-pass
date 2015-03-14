@@ -2,8 +2,10 @@ require "spec_helper"
 
 describe Admin do
   it "should have a user and location" do
-    a = create(:admin)
-    a.user.first_name.should == "first"
-    a.location.name.should == "location_name"
+    user = FactoryGirl.create(:user)
+    loc = FactoryGirl.create(:location)
+    admin = FactoryGirl.create(:admin, :user => user, :location => loc)
+    admin.user.should == user
+    admin.location.should == loc
   end
 end
