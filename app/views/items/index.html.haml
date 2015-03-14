@@ -13,27 +13,29 @@
         %th Status
         %th Location
     %tbody
-     - @items.each do |item|
-          %tr
-            %td= item.name 
-            %td= item.price 
-            %td= item.quantity
-            %td= item.type
-            %td= item.status
+      - @items.each do |item|
+        %tr
+          %td= item.name 
+          %td= item.price 
+          %td= item.quantity
+          %td= item.type
+          %td= item.status
 #modal
   #modal-overlay
   #modal-content
     #new-item-container
-      .new-item-label Name
-      %input#new-item-name.new-item-input
-      .new-item-label Quantity
-      %input#new-item-quantity.new-item-input
-      .new-item-label Price
-      %input#new-item-price.new-item-input
-      .new-item-label Status
-      %input#new-item-status.new-item-input
-      .new-item-label Location
-      %input#new-item-location.new-item-input
-      #new-item-buttons-container
-        #new-item-add.new-item-button Add
-        #new-item-cancel.new-item-button Cancel
+      = form_tag items_path do
+        = label :item, :title, 'Name', class: "new-item-label"
+        = text_field :item, 'title', class: "new-item-input"
+        = label :item, :price, 'Price', class: "new-item-label"
+        = text_field :movie, 'price', class: "new-item-input"
+        = label :item, :quantity, 'Quantity', class: "new-item-label"
+        = text_field :item, 'quantity', class: "new-item-input"
+        = label :item, :status, 'Status', class: "new-item-label"
+        = text_field :item, 'status', class: "new-item-input"
+        = label :item, :type, 'Type', class: "new-item-label"
+        = text_field :item, 'type', class: "new-item-input"
+        #new-item-buttons-container
+          #new-item-add.new-item-button Add
+          #new-item-cancel.new-item-button Cancel
+    
