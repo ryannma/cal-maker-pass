@@ -13,18 +13,13 @@
         %th Status
         %th Location
     %tbody
-      %tr
-        %td Resistor 10 Ohms
-        %td 10
-        %td $28
-        %td Buy/Rent
-        %td Inventions Lab
-      %tr
-        %td Resistor 10 Ohms
-        %td 10
-        %td $28
-        %td Buy/Rent
-        %td Inventions Lab
+     - @items.each do |item|
+          %tr
+            %td= item.name 
+            %td= item.quantity
+            %td= item.price 
+            %td= item.rent
+            %td= item.location
 #modal
   #modal-overlay
   #modal-content
