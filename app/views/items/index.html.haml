@@ -25,8 +25,8 @@
   #modal-content
     #new-item-container
       = form_tag items_path do
-        = label :item, :title, 'Name', class: "new-item-label"
-        = text_field :item, 'title', class: "new-item-input"
+        = label :item, :name, 'Name', class: "new-item-label"
+        = text_field :item, 'name', class: "new-item-input"
         = label :item, :price, 'Price', class: "new-item-label"
         = text_field :item, 'price', class: "new-item-input"
         = label :item, :quantity, 'Quantity', class: "new-item-label"
