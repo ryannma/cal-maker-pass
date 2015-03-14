@@ -7,6 +7,14 @@ class ItemsController < ApplicationController
         @items = Item.all
     end
 
+
+    def create
+      item = params[:item]
+      Item.create(item)
+      flash[:notice] = "Successfully added item"
+      redirect items_path
+    end
+
     def checkout
        items = params[:items]
        user_id = params[:user] 
