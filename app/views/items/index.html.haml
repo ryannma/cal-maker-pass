@@ -13,13 +13,13 @@
         %th Status
         %th Location
     %tbody
-     - @items.each do |item|
-          %tr
-            %td= item.name 
-            %td= item.price 
-            %td= item.quantity
-            %td= item.type
-            %td= item.status
+      - @items.each do |item|
+        %tr
+          %td= item.name 
+          %td= item.price 
+          %td= item.quantity
+          %td= item.type
+          %td= item.status
 #modal
   #modal-overlay
   #modal-content
