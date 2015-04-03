@@ -17,9 +17,4 @@
         %div.navbar-menu-item#menu-logout
           = link_to 'Log out', logout_path, id: 'logout'
     #main
-      - if flash[:notice]
-        #notice.message= flash[:notice]
-      - elsif flash[:warning]
-        #warning.message= flash[:warning]
-        
       = yield
