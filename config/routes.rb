@@ -2,7 +2,6 @@ Makerpass::Application.routes.draw do
   resources :items
   get "/find" , to: "items#find", as: 'find'
   post "/checkout" , to: "items#checkout", as: 'checkout'
-
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

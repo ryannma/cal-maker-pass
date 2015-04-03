@@ -4,7 +4,25 @@ class ItemsController < ApplicationController
     end
     
     def index
-        
+        @items = Item.all
+        @all_status = Item.all_status
+    end
+
+    def show
+      @item = Item.find(params[:id])
+    end
+
+    def create
+      @item = Item.new(params[:item])
+      if @item.valid?
+        @item.save
+        flash[:notice] = "Successfully added item"
+      else
+        errors = @item.errors.full_messages.join("<br>").html_safe
+        puts errors
+        flash[:warning] = errors
+      end
+      redirect_to items_path
     end
 
     def checkout
