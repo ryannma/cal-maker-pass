@@ -31,4 +31,3 @@ FactoryGirl.define do
     sid 12345678
   end
 end
-

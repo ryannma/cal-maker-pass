@@ -132,6 +132,8 @@ GEM
       rspec-core (~> 2.14.0)
       rspec-expectations (~> 2.14.0)
       rspec-mocks (~> 2.14.0)
+    rubycas-client (2.3.9)
+      activesupport
     sass (3.4.13)
     sass-rails (3.2.6)
       railties (~> 3.2.0)
@@ -185,6 +187,7 @@ DEPENDENCIES
   rails (= 3.2.16)
   rake
   rspec-rails (~> 2.14.0)
+  rubycas-client
   sass-rails (~> 3.2.3)
   simplecov
   sqlite3
