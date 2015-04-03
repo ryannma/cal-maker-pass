@@ -5,6 +5,7 @@ class ItemsController < ApplicationController
     
     def index
         @items = Item.all
+        @all_status = Item.all_status
     end
 
     def show
@@ -12,16 +13,15 @@ class ItemsController < ApplicationController
     end
 
     def create
-      item = params[:item]
-      # i = Item.new
-      # item.each do |key, val|
-      #   if val and val != "" 
-      #     i.key = val
-      #   end
-      # end
-      # i.create!
-      Item.create!(item)
-      flash[:notice] = "Successfully added item"
+      @item = Item.new(params[:item])
+      if @item.valid?
+        @item.save
+        flash[:notice] = "Successfully added item"
+      else
+        errors = @item.errors.full_messages.join("<br>").html_safe
+        puts errors
+        flash[:warning] = errors
+      end
       redirect_to items_path
     end
 

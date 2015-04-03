@@ -8,7 +8,7 @@ $green: #78c272;
 
 body {
     margin: 0px;
-    font-family: 'Ubuntu', sans-serif;
+    font-family: 'Ubuntu', sans-serif !important;
     background: $white;
     color: $blue-dark;
 }
@@ -28,6 +28,7 @@ body {
     position: fixed;
     top: 0px;
     left: 0px;
+    z-index: 999;
 }
 
 #title {
@@ -52,6 +53,7 @@ body {
     text-align: center;
     width: 120px;
     transition: 0.3s;
+    text-decoration: none;
 }
 
 .navbar-menu-item:hover {
@@ -107,26 +109,39 @@ tbody tr {
 }
 
 #search-bar {
-    height: 40px;
+    height: 100%;
+    width: calc(100% - 25px);
     font-size: 18px;
-    width: calc(50% - 25px);
     padding-left: 20px;
-    margin-bottom: 30px;
     border-style: solid;
     border-color: $blue-sky;
-    float: left;
+    float: right;
 }
 
-::-webkit-input-placeholder {
-    color: $blue-sky;
+#search-bar-container {
+    height: 40px;
+    width: calc(50% - 25px);
+    background-color: black;
+    position: absolute;
+    right: 50px;
+    margin-top: -5px;
 }
 
 .eye-svg {
     fill: $blue_sky;
     width: 50px;
-    margin-left: -60px;
     margin-top: -5px;
     position: absolute;
+    right: 10px;
+}
+
+#info-container {
+    height: 40px;
+    line-height: 40px;
+    float: left;
+    font-size: 18px;
+    font-weight: 300;
+    margin-left: 20px;
 }
 
 #buttons-container {
@@ -145,6 +160,39 @@ tbody tr {
 
 .plus-svg:hover {
     fill: $blue-dark;
+}
+
+//inventory
+
+.table-container {
+    position: absolute;
+    width: 700px;
+    left: 50%;
+    margin-left: -350px;
+    top: 50px;
+}
+
+#inventory-table {
+    text-align: center;
+    color: $blue-dark;
+    width: 100%;
+    margin-top: 80px;
+}
+
+thead {
+    background: $blue-sky;
+}
+
+thead tr {
+    height: 50px;
+}
+
+tbody tr {
+    height: 35px;
+}
+
+::-webkit-input-placeholder {
+    color: $blue-sky;
 }
 
 #modal {
@@ -219,12 +267,15 @@ tbody tr {
     transition: 0.3s;
     margin: 0px 5px;
     font-weight: 300;
+    padding: 0;
+    border: 0;
 }
 .new-item-button:hover {
     opacity: 0.9;
 }
 #new-item-add {
     background-color: $blue-dark;
+    font-family: 'Ubuntu', sans-serif;
 }
 #new-item-cancel {
     background-color: $red;   
