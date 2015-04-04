@@ -26,8 +26,8 @@
         - @items.each do |item|
           %tr
             %td= link_to item.name, item_path(item)
-            %td= item.price 
             %td= item.quantity
+            %td= item.price 
             %td= item.kind
             %td= item.status
             %td
@@ -58,12 +58,11 @@
             #new-item-cancel.button.button-red Cancel
 
 #cart-panel
-  = form_tag checkout_path do
-    #cart-title Cart
-    #cart-items
-      - @cart.each do |item, quantity|
-        .cart-item 
-          = text_field :item, :quantity, value: quantity, class: "cart-item-quantity"
-          = label :item, :name, item[:name], class: "cart-item-name"
-    #checkout-footer
-      = submit_tag 'Checkout', id: "checkout-button"
+  #cart-title Cart
+  #cart-items
+    - @cart.each do |item|
+      .cart-item 
+        = text_field :item, :quantity, value: item[:quantity], class: "cart-item-quantity"
+        = label :item, :name, item[:name], class: "cart-item-name"
+  #checkout-footer
+    =link_to "Checkout", checkout_path(hash: session[:cart]), method: :post, id: "checkout-button"
