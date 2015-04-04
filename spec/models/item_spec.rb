@@ -42,11 +42,4 @@ describe Item do
     item.location.name.should == "location_name"
   end
 
-  it "should have many transactions" do
-    item = FactoryGirl.create(:item)
-    transaction = FactoryGirl.create(:transaction)
-    transaction.item=(item)
-    item.transactions[0].should == transaction
-  end
-
 end
