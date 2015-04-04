@@ -3,6 +3,8 @@ rvm:
   - 1.9.3
 env:
   - DB=postgresql
+gemfile:
+  - Gemfile.lock
 script:
   - RAILS_ENV=test bundle exec rake db:migrate --trace
   - bundle exec rake db:test:prepare
