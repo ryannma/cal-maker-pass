@@ -21,6 +21,7 @@
           %th Price
           %th Kind
           %th Status
+          %th Add
       %tbody
         - @items.each do |item|
           %tr
@@ -29,6 +30,9 @@
             %td= item.quantity
             %td= item.kind
             %td= item.status
+            %td
+              =link_to add_item_path(:id => item.id), method: :post do
+                = inline_svg "plus.svg", class: "add-svg"
   #modal
     #modal-overlay
     #modal-content
@@ -57,9 +61,9 @@
   = form_tag checkout_path do
     #cart-title Cart
     #cart-items
-      - @cart.each do |item|
+      - @cart.each do |item, quantity|
         .cart-item 
-          = text_field :item, :quantity, value: item[:quantity], class: "cart-item-quantity"
+          = text_field :item, :quantity, value: quantity, class: "cart-item-quantity"
           = label :item, :name, item[:name], class: "cart-item-name"
     #checkout-footer
       = submit_tag 'Checkout', id: "checkout-button"

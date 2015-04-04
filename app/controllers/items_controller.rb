@@ -6,25 +6,14 @@ class ItemsController < ApplicationController
     def index
         @items = Item.all
         @all_status = Item.all_status
+        puts "Index"
+        puts "---------------------"
+        puts @cart
 
-        @cart = [
-          {
-            name: "Capacitor",
-            quantity: 4
-          },
-          {
-            name: "Resistor",
-            quantity: 1
-          },
-          {
-            name: "Transistor",
-            quantity: 7
-          },
-          {
-            name: "Arduino",
-            quantity: 2
-          }
-        ]
+        session[:cart] = session[:cart] || Hash.new
+        @cart = session[:cart]
+        puts @cart
+        puts "---------------------"
     end
 
     def update
@@ -76,4 +65,19 @@ class ItemsController < ApplicationController
        redirect_to items_path
     end
 
+    def add_item
+      puts "add_item"
+      puts "-----------------------"
+      puts params
+      @cart = session[:cart]
+      @item = Item.find(params[:id])
+      if @cart.has_key? @item
+        @cart[@item] += 1
+      else
+        @cart[@item] = 1
+      end
+      session[:cart] = @cart
+      puts @cart
+      redirect_to items_path
+    end
 end
