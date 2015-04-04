@@ -8,8 +8,27 @@ class ItemsController < ApplicationController
         @all_status = Item.all_status
     end
 
+    def update
+      @updated_data = params[:item]
+      @item = Item.find(params[:id])
+      @item.name = @updated_data[:name]
+      @item.price = @updated_data[:price]
+      @item.quantity = @updated_data[:quantity]
+      @item.status = @updated_data[:status]
+      @item.kind = @updated_data[:kind]
+      @item.save!
+      redirect_to item_path
+    end
+
+    def delete
+      @item = Item.find(params[:id])
+      @item.destroy
+      redirect_to items_path
+    end
+
     def show
       @item = Item.find(params[:id])
+      @all_status = Item.all_status
     end
 
     def create
