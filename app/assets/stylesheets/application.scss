@@ -193,6 +193,17 @@ tbody tr {
     margin-top: 80px;
 }
 
+.add-svg {
+    fill: $blue_sky;
+    width: 30px;
+    height: 30px;
+    transition: 0.3s;
+}
+
+.add-svg:hover {
+    fill: $blue-dark;
+}
+
 thead {
     background: $blue-sky;
 }
