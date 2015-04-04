@@ -11,22 +11,21 @@ describe Location do
   end
 
   it "should have a list of admins" do
-    l = Location.new(:name => "my_name")
-    u = User.new(:first_name => "first", :last_name => "last", :SID => 12345678)
-    u2 = User.new(:first_name => "first2", :last_name => "last2", :SID => 22345678)
+    l = FactoryGirl.create(:location)
+    u = FactoryGirl.create(:user, :first_name => "first", :last_name => "last", :sid => 12345678)
+    u2 = FactoryGirl.create(:user, :first_name => "first2", :last_name => "last2", :sid => 22345678)
     
-    a = Admin.new(:user => u, :location => l)
-    a2 = Admin.new(:user => u2, :location => l)
+    a = FactoryGirl.create(:admin, :user => u, :location => l)
+    a2 = FactoryGirl.create(:admin, :user => u2, :location => l)
 
     l.admins[0].location.should == l
     l.admins[1].location.should == l
-    
   end
 
   it "should have a list of items" do
-    l = create(:location)
-    i1 = create(:item, name: "item1", location: l)
-    i2 = create(:item, name: "item2", location: l)
+    l = FactoryGirl.create(:location)
+    i1 = FactoryGirl.create(:item, name: "item1", location: l)
+    i2 = FactoryGirl.create(:item, name: "item2", location: l)
 
     l.items[0].location.should == l
     l.items[1].location.should == l

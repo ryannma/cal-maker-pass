@@ -4,7 +4,7 @@ class Transaction < ActiveRecord::Base
   belongs_to :user
   belongs_to :admin
   allowed_types = ["lent", "sold"]
-  validates :mytype, :inclusion=> { :in => allowed_types }
+  validates :kind, :inclusion=> { :in => allowed_types }
   
 end
 
