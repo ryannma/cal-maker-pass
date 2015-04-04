@@ -3,15 +3,9 @@ require 'spec_helper'
 describe User do
   
   it "should have a first and last name and SID" do
-    u = create(:user, first_name: "first", last_name: "last", sid: 12345678)
+    u = FactoryGirl.create(:user)
     u.first_name.should == "first"
     u.last_name.should == "last"
-    u.should == 12345678
+    u.sid.should == 12345678
   end 
-
-  it "should have a unique SID" do
-    u = create(:user, sid:11111111)
-    u2 = create(:user, sid:11111111)
-    #u2.should_not be_valid
-  end
 end

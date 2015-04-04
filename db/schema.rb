@@ -11,11 +11,12 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150314034151) do
+ActiveRecord::Schema.define(:version => 20150404051724) do
 
   create_table "admins", :force => true do |t|
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.integer  "location_id"
   end
 
   create_table "items", :force => true do |t|
@@ -24,8 +25,9 @@ ActiveRecord::Schema.define(:version => 20150314034151) do
     t.integer  "quantity"
     t.string   "status"
     t.string   "kind"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.integer  "location_id"
   end
 
   create_table "locations", :force => true do |t|
@@ -39,6 +41,9 @@ ActiveRecord::Schema.define(:version => 20150314034151) do
     t.string   "purpose"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "item_id"
+    t.integer  "user_id"
+    t.integer  "admin_id"
   end
 
   create_table "users", :force => true do |t|

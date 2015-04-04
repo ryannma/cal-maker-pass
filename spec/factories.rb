@@ -5,11 +5,11 @@ FactoryGirl.define do
   end
 
   factory :item do 
-    name "item name"
+    name "item_name"
     price 4.99
     quantity 2
     status "sell"
-    mytype "tools"
+    kind "tools"
     association :location, factory: :location, name: "item's location"
   end
 
@@ -21,7 +21,7 @@ FactoryGirl.define do
     association :user, factory: :user
     admin
     item
-    mytype "sold"
+    kind "sold"
     purpose "blank" 
   end
 
