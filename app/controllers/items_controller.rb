@@ -4,12 +4,13 @@ class ItemsController < ApplicationController
     end
     
     def index
-        @items = Item.all
+      @items = Item.all
     end
 
     def show
       @item = Item.find(params[:id])
     end
+
     def create
       item = params[:item]
       # i = Item.new
@@ -20,19 +21,31 @@ class ItemsController < ApplicationController
       # end
       # i.create!
       Item.create!(item)
-      flash[:notice] = "Successfully added item"
+      flash[:notice] = "Successfully added item to database"
       redirect_to items_path
     end
 
+    def show_cart
+      #instantiate cart
+      @cart = Hash.new
+    end
+
+    def add_to_cart
+      #find items by dom elements and add them to the cart
+      items = "instantiate me!"
+      items.each do |item, quantity|
+        if item in @cart
+          @cart[item] += quantity
+        else
+          @cart[item] = quantity
+        end
+      end
+      redirect_to items_path(:cart => @cart)
+    end
+
     def checkout
-       items = params[:items]
-       user_id = params[:user] 
-       total = 0.0
-       for item in items
-            # Call appropriate transaction function
-       end
-       flash[:notice] = "Successful transaction"
-       redirect items_path
+      @cart = params[:cart]
+      redirect_to transactions_path(:items => @cart)
     end
 
 end

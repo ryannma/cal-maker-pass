@@ -4,7 +4,6 @@ class Item < ActiveRecord::Base
   has_many :transactions
   allowed_types = ["lend", "sell", "both"]
   validates :status, :inclusion=> { :in => allowed_types }
-  
 end
 
 def is_valid
