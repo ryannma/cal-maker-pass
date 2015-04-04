@@ -6,14 +6,16 @@ class ItemsController < ApplicationController
     def index
         @items = Item.all
         @all_status = Item.all_status
-        puts "Index"
-        puts "---------------------"
-        puts @cart
 
         session[:cart] = session[:cart] || Hash.new
-        @cart = session[:cart]
-        puts @cart
-        puts "---------------------"
+        @cart = []
+        unless session[:cart].empty?
+          puts session[:cart]
+          session[:cart].each do |id, quantity|
+            item = Item.find(id)
+            @cart << {name: item.name, quantity: quantity}
+          end
+        end
     end
 
     def update
@@ -53,31 +55,26 @@ class ItemsController < ApplicationController
     end
 
     def checkout
-       items = params[:cart]
-       puts "items"
-       puts items
+       cart = params[:hash]
+       puts cart
        # # user_id = params[:user] 
        # total = 0.0
        # for item in items
        #      # Call appropriate transaction function
        # end
        # flash[:notice] = "Successful transaction"
-       redirect_to items_path
+       redirect_to transactions_path(cart: cart)
     end
 
     def add_item
-      puts "add_item"
-      puts "-----------------------"
-      puts params
       @cart = session[:cart]
-      @item = Item.find(params[:id])
-      if @cart.has_key? @item
-        @cart[@item] += 1
+      @id = params[:id]
+      if @cart.has_key? @id
+        @cart[@id] += 1
       else
-        @cart[@item] = 1
+        @cart[@id] = 1
       end
       session[:cart] = @cart
-      puts @cart
       redirect_to items_path
     end
 end
