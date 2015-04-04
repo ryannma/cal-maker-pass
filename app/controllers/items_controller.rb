@@ -6,6 +6,25 @@ class ItemsController < ApplicationController
     def index
         @items = Item.all
         @all_status = Item.all_status
+
+        @cart = [
+          {
+            name: "Capacitor",
+            quantity: 4
+          },
+          {
+            name: "Resistor",
+            quantity: 1
+          },
+          {
+            name: "Transistor",
+            quantity: 7
+          },
+          {
+            name: "Arduino",
+            quantity: 2
+          }
+        ]
     end
 
     def update
@@ -45,14 +64,16 @@ class ItemsController < ApplicationController
     end
 
     def checkout
-       items = params[:items]
-       user_id = params[:user] 
-       total = 0.0
-       for item in items
-            # Call appropriate transaction function
-       end
-       flash[:notice] = "Successful transaction"
-       redirect items_path
+       items = params[:cart]
+       puts "items"
+       puts items
+       # # user_id = params[:user] 
+       # total = 0.0
+       # for item in items
+       #      # Call appropriate transaction function
+       # end
+       # flash[:notice] = "Successful transaction"
+       redirect_to items_path
     end
 
 end
