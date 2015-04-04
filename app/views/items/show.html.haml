@@ -11,11 +11,12 @@
 		= text_field :item, :quantity, value: @item.quantity, class: "attribute-value"
 
 		= label :item, :status, 'Status', class: "attribute-label"
-		= select :item, :status, @all_status.each {|t| [t.capitalize, t ] }, {}, {class: "new-item-input"}
+		= select :item, :status, @all_status.each {|t| [t.capitalize, t ] }, {}, {class: "show-item-input"}
 
 		= label :item, :kind, 'Type', class: "attribute-label"
 		= text_field :item, :kind, value: @item.kind, class: "attribute-value"
 
 		#buttons-container
-		= submit_tag 'Update', class: "button button-blue"
+		= submit_tag 'Update', class: "button button-blue" 
 		= link_to 'Back', items_path, class: 'button button-red'
+		= link_to 'Delete', delete_item_path(@item), method: :post, class: 'button button-red'

@@ -1,51 +1,65 @@
-.table-container
-  #info-container
-    - if flash[:notice]
-      #notice.message= flash[:notice]
-    - elsif flash[:warning]
-      #warning.message= flash[:warning]
-  #search-bar-container
-    %input#search-bar{ :autofocus => true , :placeholder => "Search..."}
-    = inline_svg "eye.svg", class: "eye-svg"
-  #toolbar-container
-    = inline_svg "plus.svg", class: "plus-svg"
+#items-panel 
+  .table-container
+    #info-container
+      - if flash[:notice]
+        #notice.message= flash[:notice]
+      - elsif flash[:warning]
+        #warning.message= flash[:warning]
+    #search-bar-container
+      %input#search-bar{ :autofocus => true , :placeholder => "Search..."}
+      = inline_svg "eye.svg", class: "eye-svg"
+    #toolbar-container
+      = inline_svg "shop.svg", class: "toolbar-svg shop-svg"
+      = inline_svg "plus.svg", class: "toolbar-svg plus-svg"
+      
 
-  %table#inventory-table
-    %thead
-      %tr
-        %th Item
-        %th Quantity
-        %th Price
-        %th Kind
-        %th Status
-    %tbody
-      - @items.each do |item|
+    %table#inventory-table
+      %thead
         %tr
-          %td= link_to item.name, item_path(item)
-          %td= item.price 
-          %td= item.quantity
-          %td= item.kind
-          %td= item.status
-#modal
-  #modal-overlay
-  #modal-content
-    #new-item-container
-      = form_tag items_path do
-        = label :item, :name, 'Name', class: "new-item-label"
-        = text_field :item, :name, class: "new-item-input"
+          %th Item
+          %th Quantity
+          %th Price
+          %th Kind
+          %th Status
+      %tbody
+        - @items.each do |item|
+          %tr
+            %td= link_to item.name, item_path(item)
+            %td= item.price 
+            %td= item.quantity
+            %td= item.kind
+            %td= item.status
+  #modal
+    #modal-overlay
+    #modal-content
+      #new-item-container
+        = form_tag items_path do
+          = label :item, :name, 'Name', class: "new-item-label"
+          = text_field :item, :name, class: "new-item-input"
 
-        = label :item, :price, 'Price', class: "new-item-label"
-        = text_field :item, :price, class: "new-item-input"
+          = label :item, :price, 'Price', class: "new-item-label"
+          = text_field :item, :price, class: "new-item-input"
 
-        = label :item, :quantity, 'Quantity', class: "new-item-label"
-        = text_field :item, :quantity, class: "new-item-input"
+          = label :item, :quantity, 'Quantity', class: "new-item-label"
+          = text_field :item, :quantity, class: "new-item-input"
 
-        = label :item, :status, 'Status', class: "new-item-label"
-        = select :item, :status, @all_status.each {|t| [t.capitalize, t ] }, {}, {class: "new-item-input"}
+          = label :item, :status, 'Status', class: "new-item-label"
+          = select :item, :status, @all_status.each {|t| [t.capitalize, t ] }, {}, {class: "new-item-input"}
 
-        = label :item, :kind, 'Type', class: "new-item-label"
-        = text_field :item, :kind, class: "new-item-input"
+          = label :item, :kind, 'Type', class: "new-item-label"
+          = text_field :item, :kind, class: "new-item-input"
 
-        #buttons-container
-          = submit_tag 'Add', id: "new-item-add", class: "button button-blue"
-          #new-item-cancel.button.button-red Cancel
+          #buttons-container
+            = submit_tag 'Add', id: "new-item-add", class: "button button-blue"
+            #new-item-cancel.button.button-red Cancel
+
+#cart-panel
+  = form_tag checkout_path do
+    #cart-title Cart
+    #cart-items
+      - @cart.each do |item|
+        .cart-item 
+          = text_field :item, :quantity, value: item[:quantity], class: "cart-item-quantity"
+          = label :item, :name, item[:name], class: "cart-item-name"
+    #checkout-footer
+      = submit_tag 'Checkout', id: "checkout-button"

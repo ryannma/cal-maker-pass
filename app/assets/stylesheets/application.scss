@@ -18,7 +18,7 @@ a {
 }
 
 #main {
-    position: absolute;
+    position: fixed;
     top: 60px;
     height: calc(100% - 60px);
     width: 100%;
@@ -130,9 +130,8 @@ tbody tr {
 #search-bar-container {
     height: 40px;
     width: calc(50% - 25px);
-    background-color: black;
     position: absolute;
-    right: 50px;
+    right: 100px;
     margin-top: -5px;
 }
 
@@ -159,7 +158,7 @@ tbody tr {
     float: right;
 }
 
-.plus-svg {
+.toolbar-svg {
     fill: $blue_sky;
     width: 45px;
     height: 45px;
@@ -172,6 +171,12 @@ tbody tr {
 }
 
 //inventory
+
+#items-panel {
+    position: absolute;
+    height: 100%;
+    width: calc(100% - 240px);
+}
 
 .table-container {
     position: absolute;
@@ -253,7 +258,7 @@ tbody tr {
 .new-item-input {
     float: left;
     clear: right;
-    height: 18px;
+    height: 28px;
     font-size: 18px;
     width: 150px;
     padding-left: 5px;
@@ -313,6 +318,85 @@ tbody tr {
 }
 
 .attribute-value {
+    font-size: 14px;
     float: left;
-    width: 50px;
+    width: 80px;
+}
+
+.show-item-input {
+    float: left;
+    clear: right;
+    height: 28px;
+    font-size: 18px;
+    width: 85px;
+    padding-left: 5px;
+}
+
+#cart-panel {
+    position: absolute;
+    right: 0;
+    height: calc(100% - 40px);
+    background-color: $blue-sky;
+    padding: 20px;
+    width: 200px;
+}
+
+#cart-title {
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+#cart-items {
+    
+}
+
+.cart-item {
+    display: block;
+    height: 40px;
+    background-color: rgba($blue-dark, 0.1);
+    margin-bottom: 10px;
+
+}
+
+.cart-item-name {
+    margin-right: 10px;
+    font-size: 16px;
+    line-height: 40px;
+    float: right;
+    clear: left;
+}
+
+.cart-item-quantity {
+    margin-top: 5px;
+    float: right;
+    margin-right: 10px;
+    height: 24px;
+    width: 40px;
+    font-size: 16px;
+    text-align: center;
+}
+
+#checkout-footer {
+    background-color: $blue-sea;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+}
+
+#checkout-button {
+    width: 100%;
+    height: 60px;
+    line-height: 60px;    
+    text-align: center;
+    color: $white;
+    font-weight: 300;
+    font-size: 20px;
+    background-color: $blue-sea;
+    transition: 0.3s;
+}
+
+#checkout-button:hover {
+    background-color: $blue-dark;   
 }
