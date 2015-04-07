@@ -176,6 +176,11 @@ tbody tr {
     position: absolute;
     height: 100%;
     width: calc(100% - 240px);
+    transition: 0.3s;
+}
+
+.items-panel-expanded {
+    width: 100% !important;
 }
 
 .table-container {
@@ -350,6 +355,11 @@ tbody tr {
     background-color: $blue-sky;
     padding: 20px;
     width: 200px;
+    transition: 0.3s;
+}
+
+.cart-panel-hidden {
+    right: -240px !important;
 }
 
 #cart-title {
