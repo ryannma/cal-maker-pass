@@ -24,7 +24,22 @@ $(document).ready( function () {
 	$('#modal-overlay').click( function () {
 		$('#modal').fadeOut(500);
 	});
+	$('.shop-svg').click( function () {
+		manageCart();
+	});
 	// $('#new-item-container').click( function (e) {
 	// 	e.stopPropagation();
 	// })
 });
+
+function manageCart() {
+	var itemsPanel = $('#items-panel');
+	var cartPanel = $('#cart-panel');
+	if ( itemsPanel.hasClass('items-panel-expanded')) {
+		itemsPanel.removeClass('items-panel-expanded');
+		cartPanel.removeClass('cart-panel-hidden');
+	} else {
+		itemsPanel.addClass('items-panel-expanded');
+		cartPanel.addClass('cart-panel-hidden');
+	}
+}
