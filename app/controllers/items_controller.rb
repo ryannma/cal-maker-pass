@@ -1,6 +1,6 @@
 class ItemsController < ApplicationController
-    def find
 
+    def find
     end
     
     def index
@@ -13,13 +13,6 @@ class ItemsController < ApplicationController
 
     def create
       item = params[:item]
-      # i = Item.new
-      # item.each do |key, val|
-      #   if val and val != "" 
-      #     i.key = val
-      #   end
-      # end
-      # i.create!
       Item.create!(item)
       flash[:notice] = "Successfully added item to database"
       redirect_to items_path
@@ -31,15 +24,25 @@ class ItemsController < ApplicationController
     end
 
     def add_to_cart
-      #find items by dom elements and add them to the cart
-      items = "instantiate me!"
-      items.each do |item, quantity|
-        if item in @cart
+      #do something here
+      selected_items = "instantiate me!"
+
+      selected_items.each do |item, quantity|
+        
+        #update database
+        db_item = Item.find_by(name: item)
+        new_db_quantity = db_item.quantity - quantity
+        db_item.update(quantity: new_db_quantity)
+        
+        #update cart
+        if @cart.members?(item)
           @cart[item] += quantity
         else
           @cart[item] = quantity
         end
+
       end
+
       redirect_to items_path(:cart => @cart)
     end
 

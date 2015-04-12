@@ -1,4 +1,6 @@
 class TransactionsController < ApplicationController
+
+=begin
     def index
       user_id = params[:user_id]
       admin_id = params[:admin_id]
@@ -29,16 +31,20 @@ class TransactionsController < ApplicationController
       flash[:notice] = "Successfully completed the transactions"
       redirect_to action: :show
     end
-    
+=end
+
     def create_bulk
       trans_items = params[:items]
       user_id = params[:user_id]
       admin_id= params[:admin_id]
       trans_ids = []
-      trans_items.each |trans_item| do
+      trans_items.each do |trans_item|
         trans_ids << Transaction.create!({item: trans_item[:item], user: user_id, admin: admin_id, mytype: trans_item[:trans_type]}).id
       end
       redirect_to action: :index
+    end
+
+    def order
     end
 
 end
