@@ -18,8 +18,8 @@ class ApplicationController < ActionController::Base
   private
 
   def check_user_exists
-    @user = User.where(uid: session[:cas_user])
-    if @user.empty?
+    @user = User.where(uid: session[:cas_user]).first
+    if @user.nil?
       redirect_to "/signup"
     end
   end
