@@ -100,6 +100,7 @@ class ItemsController < ApplicationController
     end
 
     def find
+      puts "hereee"
       @items = Item.search{ keywords params[:phrase]}.results
       @all_status = Item.all_status
       session[:cart] = session[:cart] || Hash.new

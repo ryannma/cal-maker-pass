@@ -76,6 +76,15 @@ $(document).ready( function () {
 
 });
 
+// document.onkeydown=function(){
+//     if(window.event.keyCode=='13'){
+//     	console.log("should had submitted")
+//     	console.log($('#search-form'))
+//         $('#search-form').submit();
+//         $('#search-form').method='post';
+//     }
+// }
+
 function manageCart() {
 	var itemsPanel = $('#items-panel');
 	var cartPanel = $('#cart-panel');

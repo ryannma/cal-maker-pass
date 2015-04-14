@@ -5,10 +5,11 @@
         #notice.message= flash[:notice]
       - elsif flash[:warning]
         #warning.message= flash[:warning]
-    = form_tag find_path do
+    = form_tag(find_path, :id => "search_form") do
       #search-bar-container
         = text_field_tag 'phrase' , nil , :autofocus => true , :placeholder => "Search...", :class => "typeahead"
         = inline_svg "eye.svg", class: "eye-svg"
+      =submit_tag "Submit", id: "submit-button"
     #toolbar-container
       = inline_svg "plus.svg", class: "plus-svg svg"
       
