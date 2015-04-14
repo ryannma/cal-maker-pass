@@ -1,0 +1,18 @@
+    %table#transaction
+      %thead
+        %tr
+          %th Item
+          %th Quantity
+          %th Price
+          %th Kind
+          %th Status
+          %th Add
+      %tbody
+        - @items.each do |item|
+          %tr
+            %td= link_to item.name, item_path(item)
+            %td= item.quantity
+            %td= item.price 
+            %td= item.kind
+            %td= item.status
+            %td
