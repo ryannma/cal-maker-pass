@@ -16,11 +16,11 @@
     %table#inventory-table
       %thead
         %tr
-          %th Item
-          %th Quantity
-          %th Price
-          %th Kind
-          %th Status
+          %th{:class => ('hilite' if @sort == 'name'), :id => 'title_header'}= link_to "Item", items_path(:sort => 'name')
+          %th{:class => ('hilite' if @sort == 'quantity'), :id => 'title_header'}= link_to "Quantity", items_path(:sort => 'quantity')
+          %th{:class => ('hilite' if @sort == 'price'), :id => 'title_header'}= link_to "Price", items_path(:sort => 'price')
+          %th{:class => ('hilite' if @sort == 'kind'), :id => 'title_header'}= link_to "Kind", items_path(:sort => 'kind')
+          %th{:class => ('hilite' if @sort == 'status'), :id => 'title_header'}= link_to "Status", items_path(:sort => 'status')
           %th Add
       %tbody
         - @items.each do |item|

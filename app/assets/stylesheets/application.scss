@@ -109,6 +109,12 @@ thead {
     background: $blue-sky;
 }
 
+//inventory-sort
+
+#inventory-table th.hilite {
+    background-color: $blue-sea;
+}
+
 thead tr {
     height: 50px;
 }
