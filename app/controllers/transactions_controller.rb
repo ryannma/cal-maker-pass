@@ -1,7 +1,6 @@
 class TransactionsController < ApplicationController
 
   def index
-
     current_user = User.where(uid: session[:uid])
     # is_admin = current_user.admin?()
 
@@ -50,8 +49,5 @@ class TransactionsController < ApplicationController
   def show
     @transaction = Transaction.find(params[:id])
   end
-
-
-
 end
 
