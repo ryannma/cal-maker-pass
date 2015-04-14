@@ -1,13 +1,13 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   before_filter CASClient::Frameworks::Rails::Filter
-  before_filter :check_user_exists
+  before_filter :check_user_exists, :except => [:logout, :signup]
 
   def home
     if @user.admin?
-      redirect_to action "/items"
+      redirect_to "/items"
     else
-      redirect_to action "/items"
+      redirect_to "/items"
     end
   end
 
@@ -18,9 +18,9 @@ class ApplicationController < ActionController::Base
   private
 
   def check_user_exists
-    @user = User.where(uid: session[:cas_user]).take
+    @user = User.where(uid: session[:cas_user])
     if @user.empty?
-      redirect_to action "/signup"
+      redirect_to "/signup"
     end
   end
 
