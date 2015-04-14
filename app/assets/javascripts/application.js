@@ -53,7 +53,6 @@ $(document).ready( function () {
 		  source: items.ttAdapter()
 		});
 
-
 	$('.comment-arrow').click( function () {
 		var commentArrow = $(this);
 		var comments = $(".cart-textarea");

@@ -194,12 +194,8 @@ tbody tr {
     height: 40px;
     width: 700px;
     position: absolute;
-<<<<<<< HEAD
     left: 50%;
     right: 100px;
-=======
-    right: 0px;
->>>>>>> checkout fixed
     margin-top: -5px;
     left: 50%;
     margin-left: -350px;
@@ -228,6 +224,8 @@ tbody tr {
     width: 100px;
     float: right;
     clear: left;
+}
+
 
 .svg {
     fill: $blue_sky;
