@@ -7,16 +7,11 @@ class Item < ActiveRecord::Base
   validates :name, :price, :quantity, :kind, presence: true
   validates :price, :quantity, numericality: true
 
-  # def is_valid
-  #   if :status == "lend" || :status == "sell" || :status == "both"
-  #     return true
-  #   else
-  #     return false
-  #   end
-  # end
+  searchable do
+    text :name
+    end
 
   def Item.all_status
     @@allowed_status
   end
-
 end
