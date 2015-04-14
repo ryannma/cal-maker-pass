@@ -17,6 +17,7 @@
     %table#inventory-table
       %thead
         %tr
+
           %th{:class => ('hilite' if @sort == 'name'), :id => 'title_header'}= link_to "Item", items_path(:sort => 'name')
           %th{:class => ('hilite' if @sort == 'quantity'), :id => 'title_header'}= link_to "Quantity", items_path(:sort => 'quantity')
           %th{:class => ('hilite' if @sort == 'price'), :id => 'title_header'}= link_to "Price", items_path(:sort => 'price')

@@ -222,10 +222,12 @@ tbody tr {
     margin-top: 40px;
     height: 40px;
     width: 100px;
-    float: right;
-    clear: left;
+    float: left;
 }
 
+.plus-svg {
+    float: left;
+}
 
 .svg {
     fill: $blue_sky;
@@ -553,8 +555,11 @@ tbody tr {
 
 .comment-arrow:hover {
     border-left-color: $blue-sea;
+<<<<<<< HEAD
 }
 
 #submit-button{
     visibility: hidden;
+=======
+>>>>>>> checkout fixed
 }
