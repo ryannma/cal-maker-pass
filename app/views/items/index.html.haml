@@ -7,7 +7,7 @@
         #warning.message= flash[:warning]
     = form_tag find_path do
       #search-bar-container
-        = text_field_tag 'phrase' , nil , :autofocus => true , :placeholder => "Search..."
+        = text_field_tag 'phrase' , nil , :autofocus => true , :placeholder => "Search...", :class => "typeahead"
         = inline_svg "eye.svg", class: "eye-svg"
     #toolbar-container
       = inline_svg "shop.svg", class: "toolbar-svg shop-svg"

@@ -114,4 +114,23 @@ class ItemsController < ApplicationController
       end
       render :index
     end
+
+    def query
+    # Get the search terms from the q parameter and do a search
+    # as we seen in the previous part of the article.
+    puts "hereee"
+    search = Item.search{ keywords params[:q]}
+ 
+    respond_to do |format|
+      format.json do
+        # Create an array from the search results.
+        results = search.results.map do |item|
+          # Each element will be a hash containing only the title of the article.
+          # The title key is used by typeahead.js.
+          { name: item.name }
+        end
+        render json: results
+      end
+    end
+  end
 end

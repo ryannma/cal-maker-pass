@@ -14,6 +14,21 @@
 // = require jquery_ujs
 //= require turbolinks
 //= require_tree .
+//= require twitter/typeahead
+
+var items;
+
+items = new Bloodhound({
+  datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+  queryTokenizer: Bloodhound.tokenizers.whitespace,
+  remote: {
+  	url: '/query?q=%QUERY'
+  }
+});
+
+items.initialize();
+
+
 $(document).ready( function () {
 	$('.plus-svg').click( function () {
 		$('#modal').fadeIn(500);
@@ -27,9 +42,16 @@ $(document).ready( function () {
 	$('.shop-svg').click( function () {
 		manageCart();
 	});
-	// $('#new-item-container').click( function (e) {
-	// 	e.stopPropagation();
-	// })
+
+	$('#phrase.typeahead').typeahead({
+		  hint: true,
+		  highlight: true,
+		  minLength: 1
+		}, {
+		  name: 'items',
+		  displayKey: 'name',
+		  source: items.ttAdapter()
+		});
 });
 
 function manageCart() {

@@ -33,6 +33,7 @@ group :assets do
 end
 
 gem 'jquery-rails'
+gem 'sprockets'
 
 
 #views
@@ -41,7 +42,8 @@ gem 'inline_svg'
 gem 'turbolinks'
 
 gem 'sunspot_rails'
-gem 'sunspot_solr' 
+gem 'sunspot_solr'
+gem 'twitter-typeahead-rails'
 
 
 gem 'rubycas-client'
