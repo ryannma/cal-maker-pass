@@ -1,21 +1,45 @@
 class ItemsController < ApplicationController
+    
     def find
-
     end
     
     def index
-        @items = Item.all
-        @all_status = Item.all_status
 
-        session[:cart] = session[:cart] || Hash.new
-        @cart = []
-        unless session[:cart].empty?
-          puts session[:cart]
-          session[:cart].each do |id, quantity|
-            item = Item.find(id)
-            @cart << {name: item.name, quantity: quantity}
-          end
+      if params.has_key?(:sort)
+        @sort = params[:sort]
+        session[:sort] = params[:sort]
+      elsif session.has_key?(:sort)
+        @sort = session[:sort]
+        need_redirect = true
+      else
+        @sort = nil
+      end
+
+      if @sort == 'name' 
+        @items = Item.order(:name)
+      elsif @sort == 'quantity' 
+        @items = Item.order(:quantity)
+      elsif @sort == 'price' 
+        @items = Item.order(:price)
+      elsif @sort == 'kind' 
+        @items = Item.order(:kind)
+      elsif @sort == 'status'
+        @items = Item.order(:status)
+      else
+        @items = Item.all
+      end
+
+      @all_status = Item.all_status
+
+      session[:cart] = session[:cart] || Hash.new
+      @cart = []
+      unless session[:cart].empty?
+        puts session[:cart]
+        session[:cart].each do |id, quantity|
+          item = Item.find(id)
+          @cart << {name: item.name, quantity: quantity}
         end
+      end
     end
 
     def update
