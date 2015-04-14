@@ -1,8 +1,5 @@
 class ItemsController < ApplicationController
     
-    def find
-    end
-    
     def index
 
       if params.has_key?(:sort)
@@ -100,5 +97,21 @@ class ItemsController < ApplicationController
       end
       session[:cart] = @cart
       redirect_to items_path
+    end
+
+    def find
+      @items = Item.search{ keywords params[:phrase]}.results
+      @all_status = Item.all_status
+      session[:cart] = session[:cart] || Hash.new
+      @cart = []
+      @sort = nil
+      unless session[:cart].empty?
+        puts session[:cart]
+        session[:cart].each do |id, quantity|
+          item = Item.find(id)
+          @cart << {name: item.name, quantity: quantity}
+        end
+      end
+      render :index
     end
 end

@@ -5,9 +5,10 @@
         #notice.message= flash[:notice]
       - elsif flash[:warning]
         #warning.message= flash[:warning]
-    #search-bar-container
-      %input#search-bar{ :autofocus => true , :placeholder => "Search..."}
-      = inline_svg "eye.svg", class: "eye-svg"
+    = form_tag find_path do
+      #search-bar-container
+        = text_field_tag 'phrase' , nil , :autofocus => true , :placeholder => "Search..."
+        = inline_svg "eye.svg", class: "eye-svg"
     #toolbar-container
       = inline_svg "shop.svg", class: "toolbar-svg shop-svg"
       = inline_svg "plus.svg", class: "toolbar-svg plus-svg"
