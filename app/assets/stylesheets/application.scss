@@ -99,6 +99,10 @@ a {
     top: 100px;
 }
 
+th, td {
+    transition: 0.3s;
+}
+
 #inventory-table {
     text-align: center;
     color: $blue-dark;
@@ -190,8 +194,12 @@ tbody tr {
     height: 40px;
     width: 700px;
     position: absolute;
+<<<<<<< HEAD
     left: 50%;
     right: 100px;
+=======
+    right: 0px;
+>>>>>>> checkout fixed
     margin-top: -5px;
     left: 50%;
     margin-left: -350px;
@@ -220,17 +228,15 @@ tbody tr {
     width: 100px;
     float: right;
     clear: left;
-}
 
-.toolbar-svg {
+.svg {
     fill: $blue_sky;
     width: 45px;
     height: 45px;
-    float: right;
-    transition: 0.3s;
+    transition: 0.3s;   
 }
 
-.plus-svg:hover {
+.svg:hover {
     fill: $blue-dark;
 }
 
@@ -244,7 +250,7 @@ tbody tr {
 }
 
 .items-panel-expanded {
-    width: 100% !important;
+    width: calc(100% - 60px) !important;
 }
 
 .table-container {
@@ -423,7 +429,8 @@ tbody tr {
 }
 
 .cart-panel-hidden {
-    right: -240px !important;
+    right: -180px !important;
+    color: $blue-sky !important;
 }
 
 #cart-title {
@@ -432,7 +439,8 @@ tbody tr {
 }
 
 #cart-items {
-    
+    clear: both;
+    display: none;
 }
 
 .cart-item {
@@ -440,7 +448,7 @@ tbody tr {
     height: 40px;
     background-color: rgba($blue-dark, 0.1);
     margin-bottom: 10px;
-
+    font-size: 30px;
 }
 
 .cart-item-name {
@@ -461,6 +469,46 @@ tbody tr {
     text-align: center;
 }
 
+.cart-label {
+    float: left;
+    clear: left;
+    width: 60px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    text-align: left;
+    font-size: 17px;
+    line-height: 33px;
+}
+
+.cart-input {
+    float: left;
+    clear: right;
+    height: 28px;
+    font-size: 18px;
+    width: 120px;
+    padding-left: 5px;
+}
+
+.cart-textarea {
+    resize: none;
+    font-size: 18px;
+    transition: 0.3s;
+    display: none;
+    height: 0px;
+}
+
+.cart-svg {
+    position: fixed;
+    right: 10px;
+    top: calc(15px + 60px);
+    fill: $blue-dark;
+    z-index: 999;
+}
+
+.cart-svg:hover {
+    fill: $blue-sea;   
+}
+
 #checkout-footer {
     background-color: $blue-sea;
     position: absolute;
@@ -468,6 +516,7 @@ tbody tr {
     left: 0;
     width: 100%;
     height: 60px;
+    display: none;
 }
 
 #checkout-button {
@@ -485,4 +534,25 @@ tbody tr {
 
 #checkout-button:hover {
     background-color: $blue-dark;   
+}
+
+.comment-arrow {
+    float: right;
+    margin-right: 5px;
+    margin-top: 5px;
+    width: 0; 
+    height: 0; 
+    border-top: 13px solid transparent;
+    border-bottom: 13px solid transparent;
+    border-left: 20px solid $blue-dark;
+    transition: 0.3s;
+}
+
+.comment-arrow-down {
+    transform: rotate(90deg);
+    -webkit-transform: rotate(90deg);
+}
+
+.comment-arrow:hover {
+    border-left-color: $blue-sea;
 }
