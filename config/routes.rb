@@ -1,6 +1,7 @@
 Makerpass::Application.routes.draw do
   resources :items
   resources :transactions
+  resources :users
 
   # HOME
   root :to => "application#home"
