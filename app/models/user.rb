@@ -4,6 +4,10 @@ class User < ActiveRecord::Base
   has_many :items, through: :transactions
   has_many :transactions
 
+  def name
+    return "#{first_name} #{last_name}"
+  end
+
   def admin?
     admin = Admin.where(user_id: @id)
     if admin.empty?
