@@ -8,13 +8,6 @@
     = csrf_meta_tags
 
   %body
-    #navbar
-      #title Maker Pass
-      #navbar-menu
-        = link_to 'Inventory', items_path, id: 'inventory-menu', class: 'navbar-menu-item'
-
-        #students-menu.navbar-menu-item Students
-        #menu-logout
-          = link_to 'Log out', logout_path, id: 'logout'
+    =render partial: "layouts/navbar"
     #main
       = yield
