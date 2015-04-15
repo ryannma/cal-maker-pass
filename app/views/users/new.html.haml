@@ -12,9 +12,6 @@
     = label :user, :sid, 'Student ID', class: "new-user-label"
     = text_field :user, :sid, class: "new-user-input"
 
-    = label :user, :locations, 'Locations', class: "new-user-label"
-    = select :user, :locations, @all_locations.each {|t| [t.capitalize, t ] }, {}, {class: "new-user-input"}
-
     #buttons-container
       = submit_tag 'Sign Up', id: "new-user-add", class: "button button-blue"
       #new-user-cancel.button.button-red Cancel

@@ -2,7 +2,6 @@ class UsersController < ApplicationController
   before_filter :check_user_exists, :except => [:new, :create]
 
   def new
-    @all_locations = Location.all
   end
 
   def create
