@@ -1,6 +1,10 @@
 class Cart
   attr_accessible :user, :items, :comment
 
+  def new
+  	@items = []
+  end
+
   def add_item( id )
 
   	item = @items.detect { |cart_item|

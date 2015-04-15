@@ -111,3 +111,12 @@ function manageCart() {
 		}, 100);
 	}
 }
+
+function updateCart( id ) {
+	$.ajax({
+		url: "/items/add_item",
+		data: id })
+	.done ( function ( cart ) {
+
+	});
+}

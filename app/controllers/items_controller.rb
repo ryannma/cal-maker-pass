@@ -91,7 +91,7 @@ class ItemsController < ApplicationController
       respond_to do |format|
         format.json do
           # Create an array from the search results.
-          items = cart.results.map do |cart_item|
+          items = cart.items.map do |cart_item|
             # Each element will be a hash containing only the title of the article.
             # The title key is used by typeahead.js.
             { name: cart_item.name }
