@@ -99,6 +99,10 @@ a {
     top: 100px;
 }
 
+th, td {
+    transition: 0.3s;
+}
+
 #inventory-table {
     text-align: center;
     color: $blue-dark;
@@ -109,6 +113,12 @@ thead {
     background: $blue-sky;
 }
 
+//inventory-sort
+
+#inventory-table th.hilite {
+    background-color: $blue-sea;
+}
+
 thead tr {
     height: 50px;
 }
@@ -117,7 +127,7 @@ tbody tr {
     height: 35px;
 }
 
-#search-bar {
+.twitter-typeahead {
     height: 100%;
     width: calc(100% - 25px);
     font-size: 18px;
@@ -127,12 +137,68 @@ tbody tr {
     float: right;
 }
 
+#phrase{
+    height: 100%;
+    width: calc(100%);
+    font-size: 18px;
+    padding-left: 20px;
+    float: right;
+    border: 0px;
+}
+
+.tt-hint{
+    visibility: hidden;
+}
+
+
+.tt-dropdown-menu {
+  text-align: left;
+  width: 670px;
+  margin-top: 3px;
+  padding: 8px 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+  -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+  -moz-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+  box-shadow: 0 5px 10px rgba(0,0,0,.2);
+ 
+  h3 {
+    margin: 3px;
+    font-weight: bold;
+    border-bottom: 1px solid #ccc;
+  }
+}
+ 
+.tt-suggestion {
+  padding: 3px 20px;
+  font-size: 110%;
+  line-height: 18px;
+}
+ 
+.tt-suggestion.tt-cursor {
+  color: #fff;
+  background-color: #16253E;
+  cursor: pointer;
+}
+ 
+.tt-suggestion p {
+  margin: 0;
+}
+
+
 #search-bar-container {
     height: 40px;
-    width: calc(50% - 25px);
+    width: 700px;
     position: absolute;
+    left: 50%;
     right: 100px;
     margin-top: -5px;
+    left: 50%;
+    margin-left: -350px;
 }
 
 .eye-svg {
@@ -153,20 +219,22 @@ tbody tr {
 }
 
 #toolbar-container {
+    margin-top: 40px;
     height: 40px;
     width: 100px;
     float: right;
+    clear: left;
 }
 
-.toolbar-svg {
+
+.svg {
     fill: $blue_sky;
     width: 45px;
     height: 45px;
-    float: right;
-    transition: 0.3s;
+    transition: 0.3s;   
 }
 
-.plus-svg:hover {
+.svg:hover {
     fill: $blue-dark;
 }
 
@@ -180,7 +248,7 @@ tbody tr {
 }
 
 .items-panel-expanded {
-    width: 100% !important;
+    width: calc(100% - 60px) !important;
 }
 
 .table-container {
@@ -188,7 +256,7 @@ tbody tr {
     width: 700px;
     left: 50%;
     margin-left: -350px;
-    top: 50px;
+    top: 15px;
 }
 
 #inventory-table {
@@ -359,7 +427,8 @@ tbody tr {
 }
 
 .cart-panel-hidden {
-    right: -240px !important;
+    right: -180px !important;
+    color: $blue-sky !important;
 }
 
 #cart-title {
@@ -368,7 +437,8 @@ tbody tr {
 }
 
 #cart-items {
-    
+    clear: both;
+    display: none;
 }
 
 .cart-item {
@@ -376,7 +446,7 @@ tbody tr {
     height: 40px;
     background-color: rgba($blue-dark, 0.1);
     margin-bottom: 10px;
-
+    font-size: 30px;
 }
 
 .cart-item-name {
@@ -397,6 +467,46 @@ tbody tr {
     text-align: center;
 }
 
+.cart-label {
+    float: left;
+    clear: left;
+    width: 60px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    text-align: left;
+    font-size: 17px;
+    line-height: 33px;
+}
+
+.cart-input {
+    float: left;
+    clear: right;
+    height: 28px;
+    font-size: 18px;
+    width: 120px;
+    padding-left: 5px;
+}
+
+.cart-textarea {
+    resize: none;
+    font-size: 18px;
+    transition: 0.3s;
+    display: none;
+    height: 0px;
+}
+
+.cart-svg {
+    position: fixed;
+    right: 10px;
+    top: calc(15px + 60px);
+    fill: $blue-dark;
+    z-index: 999;
+}
+
+.cart-svg:hover {
+    fill: $blue-sea;   
+}
+
 #checkout-footer {
     background-color: $blue-sea;
     position: absolute;
@@ -404,6 +514,7 @@ tbody tr {
     left: 0;
     width: 100%;
     height: 60px;
+    display: none;
 }
 
 #checkout-button {
@@ -421,4 +532,29 @@ tbody tr {
 
 #checkout-button:hover {
     background-color: $blue-dark;   
+}
+
+.comment-arrow {
+    float: right;
+    margin-right: 5px;
+    margin-top: 5px;
+    width: 0; 
+    height: 0; 
+    border-top: 13px solid transparent;
+    border-bottom: 13px solid transparent;
+    border-left: 20px solid $blue-dark;
+    transition: 0.3s;
+}
+
+.comment-arrow-down {
+    transform: rotate(90deg);
+    -webkit-transform: rotate(90deg);
+}
+
+.comment-arrow:hover {
+    border-left-color: $blue-sea;
+}
+
+#submit-button{
+    visibility: hidden;
 }
