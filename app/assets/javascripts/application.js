@@ -117,6 +117,6 @@ function updateCart( id ) {
 		url: "/items/add_item",
 		data: id })
 	.done ( function ( cart ) {
-
+		// $('#main'render "cart", cart:
 	});
 }
