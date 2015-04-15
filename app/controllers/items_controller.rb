@@ -28,13 +28,11 @@ class ItemsController < ApplicationController
 
       @all_status = Item.all_status
 
-      session[:cart] = session[:cart] || Hash.new
+      session[:cart] = session[:cart] || Cart.new
       @cart = []
       unless session[:cart].empty?
-        puts session[:cart]
-        session[:cart].each do |id, quantity|
-          item = Item.find(id)
-          @cart << {name: item.name, quantity: quantity}
+        session[:cart].each do |cart_item|
+          @cart << {name: cart_item.name, quantity: cart_item.quantity}
         end
       end
     end
@@ -88,33 +86,43 @@ class ItemsController < ApplicationController
     end
 
     def add_item
-      @cart = session[:cart]
-      @id = params[:id]
-      if @cart.has_key? @id
-        @cart[@id] += 1
-      else
-        @cart[@id] = 1
-      end
-      session[:cart] = @cart
-      redirect_to items_path
-    end
-
-    def find
-      puts "hereee"
-      @items = Item.search{ keywords params[:phrase]}.results
-      @all_status = Item.all_status
-      session[:cart] = session[:cart] || Hash.new
-      @cart = []
-      @sort = nil
-      unless session[:cart].empty?
-        puts session[:cart]
-        session[:cart].each do |id, quantity|
-          item = Item.find(id)
-          @cart << {name: item.name, quantity: quantity}
+      cart = session[:cart] || Cart.new
+      cart.add_item(params[:id])
+      respond_to do |format|
+        format.json do
+          # Create an array from the search results.
+          items = cart.results.map do |cart_item|
+            # Each element will be a hash containing only the title of the article.
+            # The title key is used by typeahead.js.
+            { name: cart_item.name }
+            { quantity: cart_item.quantity }
+          end
+          results = {
+            items: items,
+            total: cart.total
+          }
+          render json: results
         end
       end
-      render :index
+      session[:cart] = cart
     end
+
+    # def find
+    #   puts "hereee"
+    #   @items = Item.search{ keywords params[:phrase]}.results
+    #   @all_status = Item.all_status
+    #   session[:cart] = session[:cart] || Hash.new
+    #   @cart = []
+    #   @sort = nil
+    #   unless session[:cart].empty?
+    #     puts session[:cart]
+    #     session[:cart].each do |id, quantity|
+    #       item = Item.find(id)
+    #       @cart << {name: item.name, quantity: quantity}
+    #     end
+    #   end
+    #   render :index
+    # end
 
     def query
     # Get the search terms from the q parameter and do a search
