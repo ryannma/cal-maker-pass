@@ -1,0 +1,23 @@
+#modal
+  #modal-overlay
+  #modal-content
+    #new-item-container
+      = form_tag items_path do
+        = label :item, :name, 'Name', class: "new-item-label"
+        = text_field :item, :name, class: "new-item-input"
+
+        = label :item, :price, 'Price', class: "new-item-label"
+        = text_field :item, :price, class: "new-item-input"
+
+        = label :item, :quantity, 'Quantity', class: "new-item-label"
+        = text_field :item, :quantity, class: "new-item-input"
+
+        = label :item, :status, 'Status', class: "new-item-label"
+        = select :item, :status, @all_status.each {|t| [t.capitalize, t ] }, {}, {class: "new-item-input"}
+
+        = label :item, :kind, 'Type', class: "new-item-label"
+        = text_field :item, :kind, class: "new-item-input"
+
+        #buttons-container
+          = submit_tag 'Add', id: "new-item-add", class: "button button-blue"
+          #new-item-cancel.button.button-red Cancel

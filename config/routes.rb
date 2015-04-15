@@ -1,10 +1,14 @@
 Makerpass::Application.routes.draw do
   resources :items
-  # resources :admins
   resources :transactions
+  resources :users
 
+  # HOME
+  root :to => "application#home"
+  
   get "/find" , to: "items#find", as: "find"
   get "/logout", to: "application#logout", as: "logout"
+  get "/signup", to: "users#new", as: "signup"
 
   #ITEM
   post "/items/:id/update", to: "items#update", as: "update_item"
