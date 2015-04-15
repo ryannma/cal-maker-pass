@@ -1,21 +1,42 @@
 class ItemsController < ApplicationController
-    def find
-
-    end
     
     def index
-        @items = Item.all
-        @all_status = Item.all_status
 
-        session[:cart] = session[:cart] || Hash.new
-        @cart = []
-        unless session[:cart].empty?
-          puts session[:cart]
-          session[:cart].each do |id, quantity|
-            item = Item.find(id)
-            @cart << {name: item.name, quantity: quantity}
-          end
+      if params.has_key?(:sort)
+        @sort = params[:sort]
+        session[:sort] = params[:sort]
+      elsif session.has_key?(:sort)
+        @sort = session[:sort]
+        need_redirect = true
+      else
+        @sort = nil
+      end
+
+      if @sort == 'name' 
+        @items = Item.order(:name)
+      elsif @sort == 'quantity' 
+        @items = Item.order(:quantity)
+      elsif @sort == 'price' 
+        @items = Item.order(:price)
+      elsif @sort == 'kind' 
+        @items = Item.order(:kind)
+      elsif @sort == 'status'
+        @items = Item.order(:status)
+      else
+        @items = Item.all
+      end
+
+      @all_status = Item.all_status
+
+      session[:cart] = session[:cart] || Hash.new
+      @cart = []
+      unless session[:cart].empty?
+        puts session[:cart]
+        session[:cart].each do |id, quantity|
+          item = Item.find(id)
+          @cart << {name: item.name, quantity: quantity}
         end
+      end
     end
 
     def update
@@ -77,4 +98,40 @@ class ItemsController < ApplicationController
       session[:cart] = @cart
       redirect_to items_path
     end
+
+    def find
+      puts "hereee"
+      @items = Item.search{ keywords params[:phrase]}.results
+      @all_status = Item.all_status
+      session[:cart] = session[:cart] || Hash.new
+      @cart = []
+      @sort = nil
+      unless session[:cart].empty?
+        puts session[:cart]
+        session[:cart].each do |id, quantity|
+          item = Item.find(id)
+          @cart << {name: item.name, quantity: quantity}
+        end
+      end
+      render :index
+    end
+
+    def query
+    # Get the search terms from the q parameter and do a search
+    # as we seen in the previous part of the article.
+    puts "hereee"
+    search = Item.search{ keywords params[:q]}
+ 
+    respond_to do |format|
+      format.json do
+        # Create an array from the search results.
+        results = search.results.map do |item|
+          # Each element will be a hash containing only the title of the article.
+          # The title key is used by typeahead.js.
+          { name: item.name }
+        end
+        render json: results
+      end
+    end
+  end
 end
