@@ -1,0 +1,16 @@
+#show-container
+    #show-title Details about #{@transaction.created_at}
+    = label :transaction, :created_at, 'Date', class: "attribute-label"
+    = text_field :transaction, :created_at, value: @transaction.created_at, class: "attribute-value", readonly: true
+
+    = label :transaction, :admin, 'Seller', class: "attribute-label"
+    = text_field :transaction, :admin, value: @transaction.admin.user.name, class: "attribute-value", readonly: true
+
+    = label :transaction, :user, 'Customer', class: "attribute-label"
+    = text_field :transaction, :user, value: @transaction.user.name, class: "attribute-value", readonly: true
+
+    = label :transaction, :purpose, 'Purpose', class: "attribute-label"
+    = text_field :transaction, :purpose, value: @transaction.purpose, class: "attribute-value", readonly: true
+
+    #buttons-container
+    = link_to 'Back', transactions_path, class: 'button button-red'
