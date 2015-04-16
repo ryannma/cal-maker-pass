@@ -72,8 +72,6 @@ $(document).ready( function () {
 	});
 
 	$('.transaction-arrow').click( function () {
-		
-		// var comments = $(".cart-textarea");
 		var transactionArrow = $(this);
 		var parentRow = this.parentElement.parentElement;
 		var row_index = parentRow.rowIndex;
@@ -87,23 +85,13 @@ $(document).ready( function () {
 				nextRow = parentRow.parentNode.rows[row_index+additional];
 				additional += 1;
 			}
-
-			// comments.fadeOut(100);	
-			// setTimeout( function () {
-				// comments.css("height","0px");
-			// }, 100);
 		} else {
 			transactionArrow.addClass('transaction-arrow-down');
-			// var nextRow = parentRow.parentNode.rows[row_index];
 			while (nextRow.className == "line_item_row") {
 				nextRow.style.display = "";
 				nextRow = parentRow.parentNode.rows[row_index + additional];
 				additional += 1;
 			}
-			// comments.css("height","33px");
-			// setTimeout( function () {
-			// 	comments.fadeIn(100);
-			// }, 100);
 		}
 	});
 	// $('#new-item-container').click( function (e) {
