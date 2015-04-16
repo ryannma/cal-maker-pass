@@ -1,7 +1,6 @@
 class TransactionsController < ApplicationController
 
   def index
-<<<<<<< HEAD
     @current_user = User.find_by uid: session[:uid]
     @current_admin = Admin.find_by user_id: @current_user.id
     #@is_admin = true
@@ -10,13 +9,8 @@ class TransactionsController < ApplicationController
 	@transactions = Transaction.where(user_id: @current_user.id)
     else
         @transactions = Transaction.where(admin_id: @current_admin.id)
-=======
-
-    @current_user = User.where(uid: session[:uid])
-    @is_admin = false
-
+    end
   end
-end
 
   def create
     @transaction = Transaction.new(params[:transaction])
@@ -45,7 +39,6 @@ end
     cart.each do |item|
       item = Item.find(item[:id])
       Transaction.create(user: user, admin: admin, purpose: purpose, kind: item.kind, item: item)
->>>>>>> 58839fd6bc97da67daf882a1b70e39180052080d
     end
     redirect_to items_path
   end
@@ -60,6 +53,7 @@ end
       trans_ids << Transaction.create!({item: trans_item[:item], user: user_id, admin: admin_id, mytype: trans_item[:trans_type]}).id
     end
     redirect_to action: :index
+  end
  end
 
 end

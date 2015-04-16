@@ -1,0 +1,24 @@
+ 
+  - @transactions.each do |transaction|
+
+    %h transaction.purpose
+    %h transaction.admin
+    %h transaction.user
+
+    %table#transaction-table
+      %thead
+        %tr
+          %th Item
+          %th Action
+          %th Quantity
+          %th Kind
+          %th Status
+          %th Add
+      %tbody
+        - @line_items.each do |l_item|
+          %tr
+            %td= link_to l_item.item.name, item_path(item)
+            %td= l_item.action
+            %td= l_item.quantity
+
+

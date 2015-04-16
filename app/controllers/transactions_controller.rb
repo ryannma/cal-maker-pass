@@ -23,7 +23,7 @@ class TransactionsController < ApplicationController
     end
     redirect_to items_path
 
-  def deletee
+  def delete
     @transaction = Transaction.find(params[:id])
     @trasaction.destroy
     redirect_to transactions_path
@@ -39,7 +39,6 @@ class TransactionsController < ApplicationController
     cart.each do |item|
       item = Item.find(item[:id])
       Transaction.create(user: user, admin: admin, purpose: purpose, kind: item.kind, item: item)
->>>>>>> 58839fd6bc97da67daf882a1b70e39180052080d
     end
     redirect_to items_path
   end
@@ -54,6 +53,7 @@ class TransactionsController < ApplicationController
       trans_ids << Transaction.create!({item: trans_item[:item], user: user_id, admin: admin_id, mytype: trans_item[:trans_type]}).id
     end
     redirect_to action: :index
+  end
  end
 
 end
