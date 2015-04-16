@@ -2,8 +2,31 @@ class TransactionsController < ApplicationController
 
   def index
 
-    @current_user = User.where(uid: session[:uid])
-    @is_admin = false
+    current_user = User.where(uid: session[:uid])
+    is_admin = current_user.admin?
+
+    if params.has_key?(:sort)
+      @sort = params[:sort]
+      session[:sort] = params[:sort]
+    elsif session.has_key?(:sort)
+      @sort = session[:sort]
+      need_redirect = true
+    else
+      @sort = nil
+    end
+
+    if @sort == 'customer'
+      @transactions = Transaction.order(:user)
+    elsif @sort == 'purpose'
+      @transactions = Transaction.order(:purpose)
+    else
+      @transactions = Transaction.all
+    end
+
+  end
+
+
+
 
   end
 
@@ -25,6 +48,8 @@ class TransactionsController < ApplicationController
       lineitem.save
     end
   end
+
+
 
 end
 
