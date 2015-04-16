@@ -1,8 +1,8 @@
 class TransactionsController < ApplicationController
 
   def index
-    current_user = User.where(uid: session[:uid])
-    # is_admin = current_user.admin?()
+    current_user = User.where(uid: session[:cas_user])[0]
+    admin_user = Admin.find_by_user_id(current_user.id)
 
     if params.has_key?(:sort)
       @sort = params[:sort]
@@ -14,16 +14,20 @@ class TransactionsController < ApplicationController
       @sort = nil
     end
 
-    if @sort == 'customer'
-      @transactions = Transaction.includes(:user).order("users.last_name")
-      @transac
-    elsif @sort == 'purpose'
-      @transactions = Transaction.order(:purpose)
-    elsif @sort == 'date'
-      @transactions = Transaction.order(:created_at)
-    else
-      @transactions = Transaction.all
+    if (admin_user != nil and @all == false) 
+      if @sort == 'customer'
+        @transactions = Transaction.where(admin_id: admin_user.id).includes(:user).order("users.last_name")
+      elsif @sort == 'purpose'
+        @transactions = Transaction.where(admin_id: admin_user.id).order(:purpose)
+      elsif @sort == 'date'
+        @transactions = Transaction.where(admin_id: admin_user.id).order(:created_at)
+      else
+        @transactions = Transaction.where(admin_id: admin_user.id)
+      end
+    else 
+      @transactions = []
     end
+
   end
 
 
