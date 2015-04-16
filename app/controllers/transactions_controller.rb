@@ -35,7 +35,7 @@ class TransactionsController < ApplicationController
       else
         @transactions = Transaction.where(admin_id: admin_user.id)
       end
-    else
+   else
       if @sort == 'customer'
         @transactions = Transaction.includes(:user).order("users.last_name")
       elsif @sort == 'purpose'
@@ -45,7 +45,9 @@ class TransactionsController < ApplicationController
       else
         @transactions = Transaction.all
       end
+
     end
+
   end
 
 
