@@ -23,7 +23,9 @@ lItem1 = LineItem.create(:action => "sold", :quantity=> 5)
 lItem1.item = Item.find(1)
 lItem2 = LineItem.create(:action => "sold", :quantity=> 2)
 lItem2.item = Item.find(3)
-[lItem1, lItem2].each do |lItem|
+lItem3 = LineItem.create(:action => "sold", :quantity=> 3)
+lItem3.item = Item.find(4)
+[lItem1, lItem2, lItem3].each do |lItem|
   lItem.transaction = tx1
   lItem.save
 end
@@ -33,7 +35,9 @@ lItem1 = LineItem.create(:action => "sold", :quantity=> 7)
 lItem1.item = Item.find(2)
 lItem2 = LineItem.create(:action => "sold", :quantity=> 2)
 lItem2.item = Item.find(4)
-[lItem1, lItem2].each do |lItem|
+lItem3 = LineItem.create(:action => "sold", :quantity=> 5)
+lItem3.item = Item.find(1)
+[lItem1, lItem2, lItem3].each do |lItem|
   lItem.transaction = tx2
   lItem.save
 end
