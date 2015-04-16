@@ -15,8 +15,12 @@ describe Location do
     u = FactoryGirl.create(:user, :first_name => "first", :last_name => "last", :sid => 12345678)
     u2 = FactoryGirl.create(:user, :first_name => "first2", :last_name => "last2", :sid => 22345678)
     
-    a = FactoryGirl.create(:admin, :user => u, :location => l)
-    a2 = FactoryGirl.create(:admin, :user => u2, :location => l)
+    a = FactoryGirl.create(:admin, :location => l)
+    a.user = u
+    a.save
+    a2 = FactoryGirl.create(:admin, :location => l)
+    a2.user = u2
+    a2.save
 
     l.admins[0].location.should == l
     l.admins[1].location.should == l

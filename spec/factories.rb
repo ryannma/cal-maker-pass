@@ -28,4 +28,11 @@ FactoryGirl.define do
     last_name "last"
     sid 12345678
   end
+
+  factory :line_item do
+    item
+    transaction
+    action "sold"
+    quantity "7"
+  end
 end
