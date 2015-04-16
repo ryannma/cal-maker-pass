@@ -3,7 +3,7 @@ class TransactionsController < ApplicationController
   def index
 
     current_user = User.where(uid: session[:uid])
-    is_admin = current_user.admin?
+    # is_admin = current_user.admin?()
 
     if params.has_key?(:sort)
       @sort = params[:sort]
@@ -16,19 +16,17 @@ class TransactionsController < ApplicationController
     end
 
     if @sort == 'customer'
-      @transactions = Transaction.order(:user)
+      @transactions = Transaction.includes(:user).order("users.last_name")
+      @transac
     elsif @sort == 'purpose'
       @transactions = Transaction.order(:purpose)
+    elsif @sort == 'date'
+      @transactions = Transaction.order(:created_at)
     else
       @transactions = Transaction.all
     end
-
   end
 
-
-
-
-  end
 
   def checkout
     admin_user = User.where(uid: session[:uid])

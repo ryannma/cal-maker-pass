@@ -1,0 +1,12 @@
+%table#transaction-table
+  %thead
+    %tr
+      %th{:class => ('hilite' if @sort == 'date') , :id => 'title_header'}= link_to "Date", transactions_path(:sort => 'date')
+      %th{:class => ('hilite' if @sort == 'customer'), :id => 'title_header'}= link_to "Customer", transactions_path(:sort => 'customer')
+      %th{:class => ('hilite' if @sort == 'purpose'), :id => 'title_header'}= link_to "Purpose", transactions_path(:sort => 'purpose')
+    %tbody
+      - @transactions.each do |transaction|
+        %tr
+          %td= link_to transaction.created_at, transaction_path(transaction)
+          %td= transaction.user.name()
+          %td= transaction.purpose

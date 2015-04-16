@@ -103,6 +103,37 @@ thead {
     background-color: $blue-sea;
 }
 
+//transaction
+
+
+.transaction-wrapper {
+    position: absolute;
+    width: 700px;
+    left: 50%;
+    margin-left: -350px;
+    top: 100px;
+}
+
+th, td {
+    transition: 0.3s;
+}
+
+#transaction-table {
+    text-align: center;
+    color: $blue-dark;
+    width: 100%;
+}
+
+thead {
+    background: $blue-sky;
+}
+
+//transaction-sort
+
+#transaction-table th.hilite {
+    background-color: $blue-sea;
+}
+
 thead tr {
     height: 50px;
 }
