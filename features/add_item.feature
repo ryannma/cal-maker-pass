@@ -28,8 +28,8 @@ Scenario: add a item with invalid price
     Then I should see "Price is not a number"
 
 Scenario: add a item with invalid quantity
-    When I manually add item: capacitor, 3.75 , -1, lend, EE
-    Then I should see "Invalid Quantity"
+    When I manually add item: capacitor, 3.75 , hello, lend, EE
+    Then I should see "Quantity is not a number"
 
 Scenario: add a item with invalid quantity
     When I manually add item: capacitor, , 3, lend, EE
