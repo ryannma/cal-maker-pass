@@ -43,3 +43,7 @@ function manageCart() {
 		cartPanel.addClass('cart-panel-hidden');
 	}
 }
+
+function manageSort() {
+	
+}

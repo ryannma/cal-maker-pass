@@ -6,21 +6,27 @@
       - elsif flash[:warning]
         #warning.message= flash[:warning]
     #search-bar-container
-      %input#search-bar{ :autofocus => true , :placeholder => "Search..."}
-      = inline_svg "eye.svg", class: "eye-svg"
+      %input#search-bar{ :autofocus => true , :placeholder => 'Search...'}
+      = inline_svg 'eye.svg', class: 'eye-svg'
     #toolbar-container
-      = inline_svg "shop.svg", class: "toolbar-svg shop-svg"
-      = inline_svg "plus.svg", class: "toolbar-svg plus-svg"
+      = inline_svg 'shop.svg', class: 'toolbar-svg shop-svg'
+      = inline_svg 'plus.svg', class: 'toolbar-svg plus-svg'
       
 
     %table#inventory-table
       %thead
         %tr
-          %th{:class => ('hilite' if @sort == 'name'), :id => 'title_header'}= link_to "Item", items_path(:sort => 'name')
-          %th{:class => ('hilite' if @sort == 'quantity'), :id => 'title_header'}= link_to "Quantity", items_path(:sort => 'quantity')
-          %th{:class => ('hilite' if @sort == 'price'), :id => 'title_header'}= link_to "Price", items_path(:sort => 'price')
-          %th{:class => ('hilite' if @sort == 'kind'), :id => 'title_header'}= link_to "Kind", items_path(:sort => 'kind')
-          %th{:class => ('hilite' if @sort == 'status'), :id => 'title_header'}= link_to "Status", items_path(:sort => 'status')
+          %th{:class => [('hilite' if @sort_by == 'name'), 'header']}
+            = link_to 'Item', items_path(:sort_by => 'name', :sort_type => @sort_type), :class => 'sorter'
+            / = inline_svg 'sort.svg', class: 'sort-svg'
+          %th{:class => [('hilite' if @sort_by == 'quantity'), 'header']}
+            = link_to 'Quantity', items_path(:sort_by => 'quantity', :sort_type => @sort_type), :class => 'sorter'
+          %th{:class => [('hilite' if @sort_by == 'price'), 'header']}
+            = link_to 'Price', items_path(:sort_by => 'price', :sort_type => @sort_type), :class => 'sorter'
+          %th{:class => [('hilite' if @sort_by == 'kind'), 'header']}
+            = link_to 'Kind', items_path(:sort_by => 'kind', :sort_type => @sort_type), :class => 'sorter'
+          %th{:class => [('hilite' if @sort_by == 'status'), 'header']}
+            = link_to 'Status', items_path(:sort_by => 'status', :sort_type => @sort_type), :class => 'sorter'
           %th Add
       %tbody
         - @items.each do |item|
@@ -32,29 +38,29 @@
             %td= item.status
             %td
               =link_to add_item_path(:id => item.id), method: :post do
-                = inline_svg "plus.svg", class: "add-svg"
+                = inline_svg 'plus.svg', class: 'add-svg'
   #modal
     #modal-overlay
     #modal-content
       #new-item-container
         = form_tag items_path do
-          = label :item, :name, 'Name', class: "new-item-label"
-          = text_field :item, :name, class: "new-item-input"
+          = label :item, :name, 'Name', class: 'new-item-label'
+          = text_field :item, :name, class: 'new-item-input'
 
-          = label :item, :price, 'Price', class: "new-item-label"
-          = text_field :item, :price, class: "new-item-input"
+          = label :item, :price, 'Price', class: 'new-item-label'
+          = text_field :item, :price, class: 'new-item-input'
 
-          = label :item, :quantity, 'Quantity', class: "new-item-label"
-          = text_field :item, :quantity, class: "new-item-input"
+          = label :item, :quantity, 'Quantity', class: 'new-item-label'
+          = text_field :item, :quantity, class: 'new-item-input'
 
-          = label :item, :status, 'Status', class: "new-item-label"
-          = select :item, :status, @all_status.each {|t| [t.capitalize, t ] }, {}, {class: "new-item-input"}
+          = label :item, :status, 'Status', class: 'new-item-label'
+          = select :item, :status, @all_status.each {|t| [t.capitalize, t ] }, {}, {class: 'new-item-input'}
 
-          = label :item, :kind, 'Type', class: "new-item-label"
-          = text_field :item, :kind, class: "new-item-input"
+          = label :item, :kind, 'Type', class: 'new-item-label'
+          = text_field :item, :kind, class: 'new-item-input'
 
           #buttons-container
-            = submit_tag 'Add', id: "new-item-add", class: "button button-blue"
+            = submit_tag 'Add', id: 'new-item-add', class: 'button button-blue'
             #new-item-cancel.button.button-red Cancel
 
 #cart-panel
@@ -62,7 +68,7 @@
   #cart-items
     - @cart.each do |item|
       .cart-item 
-        = text_field :item, :quantity, value: item[:quantity], class: "cart-item-quantity"
-        = label :item, :name, item[:name], class: "cart-item-name"
+        = text_field :item, :quantity, value: item[:quantity], class: 'cart-item-quantity'
+        = label :item, :name, item[:name], class: 'cart-item-name'
   #checkout-footer
-    =link_to "Checkout", checkout_path(hash: session[:cart]), method: :post, id: "checkout-button"
+    =link_to 'Checkout', checkout_path(hash: session[:cart]), method: :post, id: 'checkout-button'

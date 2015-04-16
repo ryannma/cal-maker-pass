@@ -5,26 +5,44 @@ class ItemsController < ApplicationController
     
     def index
 
-      if params.has_key?(:sort)
-        @sort = params[:sort]
-        session[:sort] = params[:sort]
-      elsif session.has_key?(:sort)
-        @sort = session[:sort]
-        need_redirect = true
+      if params.has_key?(:sort_type)
+        @sort_type = params[:sort_type]
+        session[:sort_type] = params[:sort_type]
+      elsif session.has_key?(:sort_type)
+        @sort_type = session[:sort_type]
       else
-        @sort = nil
+        @sort_type = nil
       end
 
-      if @sort == 'name' 
-        @items = Item.order(:name)
-      elsif @sort == 'quantity' 
-        @items = Item.order(:quantity)
-      elsif @sort == 'price' 
-        @items = Item.order(:price)
-      elsif @sort == 'kind' 
-        @items = Item.order(:kind)
-      elsif @sort == 'status'
-        @items = Item.order(:status)
+      if params.has_key?(:sort_by) && session.has_key?(:sort_by) && (params[:sort_by] == session[:sort_by])
+        new_sort = false
+        @sort_type == 'ascending' ? (@sort_type = 'descending') : (@sort_type = 'ascending')
+      # accounts for case of having sorted one column to sorting a different column
+      elsif params.has_key?(:sort_by) && session.has_key?(:sort_by) && (params[:sort_by] != session[:sort_by])
+        new_sort = true
+        @sort_type = 'ascending'
+      elsif params.has_key?(:sort_by) && !session.has_key?(:sort_by)
+        new_sort = true
+        @sort_type = 'ascending'
+      else
+        new_sort = false
+        @sort_type = 'ascending'
+      end
+
+      if params.has_key?(:sort_by)
+        @sort_by = params[:sort_by]
+        should_sort = true
+        session[:sort_by] = params[:sort_by]
+      elsif session.has_key?(:sort_by)
+        @sort_by = session[:sort_by]
+        should_sort = false
+      else
+        @sort_by = nil
+        should_sort = false
+      end
+
+      if should_sort 
+        @items = Item.sort(@sort_by, @sort_type, new_sort)
       else
         @items = Item.all
       end
@@ -34,7 +52,7 @@ class ItemsController < ApplicationController
       session[:cart] = session[:cart] || Hash.new
       @cart = []
       unless session[:cart].empty?
-        puts session[:cart]
+        #puts session[:cart]
         session[:cart].each do |id, quantity|
           item = Item.find(id)
           @cart << {name: item.name, quantity: quantity}
