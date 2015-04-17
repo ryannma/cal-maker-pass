@@ -11,7 +11,8 @@
         = inline_svg "eye.svg", class: "eye-svg"
       =submit_tag "Submit", id: "submit-button"
     #toolbar-container
-      = inline_svg "plus.svg", class: "plus-svg svg"
+      %a{ href: "#", id: "new_item_button" }
+        = inline_svg "plus.svg", class: "plus-svg svg"
     #inventory-wrapper
       =render partial: "inventory_table"
     
