@@ -6,5 +6,7 @@
       - elsif flash[:warning]
         @warning.message= flash[:warning]
     #toolbar-container
+      = link_to 'All', transactions_path(:all=>true), class: 'button button-red'
+
 
     =render partial: "transaction_table"

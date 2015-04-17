@@ -15,7 +15,7 @@ class TransactionsController < ApplicationController
       @sort = nil
     end
 
-    if (admin_user != nil and @all == false) 
+    if (admin_user != nil and params[:all] != false) 
       if @sort == 'customer'
         @transactions = Transaction.where(admin_id: admin_user.id).includes(:user).order("users.last_name")
       elsif @sort == 'purpose'
@@ -26,7 +26,7 @@ class TransactionsController < ApplicationController
         @transactions = Transaction.where(admin_id: admin_user.id)
       end
     else 
-      @transactions = []
+      @transactions = Transaction.all
     end
 
   end
