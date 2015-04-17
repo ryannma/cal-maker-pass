@@ -44,6 +44,7 @@ gem 'turbolinks'
 gem 'sunspot_rails'
 gem 'sunspot_solr'
 gem 'twitter-typeahead-rails'
+gem 'searchkick'
 
 
 gem 'rubycas-client'

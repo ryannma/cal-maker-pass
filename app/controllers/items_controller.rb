@@ -100,8 +100,8 @@ class ItemsController < ApplicationController
     end
 
     def find
-      puts "hereee"
-      @items = Item.search{ keywords params[:phrase]}.results
+      
+      @items = Item.search(params[:phrase],fields: [{name: :word_start}], misspelling: {edit_distance: 2} , operator: "or").results
       @all_status = Item.all_status
       session[:cart] = session[:cart] || Hash.new
       @cart = []
@@ -119,9 +119,9 @@ class ItemsController < ApplicationController
     def query
     # Get the search terms from the q parameter and do a search
     # as we seen in the previous part of the article.
-    puts "hereee"
-    search = Item.search{ keywords params[:q]}
- 
+    search =Item.search(params[:q],fields: [{name: :word_start}], misspelling: {edit_distance: 2} , operator: "or")
+    puts(search)
+    puts("fuuuuuuuuck")
     respond_to do |format|
       format.json do
         # Create an array from the search results.
@@ -130,6 +130,7 @@ class ItemsController < ApplicationController
           # The title key is used by typeahead.js.
           { name: item.name }
         end
+        puts(results)
         render json: results
       end
     end

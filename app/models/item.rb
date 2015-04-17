@@ -7,9 +7,7 @@ class Item < ActiveRecord::Base
   validates :name, :price, :quantity, :kind, presence: true
   validates :price, :quantity, numericality: true
 
-  searchable do
-    text :name
-    end
+  searchkick word_start: [:name]
 
   def Item.all_status
     @@allowed_status
