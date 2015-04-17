@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :locations
   has_many :items, through: :transactions
   has_many :transactions
+  has_many :admins
 
   def name
     return "#{first_name} #{last_name}"

@@ -8,14 +8,7 @@
     .comment-arrow
     = text_area :transaction, :purpose, class: "cart-textarea", cols: "18", rows: "2"
     = label :transaction, :items, 'Items', class: "cart-label"
-
-  - unless @cart_items.nil?
     #cart-items
-      =index = 0
-      - @cart_items.each do |cart_item|
-        .cart-item 
-          = text_field "item#{index}", :quantity, value: cart_item.quantity, class: "cart-item-quantity"
-          = label "item#{index}", :name, cart_item.name, class: "cart-item-name"
-          =index = index + 1
+      =render partial: "cart_items"
     #checkout-footer
       =link_to "Checkout", checkout_path(hash: session[:cart]), method: :post, id: "checkout-button"

@@ -1,0 +1,7 @@
+- unless @cart_items.nil?
+  - index = 0
+  - @cart_items.each do |cart_item|
+    .cart-item 
+      = text_field "item#{index}", :quantity, value: cart_item.quantity, class: "cart-item-quantity"
+      = label "item#{index}", :name, cart_item.name, class: "cart-item-name"
+      - index = index + 1

@@ -1,0 +1,33 @@
+%table#transaction-table
+  %thead
+    %tr
+      %th{:style => "visibility: hidden;"}
+      %th{:class => ('hilite' if @sort == 'date') , :id => 'title_header'}= link_to "Date", transactions_path(:sort => 'date')
+      %th{:class => ('hilite' if @sort == 'customer'), :id => 'title_header'}= link_to "Customer", transactions_path(:sort => 'customer')
+      %th{:class => ('hilite' if @sort == 'purpose'), :id => 'title_header'}= link_to "Purpose", transactions_path(:sort => 'purpose')
+      %th{:class => "line_item_headers", :style => "visibility: visible;"} Item
+      %th{:class => "line_item_headers", :style => "visibility: visible;"} Quantity
+      %th{:class => "line_item_headers", :style => "visibility: visible;"} Action
+    %tbody
+      - @transactions.each do |transaction|
+        %tr{:class =>'clickable_row'}
+          %td
+            .transaction-arrow
+          %td= link_to transaction.created_at, transaction_path(transaction)
+          %td= transaction.user.name()
+          %td= transaction.purpose
+          %td
+          %td
+          %td
+        - transaction.line_items.each do |line_item|
+          %tr{:class=>'line_item_row', :style=>"display: none;"}
+            %td
+            %td
+            %td
+            %td
+            %td= line_item.item.name
+            %td= line_item.quantity
+            %td= line_item.action
+        
+            
+
