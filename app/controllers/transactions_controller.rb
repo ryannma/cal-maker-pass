@@ -14,6 +14,7 @@ class TransactionsController < ApplicationController
       @sort = nil
     end
 
+
     if params.has_key?(:all)
       @all = params[:all]
       session[:all] = params[:all]
@@ -26,6 +27,7 @@ class TransactionsController < ApplicationController
     end
 
     if @all == false || @all == "false"
+
       if @sort == 'customer'
         @transactions = Transaction.where(admin_id: admin_user.id).includes(:user).order("users.last_name")
       elsif @sort == 'purpose'
@@ -35,7 +37,7 @@ class TransactionsController < ApplicationController
       else
         @transactions = Transaction.where(admin_id: admin_user.id)
       end
-   else
+    else
       if @sort == 'customer'
         @transactions = Transaction.includes(:user).order("users.last_name")
       elsif @sort == 'purpose'
@@ -45,7 +47,6 @@ class TransactionsController < ApplicationController
       else
         @transactions = Transaction.all
       end
-
     end
 
   end
