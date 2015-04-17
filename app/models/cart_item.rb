@@ -1,20 +1,20 @@
 class CartItem
-  attr_accessible :quantity, :item
+  attr_accessor :quantity, :item
 
-  def new( item, quantity )
-  	@item = item
-  	@quantity = quantity
+  def initialize(item, quantity)
+    @item = item
+    @quantity = quantity
   end
 
   def price
-  	@item.price
+    @item.price
   end
 
   def name
-  	@item.name
+    @item.name
   end
 
   def item_id
-  	@item.id
+    @item.id
   end
 end

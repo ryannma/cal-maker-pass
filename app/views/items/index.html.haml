@@ -14,65 +14,7 @@
       = inline_svg "plus.svg", class: "plus-svg svg"
       
     =render partial: "inventory_table"
-
-    %table#inventory-table
-      %thead
-        %tr
-          %th{:class => ('hilite' if @sort == 'name'), :id => 'title_header'}= link_to "Item", items_path(:sort => 'name')
-          %th{:class => ('hilite' if @sort == 'quantity'), :id => 'title_header'}= link_to "Quantity", items_path(:sort => 'quantity')
-          %th{:class => ('hilite' if @sort == 'price'), :id => 'title_header'}= link_to "Price", items_path(:sort => 'price')
-          %th{:class => ('hilite' if @sort == 'kind'), :id => 'title_header'}= link_to "Kind", items_path(:sort => 'kind')
-          %th{:class => ('hilite' if @sort == 'status'), :id => 'title_header'}= link_to "Status", items_path(:sort => 'status')
-          %th.add-column Add
-      %tbody
-        - @items.each do |item|
-          %tr
-            %td= link_to item.name, item_path(item)
-            %td= item.quantity
-            %td= item.price 
-            %td= item.kind
-            %td= item.status
-            %td.add-column
-              =link_to add_item_path(:id => item.id), method: :post do
-                = inline_svg "plus.svg", class: "add-svg"
-  #modal
-    #modal-overlay
-    #modal-content
-      #new-item-container
-        = form_tag items_path do
-          = label :item, :name, 'Name', class: "new-item-label"
-          = text_field :item, :name, class: "new-item-input"
-
-          = label :item, :price, 'Price', class: "new-item-label"
-          = text_field :item, :price, class: "new-item-input"
-
-          = label :item, :quantity, 'Quantity', class: "new-item-label"
-          = text_field :item, :quantity, class: "new-item-input"
-
-          = label :item, :status, 'Status', class: "new-item-label"
-          = select :item, :status, @all_status.each {|t| [t.capitalize, t ] }, {}, {class: "new-item-input"}
-
-          = label :item, :kind, 'Type', class: "new-item-label"
-          = text_field :item, :kind, class: "new-item-input"
-
-          #buttons-container
-            = submit_tag 'Add', id: "new-item-add", class: "button button-blue"
-            #new-item-cancel.button.button-red Cancel
-
-#cart-panel.cart-panel-hidden
-  #cart-title Cart
-  = inline_svg "shop.svg", class: "cart-svg svg"
-  #cart-info
-    = label :user, :name, 'SID', class: "cart-label"
-    = text_field :user, :name, class: "cart-input"
-    = label :transaction, :purpose, 'Comment', class: "cart-label"
-    .comment-arrow
-    = text_area :transaction, :purpose, class: "cart-textarea", cols: "18", rows: "2"
-    = label :user, :items, 'Items', class: "cart-label"
-  #cart-items
-    - @cart.each_with_index do |item, index|
-      .cart-item 
-        = text_field "item#{index}", :quantity, value: item[:quantity], class: "cart-item-quantity"
-        = label "item#{index}", :name, item[:name], class: "cart-item-name"
-  #checkout-footer
-    =link_to "Checkout", checkout_path(hash: session[:cart]), method: :post, id: "checkout-button"
+    
+=render partial: "new_item"
+#cart-wrapper
+  =render partial: "cart"

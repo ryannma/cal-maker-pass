@@ -14,11 +14,7 @@ class Item < ActiveRecord::Base
       sort_type == 'ascending' ? (items = Item.order(sort_by)) : (items = Item.order(sort_by).reverse_order)
     end
   end
-
-  searchable do
-    text :name
-    end
-
+  
   def Item.all_status
     @@allowed_status
   end

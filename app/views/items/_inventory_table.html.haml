@@ -1,11 +1,11 @@
 %table#inventory-table
   %thead
     %tr
-      %th{:class => ('hilite' if @sort == 'name'), :id => 'title_header'}= link_to "Item", items_path(:sort => 'name')
-      %th{:class => ('hilite' if @sort == 'quantity'), :id => 'title_header'}= link_to "Quantity", items_path(:sort => 'quantity')
-      %th{:class => ('hilite' if @sort == 'price'), :id => 'title_header'}= link_to "Price", items_path(:sort => 'price')
-      %th{:class => ('hilite' if @sort == 'kind'), :id => 'title_header'}= link_to "Kind", items_path(:sort => 'kind')
-      %th{:class => ('hilite' if @sort == 'status'), :id => 'title_header'}= link_to "Status", items_path(:sort => 'status')
+      %th{:class => ('hilite' if @sort == 'name'), :id => 'title_header'}= link_to "Item", items_path(:sort => 'name'), :class => 'sorter'
+      %th{:class => ('hilite' if @sort == 'quantity'), :id => 'title_header'}= link_to "Quantity", items_path(:sort => 'quantity'), :class => 'sorter'
+      %th{:class => ('hilite' if @sort == 'price'), :id => 'title_header'}= link_to "Price", items_path(:sort => 'price'), :class => 'sorter'
+      %th{:class => ('hilite' if @sort == 'kind'), :id => 'title_header'}= link_to "Kind", items_path(:sort => 'kind'), :class => 'sorter'
+      %th{:class => ('hilite' if @sort == 'status'), :id => 'title_header'}= link_to "Status", items_path(:sort => 'status'), :class => 'sorter'
       %th.add-column Add
   %tbody
     - @items.each do |item|
@@ -16,5 +16,6 @@
         %td= item.kind
         %td= item.status
         %td.add-column
-          =link_to add_item_path(:id => item.id), method: :post do
+          / =link_to add_item_path(:id => item.id), method: :post do
+          %a{ href: "#", onclick: "updateCart('#{item.id}');" }
             = inline_svg "plus.svg", class: "add-svg"

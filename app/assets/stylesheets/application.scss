@@ -195,10 +195,6 @@ tbody tr {
     left: 50%;
     margin-left: -350px;
 }
-    margin-top: -5px;
-    left: 50%;
-    margin-left: -350px;
-}
 
 .eye-svg {
     fill: $blue_sky;
@@ -227,14 +223,6 @@ tbody tr {
 
 
 .svg {
-    fill: $blue_sky;
-    width: 45px;
-    height: 45px;
-    transition: 0.3s;   
-}
-
-.svg:hover {
-    fill: $blue-dark;
     fill: $blue_sky;
     width: 45px;
     height: 45px;
@@ -564,4 +552,8 @@ tbody tr {
 
 #submit-button{
     visibility: hidden;
+}
+
+.add-column {
+    display: none;
 }
