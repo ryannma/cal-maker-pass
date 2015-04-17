@@ -29,7 +29,7 @@ class Cart
 		else
 			puts id
 			item = Item.find(id)
-			curr_cart_item = CartItem.new( item, 1 )
+			curr_cart_item = CartItem.initialize( item, 1 )
 			@cart_items << curr_cart_item
 		end
 

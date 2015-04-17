@@ -10,8 +10,8 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-// = require jquery
-// = require jquery_ujs
+//= require jquery
+//= require jquery_ujs
 //= require turbolinks
 //= require_tree .
 //= require twitter/typeahead
@@ -70,9 +70,28 @@ $(document).ready( function () {
 			}, 100);
 		}
 	});
-	// $('#new-item-container').click( function (e) {
-	// 	e.stopPropagation();
-	// })
+
+	$('.item-add-btn').click( function() {
+		var classNames = this.className.split(' ');
+		var item_id = classNames[1].split('-')[1];
+		$.ajax({
+			url: "items/add_item",
+			data: {id :item_id},
+			type: "POST",
+			success: function( data ) {
+				var cart_wrapper = document.getElementById('cart-wrapper');
+				var data_json = JSON.parse(JSON.stringify(data));
+				var cart_items = data_json['cart_items'];
+				for (i = 0; i < cart_items.length; i++) {
+					var input_class = document.getElementById('item'+i.toString()+"_quantity");
+					var item_quantity = cart_items[i]["quantity"];
+					if (input_class.value != item_quantity) {
+						input_class.value = item_quantity;
+					}
+				}
+			}
+		})
+	})
 
 });
 
@@ -102,7 +121,7 @@ function manageCart() {
 		}, 100);
 	} else {
 		itemsPanel.addClass('items-panel-expanded');
-		cartPanel.addClass('cart-panel-hidden');
+		
 		checkoutFooter.fadeOut(300);
 		cartItems.fadeOut(300);
 		addColumn.css('width', '0');
@@ -111,6 +130,7 @@ function manageCart() {
 		}, 100);
 	}
 }
+
 
 function updateCart( id ) {
 	console.log("Id: " + id);

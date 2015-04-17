@@ -15,8 +15,9 @@
         %td= item.price 
         %td= item.kind
         %td= item.status
-        %td= item.id
         %td.add-column
+          =link_to (inline_svg "plus.svg", class: "add-svg"), "", {remote: true, class: "item-add-btn item-"+item.id.to_s}
+
           / =link_to add_item_path(:id => item.id), method: :post do
-          %a{ href: "#", onclick: "updateCart(#{item.id});" }
-            = inline_svg "plus.svg", class: "add-svg"
+          / %a{ href: "#", onclick: "updateCart(#{item.id});" }
+          /   = inline_svg "plus.svg", class: "add-svg"
