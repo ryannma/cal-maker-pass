@@ -599,6 +599,31 @@ tbody tr {
     visibility: hidden;
 }
 
+
 .add-column {
     display: none;
+}
+.transaction-arrow {
+    float: right;
+    margin-right: 5px;
+    margin-top: 5px;
+    width: 0; 
+    height: 0; 
+    border-top: 13px solid transparent;
+    border-bottom: 13px solid transparent;
+    border-left: 20px solid $blue-dark;
+    transition: 0.3s;
+}
+
+.transaction-arrow-down {
+    transform: rotate(90deg);
+    -webkit-transform: rotate(90deg);
+}
+
+.transaction-arrow:hover {
+    border-left-color: $blue-sea;
+}
+
+.line_item_headers {
+    width: 100px;
 }
