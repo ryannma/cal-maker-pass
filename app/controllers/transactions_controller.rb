@@ -1,6 +1,7 @@
 class TransactionsController < ApplicationController
 
   def index
+<<<<<<< HEAD
 
     current_user = User.where(uid: session[:cas_user])[0]
     admin_user = Admin.find_by_user_id(current_user.id)
@@ -72,8 +73,5 @@ class TransactionsController < ApplicationController
   def show
     @transaction = Transaction.find(params[:id])
   end
-
-
-
 end
 
