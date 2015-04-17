@@ -30,6 +30,8 @@ items.initialize();
 
 
 $(document).ready( function () {
+	history.navigationMode = 'compatible';
+
 	$('.plus-svg').click( function () {
 		$('#modal').fadeIn(500);
 	});

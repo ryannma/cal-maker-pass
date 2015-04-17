@@ -2,7 +2,7 @@
   #cart-title Cart
   = inline_svg "shop.svg", class: "cart-svg svg"
   #cart-info
-    = label :transaction, :user, "user", class: "cart-label"
+    = label :transaction, :user, "User", class: "cart-label"
     = text_field :transaction, :user, class: "cart-input"
     = label :transaction, :purpose, "Comment", class: "cart-label"
     .comment-arrow
@@ -11,11 +11,9 @@
 
   - unless @cart_items.nil?
     #cart-items
-      =index = 0
-      - @cart_items.each do |cart_item|
+      - @cart_items.each_with_index do |cart_item, index|
         .cart-item 
           = text_field "item#{index}", :quantity, value: cart_item.quantity, class: "cart-item-quantity"
           = label "item#{index}", :name, cart_item.name, class: "cart-item-name"
-          =index = index + 1
     #checkout-footer
       =link_to "Checkout", checkout_path(hash: session[:cart]), method: :post, id: "checkout-button"
