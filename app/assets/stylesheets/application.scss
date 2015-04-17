@@ -68,30 +68,14 @@ a {
     color: $white;
 }
 
-#menu-logout{
-    float: right;
-    margin-right: 20px;
-}
-
 #logout {
-    text-decoration:none;
-    background: $blue-sea;
-    font-size: 16px;
-    padding: 6px 10px;
-    border-radius: 3px;
+    float: right;
     color: $white;
-    font-weight: 300;
-    transition: 0.3s;
-    border: 1px solid $blue-dark;
-}
-
-#logout:hover {
-    border: 1px solid $white;   
 }
 
 //inventory
 
-.table-container {
+.inventory-wrapper {
     position: absolute;
     width: 700px;
     left: 50%;
@@ -116,6 +100,37 @@ thead {
 //inventory-sort
 
 #inventory-table th.hilite {
+    background-color: $blue-sea;
+}
+
+//transaction
+
+
+.transaction-wrapper {
+    position: absolute;
+    width: 700px;
+    left: 50%;
+    margin-left: -350px;
+    top: 100px;
+}
+
+th, td {
+    transition: 0.3s;
+}
+
+#transaction-table {
+    text-align: center;
+    color: $blue-dark;
+    width: 100%;
+}
+
+thead {
+    background: $blue-sky;
+}
+
+//transaction-sort
+
+#transaction-table th.hilite {
     background-color: $blue-sea;
 }
 
@@ -194,8 +209,7 @@ tbody tr {
     height: 40px;
     width: 700px;
     position: absolute;
-    left: 50%;
-    right: 100px;
+    right: 0px;
     margin-top: -5px;
     left: 50%;
     margin-left: -350px;
@@ -222,10 +236,12 @@ tbody tr {
     margin-top: 40px;
     height: 40px;
     width: 100px;
-    float: right;
-    clear: left;
+    float: left;
 }
 
+.plus-svg {
+    float: left;
+}
 
 .svg {
     fill: $blue_sky;
@@ -557,4 +573,25 @@ tbody tr {
 
 #submit-button{
     visibility: hidden;
+}
+
+.transaction-arrow {
+    float: right;
+    margin-right: 5px;
+    margin-top: 5px;
+    width: 0; 
+    height: 0; 
+    border-top: 13px solid transparent;
+    border-bottom: 13px solid transparent;
+    border-left: 20px solid $blue-dark;
+    transition: 0.3s;
+}
+
+.transaction-arrow-down {
+    transform: rotate(90deg);
+    -webkit-transform: rotate(90deg);
+}
+
+.transaction-arrow:hover {
+    border-left-color: $blue-sea;
 }

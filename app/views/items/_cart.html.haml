@@ -1,0 +1,17 @@
+#cart-panel.cart-panel-hidden
+  #cart-title Cart
+  = inline_svg "shop.svg", class: "cart-svg svg"
+  #cart-info
+    = label :user, :name, 'SID', class: "cart-label"
+    = text_field :user, :name, class: "cart-input"
+    = label :transaction, :purpose, 'Comment', class: "cart-label"
+    .comment-arrow
+    = text_area :transaction, :purpose, class: "cart-textarea", cols: "18", rows: "2"
+    = label :user, :items, 'Items', class: "cart-label"
+  #cart-items
+    - @cart.each_with_index do |item, index|
+      .cart-item 
+        = text_field "item#{index}", :quantity, value: item[:quantity], class: "cart-item-quantity"
+        = label "item#{index}", :name, item[:name], class: "cart-item-name"
+  #checkout-footer
+    =link_to "Checkout", checkout_path(hash: session[:cart]), method: :post, id: "checkout-button"

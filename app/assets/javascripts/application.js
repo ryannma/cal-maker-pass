@@ -70,6 +70,30 @@ $(document).ready( function () {
 			}, 100);
 		}
 	});
+
+	$('.transaction-arrow').click( function () {
+		var transactionArrow = $(this);
+		var parentRow = this.parentElement.parentElement;
+		var row_index = parentRow.rowIndex;
+		var additional = 1;
+		var nextRow = parentRow.parentNode.rows[row_index];
+		
+		if ( transactionArrow.hasClass('transaction-arrow-down') ) {
+			transactionArrow.removeClass('transaction-arrow-down');
+			while (nextRow.className == "line_item_row") {
+				nextRow.style.display = "none";
+				nextRow = parentRow.parentNode.rows[row_index+additional];
+				additional += 1;
+			}
+		} else {
+			transactionArrow.addClass('transaction-arrow-down');
+			while (nextRow.className == "line_item_row") {
+				nextRow.style.display = "";
+				nextRow = parentRow.parentNode.rows[row_index + additional];
+				additional += 1;
+			}
+		}
+	});
 	// $('#new-item-container').click( function (e) {
 	// 	e.stopPropagation();
 	// })

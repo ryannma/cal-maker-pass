@@ -1,0 +1,10 @@
+#transactions.panel.transactions-panel-expanded
+  .table-container
+    #info-container
+      - if flash[:notice]
+        #notice.message= flash[:notice]
+      - elsif flash[:warning]
+        @warning.message= flash[:warning]
+    #toolbar-container
+
+    =render partial: "transaction_table"
