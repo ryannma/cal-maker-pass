@@ -1,7 +1,7 @@
 class CartItem
-  attr_accessible :quantity, :item
+  attr_accessor :quantity, :item
 
-  def new( item, quantity )
+  def initialize(item, quantity)
   	@item = item
   	@quantity = quantity
   end

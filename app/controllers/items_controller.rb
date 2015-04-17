@@ -27,12 +27,15 @@ class ItemsController < ApplicationController
       end
 
       @all_status = Item.all_status
-
+      puts "before"
       session[:cart] = session[:cart] || Cart.new
-      @cart = []
-      unless session[:cart].empty?
-        session[:cart].each do |cart_item|
-          @cart << {name: cart_item.name, quantity: cart_item.quantity}
+      @cart = session[:cart]
+      puts @cart.cart_items
+      puts '*' * 54
+      @display_cart = []
+      unless @cart.cart_items.nil?
+        @cart.cart_items.each do |cart_item|
+          @display_cart << {name: cart_item.name, quantity: cart_item.quantity}
         end
       end
     end
@@ -91,15 +94,15 @@ class ItemsController < ApplicationController
       respond_to do |format|
         format.json do
           # Create an array from the search results.
-          items = cart.items.map do |cart_item|
+          cart_items = cart.cart_items.map do |cart_item|
             # Each element will be a hash containing only the title of the article.
             # The title key is used by typeahead.js.
-            { name: cart_item.name }
+            { cart_item: cart_item }
             { quantity: cart_item.quantity }
           end
           results = {
-            items: items,
-            total: cart.total
+            cart_items: cart_items,
+            cart_total: cart.total
           }
           render json: results
         end

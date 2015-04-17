@@ -16,5 +16,6 @@
         %td= item.kind
         %td= item.status
         %td.add-column
-          =link_to add_item_path(:id => item.id), method: :post do
+          / =link_to add_item_path(:id => item.id), method: :post do
+          %a{ href: "#", onclick: "updateCart('#{item.id}');" }
             = inline_svg "plus.svg", class: "add-svg"

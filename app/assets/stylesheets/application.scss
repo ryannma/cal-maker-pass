@@ -205,7 +205,7 @@ tbody tr {
     margin-top: 40px;
     height: 40px;
     width: 100px;
-    float: right;
+    float: left;
     clear: left;
 }
 
@@ -540,6 +540,12 @@ tbody tr {
 
 .comment-arrow:hover {
     border-left-color: $blue-sea;
+}
 
 #submit-button{
     visibility: hidden;
+}
+
+.add-column {
+    display: none;
+}

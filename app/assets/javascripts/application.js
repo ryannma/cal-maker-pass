@@ -114,9 +114,15 @@ function manageCart() {
 
 function updateCart( id ) {
 	$.ajax({
-		url: "/items/add_item",
-		data: id })
-	.done ( function ( cart ) {
-		// $('#main'render "cart", cart:
+		url: '/items/add_item',
+		data: {'id': id },
+		method: 'POST'})
+	.done ( function ( data ) {
+		var cart = data;
+		var cart_items = data["cart_items"];
+		var cart_total = data["cart_total"];
+		console.log(cart_total);
+		$('#cart-wrapper')
+		.html('<%= escape_javascript( render partial: "cart", collection: ' + cart_items + ', as: "cart_items") %>');
 	});
 }
