@@ -15,8 +15,11 @@ class Item < ActiveRecord::Base
     end
   end
 
+  searchable do
+    text :name
+    end
+
   def Item.all_status
     @@allowed_status
   end
-
 end

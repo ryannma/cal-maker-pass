@@ -68,14 +68,14 @@ a {
     color: $white;
 }
 
-#logout {
+#menu-logout{
     float: right;
     color: $white;
 }
 
 //inventory
 
-.inventory-wrapper {
+.table-container {
     position: absolute;
     width: 700px;
     left: 50%;
@@ -122,7 +122,7 @@ tbody tr {
     height: 35px;
 }
 
-#search-bar {
+.twitter-typeahead {
     height: 100%;
     width: calc(100% - 25px);
     font-size: 18px;
@@ -132,12 +132,72 @@ tbody tr {
     float: right;
 }
 
+#phrase{
+    height: 100%;
+    width: calc(100%);
+    font-size: 18px;
+    padding-left: 20px;
+    float: right;
+    border: 0px;
+}
+
+.tt-hint{
+    visibility: hidden;
+}
+
+
+.tt-dropdown-menu {
+  text-align: left;
+  width: 670px;
+  margin-top: 3px;
+  padding: 8px 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+  -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+  -moz-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+  box-shadow: 0 5px 10px rgba(0,0,0,.2);
+ 
+  h3 {
+    margin: 3px;
+    font-weight: bold;
+    border-bottom: 1px solid #ccc;
+  }
+}
+ 
+.tt-suggestion {
+  padding: 3px 20px;
+  font-size: 110%;
+  line-height: 18px;
+}
+ 
+.tt-suggestion.tt-cursor {
+  color: #fff;
+  background-color: #16253E;
+  cursor: pointer;
+}
+ 
+.tt-suggestion p {
+  margin: 0;
+}
+
+
 #search-bar-container {
     height: 40px;
-    width: calc(50% - 25px);
+    width: 700px;
     position: absolute;
-    right: 0px;
+    left: 50%;
+    right: 100px;
     margin-top: -5px;
+    left: 50%;
+    margin-left: -350px;
+}
+    margin-top: -5px;
+    left: 50%;
+    margin-left: -350px;
 }
 
 .eye-svg {
@@ -158,16 +218,23 @@ tbody tr {
 }
 
 #toolbar-container {
+    margin-top: 40px;
     height: 40px;
     width: 100px;
-    float: left;
+    float: right;
+    clear: left;
 }
 
-.plus-svg {
-    float: left;
-}
 
 .svg {
+    fill: $blue_sky;
+    width: 45px;
+    height: 45px;
+    transition: 0.3s;   
+}
+
+.svg:hover {
+    fill: $blue-dark;
     fill: $blue_sky;
     width: 45px;
     height: 45px;
@@ -196,7 +263,7 @@ tbody tr {
     width: 700px;
     left: 50%;
     margin-left: -350px;
-    top: 50px;
+    top: 15px;
 }
 
 #inventory-table {
@@ -493,4 +560,8 @@ tbody tr {
 
 .comment-arrow:hover {
     border-left-color: $blue-sea;
+}
+
+#submit-button{
+    visibility: hidden;
 }

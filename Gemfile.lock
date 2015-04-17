@@ -165,6 +165,10 @@ GEM
       polyglot (>= 0.3.1)
     turbolinks (2.5.3)
       coffee-rails
+    twitter-typeahead-rails (0.10.5)
+      actionpack (>= 3.1)
+      jquery-rails
+      railties (>= 3.1)
     tzinfo (0.3.43)
     uglifier (2.7.1)
       execjs (>= 0.3.0)
@@ -190,8 +194,10 @@ DEPENDENCIES
   rubycas-client
   sass-rails (~> 3.2.3)
   simplecov
+  sprockets
   sqlite3
   sunspot_rails
   sunspot_solr
   turbolinks
+  twitter-typeahead-rails
   uglifier (>= 1.0.3)
