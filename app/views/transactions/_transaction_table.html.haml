@@ -13,7 +13,7 @@
         %tr{:class =>'clickable_row'}
           %td
             .transaction-arrow
-          %td= link_to transaction.created_at, transaction_path(transaction)
+          %td= link_to transaction.created_at.strftime("%I:%M%P %m/%d/%Y "), transaction_path(transaction)
           %td= transaction.user.name()
           %td= transaction.purpose
           %td

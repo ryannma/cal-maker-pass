@@ -30,6 +30,8 @@ items.initialize();
 
 $(document).ready( function () {
 	updateCart(null);
+	history.navigationMode = 'compatible';
+
 	$('.plus-svg').click( function () {
 		$('#modal').fadeIn(500);
 	});
@@ -171,11 +173,3 @@ function updateCart( id ) {
 		dataType: 'script'
 	});
 }
-/*
-	.done( function ( cart ) {
-		var cart_items = cart["cart_items"];
-		var cart_total = cart["cart_total"];
-		console.log(cart_items);
-		$('#cart-wrapper')
-		.html("#{ escape_javascript(render(partial: 'items/cart', locals: {cart_items: " + cart_items + "})) }");
-*/
