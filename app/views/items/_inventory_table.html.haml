@@ -1,11 +1,16 @@
 %table#inventory-table
   %thead
     %tr
-      %th{:class => ('hilite' if @sort == 'name'), :id => 'title_header'}= link_to "Item", items_path(:sort => 'name'), :class => 'sorter'
-      %th{:class => ('hilite' if @sort == 'quantity'), :id => 'title_header'}= link_to "Quantity", items_path(:sort => 'quantity'), :class => 'sorter'
-      %th{:class => ('hilite' if @sort == 'price'), :id => 'title_header'}= link_to "Price", items_path(:sort => 'price'), :class => 'sorter'
-      %th{:class => ('hilite' if @sort == 'kind'), :id => 'title_header'}= link_to "Kind", items_path(:sort => 'kind'), :class => 'sorter'
-      %th{:class => ('hilite' if @sort == 'status'), :id => 'title_header'}= link_to "Status", items_path(:sort => 'status'), :class => 'sorter'
+      %th{:class => ('hilite' if @sort_by == 'name'), :id => 'title_header'}
+        = link_to "Item", items_path(:sort_by => 'name'), :class => 'sorter'
+      %th{:class => ('hilite' if @sort_by == 'quantity'), :id => 'title_header'}
+        = link_to "Quantity", items_path(:sort_by => 'quantity'), :class => 'sorter'
+      %th{:class => ('hilite' if @sort_by == 'price'), :id => 'title_header'}
+        = link_to "Price", items_path(:sort_by => 'price'), :class => 'sorter'
+      %th{:class => ('hilite' if @sort_by == 'kind'), :id => 'title_header'}
+        = link_to "Kind", items_path(:sort_by => 'kind'), :class => 'sorter'
+      %th{:class => ('hilite' if @sort_by == 'status'), :id => 'title_header'}
+        = link_to "Status", items_path(:sort_by => 'status'), :class => 'sorter'
       %th.add-column Add
   %tbody
     - @items.each do |item|
