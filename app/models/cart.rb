@@ -18,14 +18,17 @@ class Cart
   end
 
   def add_item( id )
+    id = id.to_i
+
     curr_cart_item = @cart_items.detect { |cart_item|
-      cart_item.item_id == id.to_i
+      cart_item.item_id == id
     }
 
     unless curr_cart_item.nil?
       curr_cart_item.quantity += 1
     else
-      item = Item.find( id )
+      puts id
+      item = Item.find(id)
       curr_cart_item = CartItem.new( item, 1 )
       @cart_items << curr_cart_item
     end

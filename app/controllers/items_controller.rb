@@ -3,8 +3,11 @@ class ItemsController < ApplicationController
   def index
     @items = ordering()
     @all_status = Item.all_status
+    #puts "before"
     session[:cart] = session[:cart] || Cart.new
     @cart = session[:cart]
+    #puts @cart.cart_items
+    #puts '*' * 54
     @display_cart = []
     unless @cart.cart_items.nil?
       @cart.cart_items.each do |cart_item|
@@ -58,22 +61,20 @@ class ItemsController < ApplicationController
     cart.add_item(params[:id])
     respond_to do |format|
       format.json do
-        # Create an array from the search results.
-        items = cart.results.map do |cart_item|
-          # Each element will be a hash containing only the title of the article.
-          # The title key is used by typeahead.js.
-          { name: cart_item.name }
-          { quantity: cart_item.quantity }
+        Create an array from the search results.
+        cart_items = cart.cart_items.map do |cart_item|
+          { cart_item: cart_item }
         end
         results = {
-          items: items,
-          total: cart.total
+          cart_items: cart.cart_items,
+          cart_total: cart.total
         }
         render json: results
       end
     end
     session[:cart] = cart
   end
+
 
   # def find
   #   puts "hereee"

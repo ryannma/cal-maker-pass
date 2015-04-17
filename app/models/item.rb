@@ -10,6 +10,10 @@ class Item < ActiveRecord::Base
   def self.sort(sort_by, sort_type)
     sort_type == 'ascending' ? (items = Item.order(sort_by)) : (items = Item.order(sort_by).reverse_order)
   end
+  
+  # searchable do
+  #   text :name
+  #   end
 
   def Item.all_status
     @@allowed_status

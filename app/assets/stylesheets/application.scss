@@ -189,8 +189,7 @@ tbody tr {
     height: 40px;
     width: 700px;
     position: absolute;
-    left: 50%;
-    right: 100px;
+    right: 0px;
     margin-top: -5px;
     left: 50%;
     margin-left: -350px;
@@ -217,10 +216,14 @@ tbody tr {
     margin-top: 40px;
     height: 40px;
     width: 100px;
-    float: right;
+    float: left;
     clear: left;
 }
 
+
+.plus-svg {
+    float: left;
+}
 
 .svg {
     fill: $blue_sky;
