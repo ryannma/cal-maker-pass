@@ -68,14 +68,14 @@ a {
     color: $white;
 }
 
-#menu-logout{
+#logout {
     float: right;
     color: $white;
 }
 
 //inventory
 
-.table-container {
+.inventory-wrapper {
     position: absolute;
     width: 700px;
     left: 50%;
@@ -112,6 +112,45 @@ thead {
 
 #inventory-table th.header {
     padding: 0px;
+}
+
+thead tr {
+    height: 50px;
+}
+
+tbody tr {
+    height: 35px;
+}
+
+//transaction
+
+
+.transaction-wrapper {
+    position: absolute;
+    width: 700px;
+    left: 50%;
+    margin-left: -350px;
+    top: 100px;
+}
+
+th, td {
+    transition: 0.3s;
+}
+
+#transaction-table {
+    text-align: center;
+    color: $blue-dark;
+    width: 100%;
+}
+
+thead {
+    background: $blue-sky;
+}
+
+//transaction-sort
+
+#transaction-table th.hilite {
+    background-color: $blue-sea;
 }
 
 thead tr {
@@ -220,6 +259,9 @@ tbody tr {
     clear: left;
 }
 
+.plus-svg {
+    float: left;
+}
 
 .plus-svg {
     float: left;

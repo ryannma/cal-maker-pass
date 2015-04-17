@@ -1,0 +1,30 @@
+#show-container
+  #show-title Details about sale on: #{@transaction.created_at}
+  = label :transaction, :created_at, 'Date', class: "attribute-label"
+  = text_field :transaction, :created_at, value: @transaction.created_at, class: "attribute-value", readonly: true
+
+  = label :transaction, :admin, 'Seller', class: "attribute-label"
+  = text_field :transaction, :admin, value: @transaction.admin.user.name, class: "attribute-value", readonly: true
+
+  = label :transaction, :user, 'Customer', class: "attribute-label"
+  = text_field :transaction, :user, value: @transaction.user.name, class: "attribute-value", readonly: true
+
+  = label :transaction, :purpose, 'Purpose', class: "attribute-label"
+  = text_field :transaction, :purpose, value: @transaction.purpose, class: "attribute-value", readonly: true
+
+#table-container
+  %table#line_item-table
+    %thead
+      %tr
+        %th Item
+        %th Quantity
+        %th Action
+      %tbody
+        - @transaction.line_items.each do |line_item|
+          %tr
+            %td= line_item.item.name
+            %td= line_item.quantity
+            %td= line_item.action
+
+#buttons-container
+= link_to 'Back', transactions_path, class: 'button button-red'
