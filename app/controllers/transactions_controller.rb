@@ -25,7 +25,7 @@ class TransactionsController < ApplicationController
       session[:all] = false
     end
 
-    if @all == false || @all == "false"
+    if (@all == false && admin_user != nil) || (@all == "false" && admin_user != nil)
       if @sort == 'customer'
         @transactions = Transaction.where(admin_id: admin_user.id).includes(:user).order("users.last_name")
       elsif @sort == 'purpose'
@@ -33,9 +33,13 @@ class TransactionsController < ApplicationController
       elsif @sort == 'date'
         @transactions = Transaction.where(admin_id: admin_user.id).order(:created_at)
       else
-        @transactions = Transaction.where(admin_id: admin_user.id)
+        unless admin_user.nil?
+          @transactions = Transaction.where(admin_id: admin_user.id)
+        else
+          @transactions = []
+        end
       end
-    else
+    elsif @all == true || @all == "true"
       if @sort == 'customer'
         @transactions = Transaction.includes(:user).order("users.last_name")
       elsif @sort == 'purpose'
@@ -45,6 +49,8 @@ class TransactionsController < ApplicationController
       else
         @transactions = Transaction.all
       end
+    else
+      @transactions = []
     end
   end
 
