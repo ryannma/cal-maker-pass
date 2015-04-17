@@ -14,7 +14,18 @@ class TransactionsController < ApplicationController
       @sort = nil
     end
 
-    if (admin_user != nil and params[:all] != false) 
+    if params.has_key?(:all)
+      @all = params[:all]
+      session[:all] = params[:all]
+    elsif session.has_key?(:all)
+      @all = session[:all]
+      need_redirect = true
+    else
+      @all = false
+      session[:all] = false
+    end
+
+    if @all == false || @all == "false"
       if @sort == 'customer'
         @transactions = Transaction.where(admin_id: admin_user.id).includes(:user).order("users.last_name")
       elsif @sort == 'purpose'
@@ -24,10 +35,17 @@ class TransactionsController < ApplicationController
       else
         @transactions = Transaction.where(admin_id: admin_user.id)
       end
-    else 
-      @transactions = Transaction.all
+    else
+      if @sort == 'customer'
+        @transactions = Transaction.includes(:user).order("users.last_name")
+      elsif @sort == 'purpose'
+        @transactions = Transaction.order(:purpose)
+      elsif @sort == 'date'
+        @transactions = Transaction.order(:created_at)
+      else
+        @transactions = Transaction.all
+      end
     end
-
   end
 
 
