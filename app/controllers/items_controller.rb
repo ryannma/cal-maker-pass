@@ -57,6 +57,23 @@ class ItemsController < ApplicationController
   end
 
   def add_item
+    #puts "ADD_ITEM WAS INVOKED"
+    cart = session[:cart] || Cart.new
+    cart.add_item(params[:id])
+    @cart_items = cart.cart_items
+    #puts "LOOK AT THESE CART ITEMS"
+    #puts @cart_items[0]
+    @cart_total = cart.total
+    #puts "LOOK AT THIS TOTAL"
+    #puts @cart_total
+    respond_to do |format|
+      format.js {}
+    end
+    session[:cart] = cart
+  end
+
+=begin
+  def add_item
     cart = session[:cart] || Cart.new
     cart.add_item(params[:id])
     respond_to do |format|
@@ -75,23 +92,23 @@ class ItemsController < ApplicationController
     session[:cart] = cart
   end
 
-
-  # def find
-  #   puts "hereee"
-  #   @items = Item.search{ keywords params[:phrase]}.results
-  #   @all_status = Item.all_status
-  #   session[:cart] = session[:cart] || Hash.new
-  #   @cart = []
-  #   @sort = nil
-  #   unless session[:cart].empty?
-  #     puts session[:cart]
-  #     session[:cart].each do |id, quantity|
-  #       item = Item.find(id)
-  #       @cart << {name: item.name, quantity: quantity}
-  #     end
-  #   end
-  #   render :index
-  # end
+  def find
+    puts "hereee"
+    @items = Item.search{ keywords params[:phrase]}.results
+    @all_status = Item.all_status
+    session[:cart] = session[:cart] || Hash.new
+    @cart = []
+    @sort = nil
+    unless session[:cart].empty?
+      puts session[:cart]
+      session[:cart].each do |id, quantity|
+        item = Item.find(id)
+        @cart << {name: item.name, quantity: quantity}
+      end
+    end
+    render :index
+  end
+=end
 
   def query
     # Get the search terms from the q parameter and do a search

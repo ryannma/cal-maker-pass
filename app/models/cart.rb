@@ -19,20 +19,25 @@ class Cart
 
   def add_item( id )
     id = id.to_i
-
     curr_cart_item = @cart_items.detect { |cart_item|
       cart_item.item_id == id
     }
-
     unless curr_cart_item.nil?
       curr_cart_item.quantity += 1
     else
       puts id
       item = Item.find(id)
-      curr_cart_item = CartItem.new( item, 1 )
+      curr_cart_item = CartItem.new(item, 1)
+      puts "CART_ITEMS BEFORE ADD"
+      @cart_items.each do |cart_item|
+        puts cart_item.to_s
+      end
       @cart_items << curr_cart_item
+      puts "CART_ITEMS AFTER ADD"
+      @cart_items.each do |cart_item|
+        puts cart_item.to_s
+      end
     end
-
   end
 
   def clear
@@ -47,6 +52,4 @@ class Cart
       sum += ( cart_item.price * cart_item.quantity )
     }
   end
-
-
 end

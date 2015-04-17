@@ -85,6 +85,51 @@ $(document).ready( function () {
 //     }
 // }
 
+/*
+var itemsPanel = $('#items-panel');
+var cartPanel = $('#cart-panel');
+var checkoutFooter = $('#checkout-footer');
+var cartItems = $('#cart-items');
+var addColumn = $('.add-column');
+
+function cartHidden() {
+	itemsPanel.hasClass('items-panel-expanded');
+	console.log("i got called too!");
+}
+
+function expandCart() {
+	itemsPanel.removeClass('items-panel-expanded');
+	cartPanel.removeClass('cart-panel-hidden');
+	checkoutFooter.fadeIn(300);
+	cartItems.fadeIn(300);
+	addColumn.css('width', 'auto');
+	setTimeout( function () {
+		addColumn.fadeIn(300);
+	}, 100);
+}
+
+function hideCart() {
+	itemsPanel.addClass('items-panel-expanded');
+	cartPanel.addClass('cart-panel-hidden');
+	checkoutFooter.fadeOut(300);
+	cartItems.fadeOut(300);
+	addColumn.css('width', '0');
+	setTimeout( function () {
+		addColumn.fadeOut(300);
+	}, 100);
+}
+
+function manageCart() {
+	console.log("i get called dude");
+	console.log(cartHidden())
+	if (cartHidden()) {
+		expandCart();
+	} else {
+		hideCart();
+	}
+}
+*/
+
 function manageCart() {
 	var itemsPanel = $('#items-panel');
 	var cartPanel = $('#cart-panel');
@@ -113,16 +158,33 @@ function manageCart() {
 }
 
 function updateCart( id ) {
-	console.log("Id: " + id);
+	//console.log("Id: " + id);
 	$.ajax({
 		url: '/items/add_item',
-		data: { id : id },
-		method: 'POST'})
+		data: { 'id' : id },
+		method: 'POST',
+		dataType: 'script'
+	}).done(function() {
+		var itemsPanel = $('#items-panel');
+		var cartPanel = $('#cart-panel');
+		var checkoutFooter = $('#checkout-footer');
+		var cartItems = $('#cart-items');
+		var addColumn = $('.add-column');
+		itemsPanel.removeClass('items-panel-expanded');
+		cartPanel.removeClass('cart-panel-hidden');
+		checkoutFooter.fadeIn(300);
+		cartItems.fadeIn(300);
+		addColumn.css('width', 'auto');
+		setTimeout( function () {
+			addColumn.fadeIn(300);
+		}, 100);
+	});
+}
+/*
 	.done( function ( cart ) {
 		var cart_items = cart["cart_items"];
 		var cart_total = cart["cart_total"];
 		console.log(cart_items);
 		$('#cart-wrapper')
 		.html("#{ escape_javascript(render(partial: 'items/cart', locals: {cart_items: " + cart_items + "})) }");
-	});
-}
+*/

@@ -17,4 +17,8 @@ class CartItem
   def item_id
     @item.id
   end
+
+  def to_s
+    "quantity: #{@quantity}, item: #{@item.name}"
+  end
 end
