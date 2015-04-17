@@ -113,16 +113,16 @@ function manageCart() {
 }
 
 function updateCart( id ) {
+	console.log("Id: " + id);
 	$.ajax({
 		url: '/items/add_item',
-		data: {'id': id },
+		data: { id : id },
 		method: 'POST'})
-	.done ( function ( data ) {
-		var cart = data;
-		var cart_items = data["cart_items"];
-		var cart_total = data["cart_total"];
-		console.log(cart_total);
+	.done( function ( cart ) {
+		var cart_items = cart["cart_items"];
+		var cart_total = cart["cart_total"];
+		console.log(cart_items);
 		$('#cart-wrapper')
-		.html('<%= escape_javascript( render partial: "cart", collection: ' + cart_items + ', as: "cart_items") %>');
+		.html("#{ escape_javascript(render(partial: 'items/cart', locals: {cart_items: " + cart_items + "})) }");
 	});
 }
