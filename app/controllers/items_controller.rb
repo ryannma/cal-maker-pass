@@ -3,12 +3,15 @@ class ItemsController < ApplicationController
   def index
     @items = ordering()
     @all_status = Item.all_status
-    #puts "before"
+    puts "before"
+    puts session[:cart]
+    if session[:cart] == {} then session[:cart] = nil end
     session[:cart] = session[:cart] || Cart.new
     @cart = session[:cart]
     #puts @cart.cart_items
     #puts '*' * 54
     @display_cart = []
+    puts "thing"*200
     unless @cart.cart_items.nil?
       @cart.cart_items.each do |cart_item|
         @display_cart << {name: cart_item.name, quantity: cart_item.quantity}
