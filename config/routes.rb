@@ -13,7 +13,7 @@ Makerpass::Application.routes.draw do
   #ITEM
   post "/items/:id/update", to: "items#update", as: "update_item"
   post "/items/:id/delete", to: "items#delete", as: "delete_item"
-  post "/items/checkout/:hash", to: "items#checkout", as: "checkout"
+  
   post "/items/add_item", to: "items#add_item", as: "add_item"
   #search engine
   post "/items/find", to: "items#find", as: "find"
@@ -21,4 +21,5 @@ Makerpass::Application.routes.draw do
 
   #TRANSACTION
   post "/transactions/new/:cart", to: "transactions#new", as: "new_transaction"
+  post "/transactions/checkout/:hash", to: "transactions#checkout", as: "checkout"
 end
