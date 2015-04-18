@@ -41,10 +41,11 @@ gem 'haml'
 gem 'inline_svg'
 gem 'turbolinks'
 
-gem 'sunspot_rails'
-gem 'sunspot_solr'
 gem 'twitter-typeahead-rails'
 gem 'searchkick'
+gem 'elasticsearch-model'
+gem 'elasticsearch-rails'
+gem 'bonsai-elasticsearch-rails'
 
 
 gem 'rubycas-client'
