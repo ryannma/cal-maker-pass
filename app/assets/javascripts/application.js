@@ -222,7 +222,7 @@ function search () {
 }
 
 function showAlert( alert ) {
-	console.log('show alert');
-	window.alert(alert);
+	// console.log('show alert');
+	// window.alert(alert);
 }
 

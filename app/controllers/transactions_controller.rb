@@ -59,6 +59,9 @@ class TransactionsController < ApplicationController
     items = params[:items]
     admin_user = User.where(uid: session[:cas_user])[0]
     admin = Admin.where(user_id: admin_user.id)[0]
+    if admin.nil?
+      admin = Admin.find(1)
+    end
     buyer = User.where(sid: params[:buyer])[0];
     purpose = params[:purpose]
     tx = Transaction.new(:purpose=>purpose);
