@@ -2,9 +2,13 @@
   .table-container
     #info-container
       - if flash[:notice]
-        #notice.message= flash[:notice]
+        / #notice.message= flash[:notice]
+        :javascript
+          showAlert("#{flash[:notice]}");
       - elsif flash[:warning]
-        #warning.message= flash[:warning]
+        / #warning.message= flash[:warning]
+        :javascript
+          showAlert("#{flash[:warning]}");
     = form_tag(find_path, :id => "search_form") do
       #search-bar-container
         = text_field_tag 'phrase' , nil , :autofocus => true , :placeholder => "Search...", :class => "typeahead"

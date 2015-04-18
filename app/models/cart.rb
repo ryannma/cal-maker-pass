@@ -18,6 +18,7 @@ class Cart
   end
 
   def add_item( id )
+  	clean_cart
   	if id.empty? then return end
     id = id.to_i
     curr_cart_item = @cart_items.detect { |cart_item|
@@ -30,6 +31,19 @@ class Cart
       curr_cart_item = CartItem.new(item, 1)
       @cart_items << curr_cart_item
     end
+  end
+
+  def clean_cart
+  	new_cart = []
+  	@cart_items.each do |cart_item|
+  		begin
+  			item = Item.find(cart_item.item_id)
+  			new_cart << cart_item
+  		rescue
+
+  		end
+  	end
+  	@cart_items = new_cart
   end
 
   def clear

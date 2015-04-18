@@ -47,14 +47,16 @@ class ItemsController < ApplicationController
       @item.save
       flash[:notice] = "Successfully added item"
     else
-      errors = @item.errors.full_messages.join("<br>").html_safe
+      # errors = @item.errors.full_messages.join("<br>").html_safe
+      errors = @item.errors.full_messages.join(". ")
       flash[:warning] = errors
     end
     redirect_to items_path
   end
 
   def checkout
-    cart = params[:hash]
+    puts params
+    # cart = params[:hash]
     redirect_to transactions_path(cart: cart)
   end
 

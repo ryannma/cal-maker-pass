@@ -179,3 +179,8 @@ function search(){
 		dataType: 'script'
 	});
 }
+
+function showAlert( alert ) {
+	console.log('show alert');
+	window.alert(alert);
+}

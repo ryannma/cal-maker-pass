@@ -11,4 +11,4 @@
     #cart-items
       =render partial: "cart_items"
     #checkout-footer
-      =link_to "Checkout", checkout_path(hash: session[:cart]), method: :post, id: "checkout-button"
+      =link_to "Checkout", checkout_path, method: :post, id: "checkout-button"
