@@ -1,0 +1,4 @@
+$('#inventory-wrapper').html(
+    "<%= escape_javascript render(:partial => 'inventory_table', :locals => {:items => @items, :sort_by => @sort_by}) %>"
+);
+console.log("I was here")

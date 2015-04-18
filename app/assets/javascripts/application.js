@@ -125,14 +125,11 @@ $(document).ready( function () {
 
 });
 
-// document.onkeydown=function(){
-//     if(window.event.keyCode=='13'){
-//     	console.log("should had submitted")
-//     	console.log($('#search-form'))
-//         $('#search-form').submit();
-//         $('#search-form').method='post';
-//     }
-// }
+document.onkeydown=function(){
+    if(window.event.keyCode=='13'){
+ 		search()
+    }
+}
 
 
 function manageCart() {
@@ -169,6 +166,15 @@ function updateCart( id ) {
 	$.ajax({
 		url: '/items/add_item',
 		data: { 'id' : id },
+		method: 'POST',
+		dataType: 'script'
+	});
+}
+
+function search(){
+	$.ajax({
+		url: '/items/find',
+		data: { 'phrase' : $("#phrase").val() },
 		method: 'POST',
 		dataType: 'script'
 	});
