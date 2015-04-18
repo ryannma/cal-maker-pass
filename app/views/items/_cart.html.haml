@@ -16,4 +16,4 @@
           = text_field "item#{index}", :quantity, value: cart_item.quantity, class: "cart-item-quantity"
           = label "item#{index}", :name, cart_item.name, class: "cart-item-name"
     #checkout-footer
-      =link_to "Checkout", checkout_path(hash: session[:cart]), method: :post, id: "checkout-button"
+      =link_to "Checkout", checkout_path(cart: session[:cart]), method: :post, id: "checkout-button"
