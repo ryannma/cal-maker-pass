@@ -1,6 +1,7 @@
 #cart-panel.cart-panel-hidden
   #cart-title Cart
-  = inline_svg "shop.svg", class: "cart-svg svg"
+  %a{ href: "#", id: "cart-button", onclick: "manageCart()" }
+    = inline_svg "shop.svg", class: "cart-svg svg"
   #cart-info
     = label :transaction, :user, "User", class: "cart-label"
     = text_field :transaction, :user, class: "cart-input"

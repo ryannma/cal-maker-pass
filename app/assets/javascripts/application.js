@@ -41,9 +41,9 @@ $(document).ready( function () {
 	$('#modal-overlay').click( function () {
 		$('#modal').fadeOut(500);
 	});
-	$('.cart-svg').click( function () {
-		manageCart();
-	});
+	// $('#cart-panel').on('click', '#cart-button', function () {
+	// 	manageCart();
+	// });
 
 	$('#phrase.typeahead').typeahead({
 		  hint: true,
@@ -127,12 +127,13 @@ $(document).ready( function () {
 
 document.onkeydown=function(){
     if(window.event.keyCode=='13'){
- 		search()
+ 		search();
     }
 }
 
 
 function manageCart() {
+	console.log('manageCart');
 	if ($('#items-panel').hasClass('items-panel-expanded')) {
 		expandCart();
 	} else {
@@ -171,12 +172,20 @@ function updateCart( id ) {
 	});
 }
 
-function search(){
+function showAlert( alert ) {
+	console.log('show alert');
+	window.alert(alert);
+}
+
+function search () {
 	$.ajax({
 		url: '/items/find',
 		data: { 'phrase' : $("#phrase").val() },
 		method: 'POST',
 		dataType: 'script'
+	})
+	.done( function () {
+		$('.add-column').show();
 	});
 }
 

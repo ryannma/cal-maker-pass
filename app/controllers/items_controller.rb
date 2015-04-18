@@ -89,7 +89,7 @@ class ItemsController < ApplicationController
     def query
     # Get the search terms from the q parameter and do a search
     # as we seen in the previous part of the article.
-    search =Item.search(params[:q],fields: [{name: :word_start}], misspelling: {edit_distance: 2} , operator: "or")
+    search = Item.search(params[:q],fields: [{name: :word_start}], misspelling: {edit_distance: 2} , operator: "or")
     puts(search)
     puts("fuuuuuuuuck")
     respond_to do |format|
