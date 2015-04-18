@@ -8,9 +8,9 @@ And /a user is logged in/ do
   CASClient::Frameworks::Rails::Filter.fake("homer")
 end
 
+
 When /^(?:|I )manually add item: (.*), (.*), (.*), (.*), (.*)/ do |name, price, quantity, status, kind|
   step "I go to the items page"
-  step "I press \"Add\""
   step "I fill in \"Name\" with \"#{name}\""
   step "I fill in \"Price\" with \"#{price}\""
   step "I fill in \"Quantity\" with \"#{quantity}\""
