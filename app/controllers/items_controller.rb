@@ -3,15 +3,10 @@ class ItemsController < ApplicationController
   def index
     @items = ordering()
     @all_status = Item.all_status
-    puts "before"
-    puts session[:cart]
     if session[:cart] == {} then session[:cart] = nil end
     session[:cart] = session[:cart] || Cart.new
     @cart = session[:cart]
-    #puts @cart.cart_items
-    #puts '*' * 54
     @display_cart = []
-    puts "thing"*200
     unless @cart.cart_items.nil?
       @cart.cart_items.each do |cart_item|
         @display_cart << {name: cart_item.name, quantity: cart_item.quantity}
@@ -73,18 +68,19 @@ class ItemsController < ApplicationController
 
   def find
     puts "hereee"
-    @items = Item.search{ keywords params[:phrase]}.results
+    @items = Item.search(params[:phrase],fields: [{name: :word_start}], misspelling: {edit_distance: 2} , operator: "or").results
+    
     @all_status = Item.all_status
-    session[:cart] = session[:cart] || Hash.new
-    @cart = []
-    @sort = nil
-    unless session[:cart].empty?
-      puts session[:cart]
-      session[:cart].each do |id, quantity|
-        item = Item.find(id)
-        @cart << {name: item.name, quantity: quantity}
+    if session[:cart] == {} then session[:cart] = nil end
+    session[:cart] = session[:cart] || Cart.new
+    @cart = session[:cart]
+    @display_cart = []
+    unless @cart.cart_items.nil?
+      @cart.cart_items.each do |cart_item|
+        @display_cart << {name: cart_item.name, quantity: cart_item.quantity}
       end
     end
+
     render :index
   end
 
