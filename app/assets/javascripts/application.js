@@ -95,13 +95,12 @@ $(document).ready( function () {
 		$.ajax({
 			url: '/transactions/checkout',
 	    method: 'post',
-	    parameters: {
-	      cart_items: bought_items,
+	    data: {
+	      items: bought_items,
 	      buyer: user,
 	      purpose: purpose,
 	    },
 	    success: function () {
-	    	alert("success");
 	    }
 	  });
 	});
@@ -206,8 +205,8 @@ function updateCart( id ) {
 }
 
 function showAlert( alert ) {
-	console.log('show alert');
-	window.alert(alert);
+	// console.log('show alert');
+	// window.alert(alert);
 }
 
 function search () {
