@@ -27,8 +27,12 @@ items = new Bloodhound({
 });
 
 items.initialize();
+$('.cart-item').bind('input propertychange', function(){
+	  alert($(this).val());
+	});
 
 $(document).ready( function () {
+
 	updateCart(null);
 	history.navigationMode = 'compatible';
 
@@ -71,6 +75,35 @@ $(document).ready( function () {
 				comments.fadeIn(100);
 			}, 100);
 		}
+	});
+
+	$('#checkout-button').click( function() {
+		var cart_items = document.getElementById('cart-items').getElementsByClassName('cart-item');
+		var bought_items = []
+		for (i = 0; i < cart_items.length; i++) {
+			var item = []
+			var cart_item = cart_items[i];
+			var quantity = cart_item.getElementsByClassName('cart-item-quantity')[0].value;
+			var item_name = cart_item.getElementsByClassName('cart-item-name')[0].innerHTML;
+			item.push(item_name);
+			item.push(quantity);
+			bought_items.push(item);
+		}
+		var user = document.getElementById('transaction_user').value;
+		var purpose = document.getElementById('transaction_purpose').value;
+		var checkout_button = document.getElementById('checkout-button').setAttribute('href', "/items");
+		$.ajax({
+			url: '/transactions/checkout',
+	    method: 'post',
+	    parameters: {
+	      cart_items: bought_items,
+	      buyer: user,
+	      purpose: purpose,
+	    },
+	    success: function () {
+	    	alert("success");
+	    }
+	  });
 	});
 
 	$('.transaction-arrow').click( function () {
@@ -193,3 +226,4 @@ function showAlert( alert ) {
 	console.log('show alert');
 	window.alert(alert);
 }
+
