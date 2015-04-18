@@ -20,8 +20,6 @@ FactoryGirl.define do
   factory :transaction do
     association :user, factory: :user
     admin
-    item
-    kind "sold"
     purpose "blank" 
   end
 
@@ -29,5 +27,12 @@ FactoryGirl.define do
     first_name "first"
     last_name "last"
     sid 12345678
+  end
+
+  factory :line_item do
+    item
+    transaction
+    action "sold"
+    quantity "7"
   end
 end

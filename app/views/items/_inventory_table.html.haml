@@ -1,0 +1,26 @@
+%table#inventory-table
+  %thead
+    %tr
+      %th{:class => ('hilite' if @sort_by == 'name'), :id => 'title_header'}
+        = link_to "Item", items_path(:sort_by => 'name'), :class => 'sorter'
+      %th{:class => ('hilite' if @sort_by == 'quantity'), :id => 'title_header'}
+        = link_to "Quantity", items_path(:sort_by => 'quantity'), :class => 'sorter'
+      %th{:class => ('hilite' if @sort_by == 'price'), :id => 'title_header'}
+        = link_to "Price", items_path(:sort_by => 'price'), :class => 'sorter'
+      %th{:class => ('hilite' if @sort_by == 'kind'), :id => 'title_header'}
+        = link_to "Kind", items_path(:sort_by => 'kind'), :class => 'sorter'
+      %th{:class => ('hilite' if @sort_by == 'status'), :id => 'title_header'}
+        = link_to "Status", items_path(:sort_by => 'status'), :class => 'sorter'
+      %th.add-column Add
+  %tbody
+    - @items.each do |item|
+      %tr
+        %td= link_to item.name, item_path(item)
+        %td= item.quantity
+        %td= item.price 
+        %td= item.kind
+        %td= item.status
+        %td.add-column
+          / =link_to add_item_path(:id => item.id), method: :post do
+          %a{ href: "#", onclick: "updateCart(#{item.id});", id: "add-item-#{item.id}" }
+            = inline_svg "plus.svg", class: "add-svg"

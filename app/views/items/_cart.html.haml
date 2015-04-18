@@ -1,0 +1,14 @@
+#cart-panel.cart-panel-hidden
+  #cart-title Cart
+  = inline_svg "shop.svg", class: "cart-svg svg"
+  #cart-info
+    = label :transaction, :user, "User", class: "cart-label"
+    = text_field :transaction, :user, class: "cart-input"
+    = label :transaction, :purpose, "Comment", class: "cart-label"
+    .comment-arrow
+    = text_area :transaction, :purpose, class: "cart-textarea", cols: "18", rows: "2"
+    = label :transaction, :items, 'Items', class: "cart-label"
+    #cart-items
+      =render partial: "cart_items"
+    #checkout-footer
+      =link_to "Checkout", checkout_path(hash: session[:cart]), method: :post, id: "checkout-button"
