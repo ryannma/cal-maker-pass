@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'sunspot/rails/spec_helper'
 
 describe Item do
   it "should have a location" do
