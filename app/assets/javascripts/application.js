@@ -32,7 +32,7 @@ $(document).ready( function () {
 	updateCart(null);
 	history.navigationMode = 'compatible';
 
-	$('.plus-svg').click( function () {
+	$('#new-item-button').click( function () {
 		$('#modal').fadeIn(500);
 	});
 	$('#new-item-cancel').click( function () {
