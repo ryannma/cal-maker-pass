@@ -206,10 +206,6 @@ function updateCart( id ) {
 	});
 }
 
-function showAlert( alert ) {
-	console.log('show alert');
-	window.alert(alert);
-}
 
 function search () {
 	$.ajax({
@@ -226,6 +222,7 @@ function search () {
 	});
 }
 
+
 function sortInventory( sort_by ) {
 	$.ajax({
 		url: '/items/sort',
@@ -239,4 +236,11 @@ function sortInventory( sort_by ) {
 			$('.add-column').show();
 		}
 	});
+}
+
+
+
+function showAlert( alert ) {
+	console.log('show alert');
+	window.alert(alert);
 }
