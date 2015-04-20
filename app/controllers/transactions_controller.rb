@@ -79,6 +79,7 @@ class TransactionsController < ApplicationController
       lineitem.save
       index += 1
     end
+    session[:cart] = Cart.new
     render :nothing => true
   end
 
