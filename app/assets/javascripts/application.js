@@ -221,8 +221,11 @@ function search () {
 	});
 }
 
-function showAlert( alert ) {
-	// console.log('show alert');
-	// window.alert(alert);
+function sortInventory( sort_by ) {
+	$.ajax({
+		url: '/items/sort',
+		data: { 'sort_by' : sort_by },
+		method: 'POST',
+		dataType: 'script'
+	});
 }
-
