@@ -1,11 +1,10 @@
 class ItemsController < ApplicationController
     
   def index
-    @sort_by, @sort_type = sort_params[0], sort_params[1]
-    set_session_sort(@sort_by, @sort_type)
+    
     @items = Item.all
-    @items = order_items(@sort_by, @sort_type, @items)
     @all_status = Item.all_status
+    
     if session[:cart] == {} then session[:cart] = nil end
     session[:cart] = session[:cart] || Cart.new
     @cart = session[:cart]
@@ -15,6 +14,7 @@ class ItemsController < ApplicationController
         @display_cart << {name: cart_item.name, quantity: cart_item.quantity}
       end
     end
+
   end
 
   def update
@@ -54,13 +54,10 @@ class ItemsController < ApplicationController
   end
 
   def checkout
-    puts params
-    # cart = params[:hash]
     redirect_to transactions_path(cart: cart)
   end
 
   def add_item
-    puts "add item"
     cart = session[:cart] || Cart.new
     cart.add_item(params[:id])
     @cart_items = cart.cart_items
@@ -95,6 +92,17 @@ class ItemsController < ApplicationController
         end
         render json: results
       end
+    end
+  end
+
+  def sort
+    puts "sort gets called"
+    get_sort_params
+    save_sort_params
+    @items = Item.all
+    Item.sort(@items, @sort_by, @sort_type)
+    respond_to do |format|
+      format.js{}
     end
   end
 

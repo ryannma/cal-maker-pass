@@ -6,7 +6,6 @@ Makerpass::Application.routes.draw do
   # HOME
   root :to => "application#home"
   
-  get "/find" , to: "items#find", as: "find"
   get "/logout", to: "application#logout", as: "logout"
   get "/signup", to: "users#new", as: "signup"
 
@@ -14,6 +13,7 @@ Makerpass::Application.routes.draw do
   post "/items/:id/update", to: "items#update", as: "update_item"
   post "/items/:id/delete", to: "items#delete", as: "delete_item"
   post "/items/add_item", to: "items#add_item", as: "add_item"
+  post "/items/sort", to: "items#sort", as: "sort"
   #search engine
   post "/items/find", to: "items#find", as: "find"
   get "/query", to: "items#query"
