@@ -69,13 +69,14 @@ class ItemsController < ApplicationController
   end
 
   def find
-    params[:phrase].blank? ? (@items = Item.all) : (@items = Item.search(params[:phrase],fields: [{name: :word_start}], misspelling: {edit_distance: 2} , operator: "or").results)
-    get_sort_params
-    Item.sort(@items, @sort_by, @sort_type)
+    get_inv_params
     @all_status = Item.all_status
+    @phrase.blank? ? (@items = Item.all) : (@items = Item.search(@phrase, fields: [{name: :word_start}], misspelling: {edit_distance: 2}, operator: "or").results)
+    Item.sort(@items, @sort_by, @sort_type)
     respond_to do |format|
       format.js{}
     end
+    save_inv_params
   end
 
   def query
@@ -96,27 +97,34 @@ class ItemsController < ApplicationController
   end
 
   def sort
-    puts "sort gets called"
-    get_sort_params
-    save_sort_params
-    @items = Item.all
+    get_inv_params
+    @all_status = Item.all_status
+    @phrase.blank? ? (@items = Item.all) : (@items = Item.search(@phrase, fields: [{name: :word_start}], misspelling: {edit_distance: 2}, operator: "or").results)
     Item.sort(@items, @sort_by, @sort_type)
     respond_to do |format|
       format.js{}
     end
+    save_inv_params
   end
 
   private
+
   ## sorting logic
+
+  def should_find?
+    (params.has_key?(:phrase)) || (session.has_key?(:phrase) && !session[:phrase].nil?) 
+  end
+
   def should_sort?
     params.has_key?(:sort_by)
   end
 
   def sorted_before?
-    session.has_key?(:sort_by)
+    session.has_key?(:sort_by) && !session[:sort_by].nil?
   end
 
-  def get_sort_params
+  # gets @sort_by, @sort_type, and @phrase
+  def get_inv_params
     if should_sort?
       @sort_by = params[:sort_by]
       # accounts for first time sorting in current session
@@ -130,22 +138,24 @@ class ItemsController < ApplicationController
         @sort_type = 'ascending'
       end
     elsif sorted_before?
-      load_sort_params
+      @sort_by, @sort_type = session[:sort_by], session[:sort_type]
+      # only store state of previous request
+      #session[:sort_by], session[:sort_type] = nil, nil
     else
       @sort_by, @sort_type = nil, nil
     end
+    if should_find?
+      params.has_key?(:phrase) ? (@phrase = params[:phrase]) : (@phrase = session[:phrase])
+    else
+      @phrase = nil
+    end
   end
 
-  # remember most recent sort params
-  def save_sort_params
+  # remember recent inventory conditions (filter & order)
+  def save_inv_params
+    session[:phrase] = @phrase
     session[:sort_by] = @sort_by
     session[:sort_type] = @sort_type
-  end
-
-  # load sorting conditions from session
-  def load_sort_params
-    @sort_by = session[:sort_by]
-    @sort_type = session[:sort_type]
   end
 
 end
