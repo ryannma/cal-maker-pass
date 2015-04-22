@@ -1,11 +1,9 @@
 Makerpass::Application.routes.draw do
-  resources :items
-  resources :transactions
-  resources :users
+
+  resources :items, :transactions, :users
 
   # HOME
   root :to => "application#home"
-  
   get "/logout", to: "application#logout", as: "logout"
   get "/signup", to: "users#new", as: "signup"
 
@@ -16,9 +14,10 @@ Makerpass::Application.routes.draw do
   post "/items/sort", to: "items#sort", as: "sort"
   #search engine
   post "/items/find", to: "items#find", as: "find"
-  get "/query", to: "items#query"
+  get "/query", to: "items#query", as: "query"
 
   #TRANSACTION
   post "/transactions/new/:cart", to: "transactions#new", as: "new_transaction"
   post "/transactions/checkout", to: "transactions#checkout", as: "checkout"
+
 end

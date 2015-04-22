@@ -1,27 +1,17 @@
 %table#inventory-table
   %thead
     %tr
-      %th.title_header{class: ('hilite' if @sort_by == 'name')}
-        /= link_to 'Item', items_path(:sort_by => 'name'), :class => 'sorter'
-        %a{ href: '#', onclick: 'sortInventory(#{@sort_by});', class: 'sorter' }
-          %strong
-            Item
-      %th.title_header{class: ('hilite' if @sort_by == 'quantity')}
-        %a{ href: '#', onclick: 'sortInventory(#{@sort_by});', class: 'sorter' }
-          %strong
-            Quantity        
-      %th.title_header{class: ('hilite' if @sort_by == 'price')}
-        %a{ href: '#', onclick: 'sortInventory(#{@sort_by});', class: 'sorter' }
-          %strong
-            Price        
-      %th.title_header{class: ('hilite' if @sort_by == 'kind')}
-        %a{ href: '#', onclick: 'sortInventory(#{@sort_by});', class: 'sorter' }
-          %strong
-            Kind        
-      %th.title_header{class: ('hilite' if @sort_by == 'status')}
-        %a{ href: '#', onclick: 'sortInventory(#{@sort_by});', class: 'sorter' }
-          %strong
-            Status       
+      %th.title_header{class: ("hilite" if @sort_by == "name")}
+        /= link_to "Item", items_path(:sort_by => "name"), :class => "sorter"
+        %a{ href: "#", onclick: "sortInventory('name');", class: "sorter" } Item
+      %th.title_header{class: ("hilite" if @sort_by == "quantity")}
+        %a{ href: "#", onclick: "sortInventory('quantity');", class: "sorter" } Quantity  
+      %th.title_header{class: ("hilite" if @sort_by == "price")}
+        %a{ href: "#", onclick: "sortInventory('price');", class: "sorter" } Price
+      %th.title_header{class: ("hilite" if @sort_by == "kind")}
+        %a{ href: "#", onclick: "sortInventory('kind');", class: "sorter" } Kind
+      %th.title_header{class: ("hilite" if @sort_by == "status")}
+        %a{ href: "#", onclick: "sortInventory('status');", class: "sorter" } Status    
       %th.add-column Add
   %tbody
     - @items.each do |item|
@@ -33,5 +23,5 @@
         %td= item.status
         %td.add-column
           / =link_to add_item_path(:id => item.id), method: :post do
-          %a{ href: '#', onclick: 'updateCart(#{item.id});', id: 'add-item-#{item.id}' }
-            = inline_svg 'plus.svg', class: 'add-svg'
+          %a{ href: "#", onclick: "updateCart(#{item.id});" }
+            = inline_svg "plus.svg", class: "add-svg"
