@@ -80,6 +80,7 @@ $(document).ready( function () {
 	$('#checkout-button').click( function() {
 		var cart_items = document.getElementById('cart-items').getElementsByClassName('cart-item');
 		var bought_items = []
+		var checkout_button = document.getElementById('checkout-button').setAttribute('href', "/");
 		for (i = 0; i < cart_items.length; i++) {
 			var item = []
 			var cart_item = cart_items[i];
@@ -89,20 +90,25 @@ $(document).ready( function () {
 			item.push(quantity);
 			bought_items.push(item);
 		}
-		var user = document.getElementById('transaction_user').value;
-		var purpose = document.getElementById('transaction_purpose').value;
-		var checkout_button = document.getElementById('checkout-button').setAttribute('href', "/items");
-		$.ajax({
-			url: '/transactions/checkout',
-	    method: 'post',
-	    data: {
-	      items: bought_items,
-	      buyer: user,
-	      purpose: purpose,
-	    },
-	    success: function () {
-	    }
-	  });
+		if (bought_items.length > 0) {
+			var user = document.getElementById('transaction_user').value;
+			var purpose = document.getElementById('transaction_purpose').value;
+			$.ajax({
+				url: '/transactions/checkout',
+		    method: 'post',
+		    data: {
+		      items: bought_items,
+		      buyer: user,
+		      purpose: purpose,
+		    },
+		    success: function () {
+		    }
+		  });
+		}
+		else {
+			showAlert("No items to checkout");
+
+		}
 	});
 
 	$('.transaction-arrow').click( function () {
