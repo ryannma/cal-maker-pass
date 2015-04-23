@@ -3,15 +3,25 @@
     %tr
       %th.title_header{class: ("hilite" if @sort_by == "name")}
         /= link_to "Item", items_path(:sort_by => "name"), :class => "sorter"
-        %a{ href: "#", onclick: "sortInventory('name');", class: "sorter" } Item
+        %a.sorter{ href: "#", onclick: "sortInventory('name');" }
+          %span Item
+          = inline_svg "sort.svg", class: "sort-hide", id: "name"
       %th.title_header{class: ("hilite" if @sort_by == "quantity")}
-        %a{ href: "#", onclick: "sortInventory('quantity');", class: "sorter" } Quantity  
+        %a.sorter{ href: "#", onclick: "sortInventory('quantity');" } 
+          %span Quantity
+          = inline_svg "sort.svg", class: "sort-hide", id: "quantity"
       %th.title_header{class: ("hilite" if @sort_by == "price")}
-        %a{ href: "#", onclick: "sortInventory('price');", class: "sorter" } Price
+        %a.sorter{ href: "#", onclick: "sortInventory('price');" } 
+          %span Price
+          = inline_svg "sort.svg", class: "sort-hide", id: "price"
       %th.title_header{class: ("hilite" if @sort_by == "kind")}
-        %a{ href: "#", onclick: "sortInventory('kind');", class: "sorter" } Kind
+        %a.sorter{ href: "#", onclick: "sortInventory('kind');" } 
+          %span Kind
+          = inline_svg "sort.svg", class: "sort-hide", id: "kind"
       %th.title_header{class: ("hilite" if @sort_by == "status")}
-        %a{ href: "#", onclick: "sortInventory('status');", class: "sorter" } Status    
+        %a.sorter{ href: "#", onclick: "sortInventory('status');" } 
+          %span Status
+          = inline_svg "sort.svg", class: "sort-hide", id: "status"
       %th.add-column Add
   %tbody
     - @items.each do |item|

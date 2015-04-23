@@ -123,6 +123,32 @@ tbody tr {
     height: 35px;
 }
 
+#inventory-table .sort-hide {
+    width: 20px;
+    height: 20px;
+    fill: white;
+    position: relative;
+    top: 5px;
+    display: none;
+}
+
+#inventory-table .sort-show-down {
+    width: 20px;
+    height: 20px;
+    fill: white;
+    position: relative;
+    top: 5px;
+}
+
+#inventory-table .sort-show-up {
+    width: 20px;
+    height: 20px;
+    fill: white;
+    position: relative;
+    top: 5px;
+    transform: rotate(180deg);
+}
+
 //transaction
 
 

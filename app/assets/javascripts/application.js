@@ -227,10 +227,24 @@ function sortInventory( sort_by ) {
 		method: 'POST',
 		dataType: 'script'
 	}).done( function () {
+		
+		id = '#' + sort_by
+		if ($(id).hasClass('sort-hide')) {
+			$(id).removeClass('sort-hide');
+			$(id).addClass('sort-show-up');
+		} else if ($(id).hasClass('sort-show-up')) {
+			$(id).removeClass('sort-show-up');
+			$(id).addClass('sort-show-down');
+		} else if ($(id).hasClass('sort-show-down')) {
+			$(id).removeClass('sort-show-down');
+			$(id).addClass('sort-show-up)')
+		}
+
 		if ($('#items-panel').hasClass('items-panel-expanded')) {
 			$('.add-column').hide();
 		} else {
 			$('.add-column').show();
 		}
+
 	});
 }
