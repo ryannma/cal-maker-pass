@@ -49,6 +49,32 @@ $(document).ready( function () {
 	// 	manageCart();
 	// });
 
+	$('.sorter').click( function () {
+		sort_by = $(this).prop('id');
+		$.ajax({
+			url: '/items/sort',
+			data: { 'sort_by' : sort_by },
+			method: 'POST',
+			dataType: 'script'
+		}).done( function () {
+			id = '#' + sort_by;
+			$(id).addClass('hilite');
+
+			sort_type = $(#inventory-table).prop('data-sort_type');
+			if (sort_type == 'ascending') {
+				$(id).addClass(.sort-show-down);
+			} else if (sort_type == 'descending') {
+				$(id).addClass(.sort-show-up);
+			}
+
+			if ($('#items-panel').hasClass('items-panel-expanded')) {
+				$('.add-column').hide();
+			} else {
+				$('.add-column').show();
+			}			
+		});
+	});
+
 	$('#phrase.typeahead').typeahead({
 		  hint: true,
 		  highlight: true,
