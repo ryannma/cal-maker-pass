@@ -107,7 +107,6 @@ $(document).ready( function () {
 		}
 		else {
 			showAlert("No items to checkout");
-
 		}
 	});
 
