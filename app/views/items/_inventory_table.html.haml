@@ -1,17 +1,21 @@
-%table#inventory-table
+%table#inventory-table{ data: {sort_by: @sort_by, sort_type: @sort_type} }
   %thead
     %tr
-      %th.title_header{class: ("hilite" if @sort_by == "name")}
-        /= link_to "Item", items_path(:sort_by => "name"), :class => "sorter"
-        %a{ href: "#", onclick: "sortInventory('name');", class: "sorter" } Item
-      %th.title_header{class: ("hilite" if @sort_by == "quantity")}
-        %a{ href: "#", onclick: "sortInventory('quantity');", class: "sorter" } Quantity  
-      %th.title_header{class: ("hilite" if @sort_by == "price")}
-        %a{ href: "#", onclick: "sortInventory('price');", class: "sorter" } Price
-      %th.title_header{class: ("hilite" if @sort_by == "kind")}
-        %a{ href: "#", onclick: "sortInventory('kind');", class: "sorter" } Kind
-      %th.title_header{class: ("hilite" if @sort_by == "status")}
-        %a{ href: "#", onclick: "sortInventory('status');", class: "sorter" } Status    
+      %th.sorter#name
+        %span Item
+        = inline_svg "sort.svg", class: "sort-hide"
+      %th.sorter#quantity
+        %span Quantity
+        = inline_svg "sort.svg", class: "sort-hide"
+      %th.sorter#price
+        %span Price
+        = inline_svg "sort.svg", class: "sort-hide"
+      %th.sorter#kind
+        %span Kind
+        = inline_svg "sort.svg", class: "sort-hide"
+      %th.sorter#status
+        %span Status
+        = inline_svg "sort.svg", class: "sort-hide"
       %th.add-column Add
   %tbody
     - @items.each do |item|
@@ -22,6 +26,5 @@
         %td= item.kind
         %td= item.status
         %td.add-column
-          / =link_to add_item_path(:id => item.id), method: :post do
           %a{ href: "#", onclick: "updateCart(#{item.id});" }
             = inline_svg "plus.svg", class: "add-svg"

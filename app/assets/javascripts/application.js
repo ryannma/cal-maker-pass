@@ -49,6 +49,34 @@ $(document).ready( function () {
 	// 	manageCart();
 	// });
 
+	$('#inventory-wrapper').on('click', '.sorter', function () {
+		var sort_by = $(this).prop('id');
+		$.ajax({
+			url: '/items/sort',
+			data: { 'sort_by' : sort_by },
+			method: 'POST',
+			dataType: 'script'
+		}).done( function () {
+			var sort_type = $('#inventory-table').attr('data-sort-type');
+			var id = '#' + sort_by;
+			var svg = id + ' svg';
+			var span = id + ' span';
+			$(id).addClass('hilite');
+			if (sort_type == 'ascending') {
+				$(span).addClass('sort-align')
+				$(svg).attr('class', 'sort-show-down');
+			} else if (sort_type == 'descending') {
+				$(span).addClass('sort-align')
+				$(svg).attr('class', 'sort-show-up');
+			}
+			if ($('#items-panel').hasClass('items-panel-expanded')) {
+				$('.add-column').hide();
+			} else {
+				$('.add-column').show();
+			}			
+		});
+	});
+
 	$('#phrase.typeahead').typeahead({
 		  hint: true,
 		  highlight: true,
@@ -200,6 +228,19 @@ function search () {
 		method: 'POST',
 		dataType: 'script'
 	}).done( function () {
+		var sort_by = $('#inventory-table').attr('data-sort-by');
+		var sort_type = $('#inventory-table').attr('data-sort-type');
+		var id = '#' + sort_by;
+		var svg = id + ' svg';
+		var span = id + ' span';
+		$(id).addClass('hilite');
+		if (sort_type == 'ascending') {
+			$(span).addClass('sort-align')
+			$(svg).attr('class', 'sort-show-down');
+		} else if (sort_type == 'descending') {
+			$(span).addClass('sort-align')
+			$(svg).attr('class', 'sort-show-up');
+		}
 		if ($('#items-panel').hasClass('items-panel-expanded')) {
 			$('.add-column').hide();
 		} else {
@@ -207,23 +248,6 @@ function search () {
 		}
 	});
 }
-
-
-function sortInventory( sort_by ) {
-	$.ajax({
-		url: '/items/sort',
-		data: { 'sort_by' : sort_by },
-		method: 'POST',
-		dataType: 'script'
-	}).done( function () {
-		if ($('#items-panel').hasClass('items-panel-expanded')) {
-			$('.add-column').hide();
-		} else {
-			$('.add-column').show();
-		}
-	});
-}
-
 
 
 function showAlert( alert ) {

@@ -114,10 +114,13 @@ thead {
 }
 
 #inventory-table .sorter {
+    cursor: pointer;
+/*
     width: 100%;
     display: block;
     height: 50px;
     line-height: 50px;
+*/
 }
 
 #inventory-table th.header {
@@ -130,6 +133,37 @@ thead tr {
 
 tbody tr {
     height: 35px;
+}
+
+#inventory-table .sort-hide {
+    width: 20px;
+    height: 20px;
+    fill: white;
+    position: relative;
+    top: 5px;
+    display: none;
+}
+
+#inventory-table .sort-show-down {
+    width: 23px;
+    height: 23px;
+    fill: $blue-dark;
+    position: relative;
+    top: 2px;
+}
+
+#inventory-table .sort-show-up {
+    width: 23px;
+    height: 23px;
+    fill: $blue-dark;
+    position: relative;
+    top: 2px;
+    transform: rotate(180deg);
+}
+
+.sort-align {
+    position: relative;
+    bottom: 4px;
 }
 
 //transaction
