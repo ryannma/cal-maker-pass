@@ -3,19 +3,19 @@
     %tr
       %th.sorter#name
         %span Item
-        = inline_svg "sort.svg", class: "sort-hide", id: "name-svg"
+        = inline_svg "sort.svg", class: "sort-hide"
       %th.sorter#quantity
         %span Quantity
-        = inline_svg "sort.svg", class: "sort-hide", id: "quantity-svg"
+        = inline_svg "sort.svg", class: "sort-hide"
       %th.sorter#price
         %span Price
-        = inline_svg "sort.svg", class: "sort-hide", id: "price-svg"
+        = inline_svg "sort.svg", class: "sort-hide"
       %th.sorter#kind
         %span Kind
-        = inline_svg "sort.svg", class: "sort-hide", id: "kind-svg"
+        = inline_svg "sort.svg", class: "sort-hide"
       %th.sorter#status
         %span Status
-        = inline_svg "sort.svg", class: "sort-hide", id: "status-svg"
+        = inline_svg "sort.svg", class: "sort-hide"
       %th.add-column Add
   %tbody
     - @items.each do |item|
@@ -26,6 +26,5 @@
         %td= item.kind
         %td= item.status
         %td.add-column
-          / =link_to add_item_path(:id => item.id), method: :post do
           %a{ href: "#", onclick: "updateCart(#{item.id});" }
             = inline_svg "plus.svg", class: "add-svg"

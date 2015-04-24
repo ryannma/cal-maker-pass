@@ -105,6 +105,7 @@ thead {
 }
 
 #inventory-table .sorter {
+    cursor: pointer;
 /*
     width: 100%;
     display: block;
@@ -135,20 +136,25 @@ tbody tr {
 }
 
 #inventory-table .sort-show-down {
-    width: 20px;
-    height: 20px;
-    fill: white;
+    width: 23px;
+    height: 23px;
+    fill: $blue-dark;
     position: relative;
-    top: 5px;
+    top: 2px;
 }
 
 #inventory-table .sort-show-up {
-    width: 20px;
-    height: 20px;
-    fill: white;
+    width: 23px;
+    height: 23px;
+    fill: $blue-dark;
     position: relative;
-    top: 5px;
+    top: 2px;
     transform: rotate(180deg);
+}
+
+.sort-align {
+    position: relative;
+    bottom: 4px;
 }
 
 //transaction

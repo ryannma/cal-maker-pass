@@ -49,30 +49,26 @@ $(document).ready( function () {
 	// 	manageCart();
 	// });
 
-	$('.sorter').click( function () {
+	$('#inventory-wrapper').on('click', '.sorter', function () {
 		var sort_by = $(this).prop('id');
-		var sort_type = $('#inventory-table').attr('data-sort-type');
-		console.log(sort_by);
-		console.log(sort_type);
 		$.ajax({
 			url: '/items/sort',
 			data: { 'sort_by' : sort_by },
 			method: 'POST',
 			dataType: 'script'
 		}).done( function () {
-			sort_type = $('#inventory-table').attr('data-sort-type');
-			console.log(sort_by);
-			console.log(sort_type);
-			id = '#' + sort_by;
-			console.log(id);
-			//$(id).addClass('hilite');
-
+			var sort_type = $('#inventory-table').attr('data-sort-type');
+			var id = '#' + sort_by;
+			var svg = id + ' svg';
+			var span = id + ' span';
+			$(id).addClass('hilite');
 			if (sort_type == 'ascending') {
-				$(id).addClass('.sort-show-down');
+				$(span).addClass('sort-align')
+				$(svg).attr('class', 'sort-show-down');
 			} else if (sort_type == 'descending') {
-				$(id).addClass('.sort-show-up');
+				$(span).addClass('sort-align')
+				$(svg).attr('class', 'sort-show-up');
 			}
-
 			if ($('#items-panel').hasClass('items-panel-expanded')) {
 				$('.add-column').hide();
 			} else {
