@@ -228,6 +228,19 @@ function search () {
 		method: 'POST',
 		dataType: 'script'
 	}).done( function () {
+		var sort_by = $('#inventory-table').attr('data-sort-by');
+		var sort_type = $('#inventory-table').attr('data-sort-type');
+		var id = '#' + sort_by;
+		var svg = id + ' svg';
+		var span = id + ' span';
+		$(id).addClass('hilite');
+		if (sort_type == 'ascending') {
+			$(span).addClass('sort-align')
+			$(svg).attr('class', 'sort-show-down');
+		} else if (sort_type == 'descending') {
+			$(span).addClass('sort-align')
+			$(svg).attr('class', 'sort-show-up');
+		}
 		if ($('#items-panel').hasClass('items-panel-expanded')) {
 			$('.add-column').hide();
 		} else {
@@ -235,37 +248,6 @@ function search () {
 		}
 	});
 }
-
-
-function sortInventory( sort_by ) {
-	$.ajax({
-		url: '/items/sort',
-		data: { 'sort_by' : sort_by },
-		method: 'POST',
-		dataType: 'script'
-	}).done( function () {
-		
-		id = '#' + sort_by
-		if ($(id).hasClass('sort-hide')) {
-			$(id).removeClass('sort-hide');
-			$(id).addClass('sort-show-up');
-		} else if ($(id).hasClass('sort-show-up')) {
-			$(id).removeClass('sort-show-up');
-			$(id).addClass('sort-show-down');
-		} else if ($(id).hasClass('sort-show-down')) {
-			$(id).removeClass('sort-show-down');
-			$(id).addClass('sort-show-up)')
-		}
-
-		if ($('#items-panel').hasClass('items-panel-expanded')) {
-			$('.add-column').hide();
-		} else {
-			$('.add-column').show();
-		}
-
-	});
-}
-
 
 
 function showAlert( alert ) {
