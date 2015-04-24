@@ -13,6 +13,15 @@ body {
     color: $blue-dark;
 }
 
+* {
+    font-family: 'Ubuntu', sans-serif !important;
+}
+
+textarea:focus, input:focus{
+    outline: 0;
+    background-color: $white;
+}
+
 a {
     text-decoration: none;
 }
@@ -633,8 +642,9 @@ tbody tr {
     position: absolute;
     top: 50%;
     left: 50%;
-    margin-top: calc(-225px/2);
-    margin-left: calc(-279px/2);
+    margin-top: calc(-279px/2);
+    margin-left: calc(-376px/2);
+
 }
 
 .new-user-label {
@@ -645,15 +655,25 @@ tbody tr {
     margin-bottom: 20px;
     text-align: right;
     font-size: 18px;
+    line-height: 38px;
 }
 
 .new-user-input {
     float: left;
     clear: right;
-    height: 28px;
+    height: 34px;
     font-size: 18px;
-    width: 150px;
+    width: 250px;
     padding-left: 5px;
+    line-height: 32px;
+    border: 0px;
+    border-bottom: 1px solid $blue-sea;
+    transition: 1s;
+    color: $blue-dark;
+}
+
+.new-user-input:focus {
+    border-color: $blue-dark;
 }
 
 #transactions-buttons-container {
@@ -662,6 +682,6 @@ tbody tr {
 
 #new-user-buttons-container {
     float: left;
-    width: 279px;
-    margin-top: 30px;
+    width: 376px;
+    margin-top: 15px;
 }
