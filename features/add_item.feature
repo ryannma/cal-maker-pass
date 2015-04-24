@@ -21,6 +21,8 @@ Background: items have been added to the database
 
 
 Scenario: add a new item to inventory
+    When I go to the items page
+    Then I should see "resistor"
     When I manually add item: led, 4.0, 10, sell, EE
     Then I should see "Successfully added"
 
