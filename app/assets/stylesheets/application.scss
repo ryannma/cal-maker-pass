@@ -109,6 +109,10 @@ thead {
 
 //inventory-sort
 
+#inventory-table th {
+    transition: 1s;
+}
+
 #inventory-table th.hilite {
     background-color: $blue-sea;
 }
@@ -273,7 +277,7 @@ tbody tr {
     width: 700px;
     position: absolute;
     right: 0px;
-    margin-top: -5px;
+    margin-top: 15px;
     left: 50%;
     margin-left: -350px;
 }
@@ -348,6 +352,11 @@ tbody tr {
     color: $blue-dark;
     width: 100%;
     margin-top: 80px;
+}
+
+.inventory-table-link:visited, .inventory-table-link:active, .inventory-table-link:link {
+    color: $blue-dark;
+    border-bottom: 1px solid $blue-sea;
 }
 
 .add-svg {
