@@ -50,21 +50,27 @@ $(document).ready( function () {
 	// });
 
 	$('.sorter').click( function () {
-		sort_by = $(this).prop('id');
+		var sort_by = $(this).prop('id');
+		var sort_type = $('#inventory-table').attr('data-sort-type');
+		console.log(sort_by);
+		console.log(sort_type);
 		$.ajax({
 			url: '/items/sort',
 			data: { 'sort_by' : sort_by },
 			method: 'POST',
 			dataType: 'script'
 		}).done( function () {
+			sort_type = $('#inventory-table').attr('data-sort-type');
+			console.log(sort_by);
+			console.log(sort_type);
 			id = '#' + sort_by;
-			$(id).addClass('hilite');
+			console.log(id);
+			//$(id).addClass('hilite');
 
-			sort_type = $(#inventory-table).prop('data-sort_type');
 			if (sort_type == 'ascending') {
-				$(id).addClass(.sort-show-down);
+				$(id).addClass('.sort-show-down');
 			} else if (sort_type == 'descending') {
-				$(id).addClass(.sort-show-up);
+				$(id).addClass('.sort-show-up');
 			}
 
 			if ($('#items-panel').hasClass('items-panel-expanded')) {
