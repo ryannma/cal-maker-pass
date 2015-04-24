@@ -53,10 +53,6 @@ class ItemsController < ApplicationController
     redirect_to items_path
   end
 
-  def checkout
-    redirect_to transactions_path(cart: cart)
-  end
-
   def add_item
     cart = session[:cart] || Cart.new
     cart.add_item(params[:id])
