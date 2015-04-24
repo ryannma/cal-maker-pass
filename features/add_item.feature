@@ -21,20 +21,19 @@ Background: items have been added to the database
 
 
 Scenario: add a new item to inventory
-    When I go to the items page
-    Then I should see "resistor"
-    When I manually add item: led, 4.0, 10, sell, EE
-    Then I should see "Successfully added"
+    When I manually add item: ishere, 4.0, 10, sell, EE
+    Then I should see "ishere"
 
 Scenario: add a item with invalid price
-    When I manually add item: capacitor, hello , 3, both, EE
-    Then I should see "Price is not a number"
+    When I manually add item: nothere, hello , 3, both, EE
+    Then I should not see "nothere"
 
 Scenario: add a item with invalid quantity
-    When I manually add item: capacitor, 3.75 , hello, lend, EE
-    Then I should see "Quantity is not a number"
+    When I manually add item: nothere, 3.75 , hello, lend, EE
+    Then I should not see "nothere"
 
 Scenario: add a item with invalid quantity
-    When I manually add item: capacitor, , 3, lend, EE
-    Then I should see "Price can't be blank"
+    When I manually add item: nothere, , 3, lend, EE
+    Then I should not see "nothere"
+
 

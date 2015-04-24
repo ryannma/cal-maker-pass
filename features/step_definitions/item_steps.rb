@@ -4,6 +4,10 @@ Given /the following items exist/ do |items_table|
   end
 end
 
+Given /a user is calnet logged in/ do
+  CASClient::Frameworks::Rails::Filter.fake("homer")
+end
+
 And /a user is logged in/ do
   CASClient::Frameworks::Rails::Filter.fake("homer")
 
