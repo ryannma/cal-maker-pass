@@ -1,16 +1,16 @@
 #new-user-container
   = form_tag users_path do
     = label :user, :first_name, 'First Name', class: "new-user-label"
-    = text_field :user, :first_name, class: "new-user-input"
+    = text_field :user, :first_name, class: "new-user-input", autocomplete: :off
 
     = label :user, :last_name, 'Last Name', class: "new-user-label"
-    = text_field :user, :last_name, class: "new-user-input"
+    = text_field :user, :last_name, class: "new-user-input", autocomplete: :off
 
     = label :user, :email, 'Email', class: "new-user-label"
-    = text_field :user, :email, class: "new-user-input"
+    = text_field :user, :email, class: "new-user-input", autocomplete: :off
 
     = label :user, :sid, 'Student ID', class: "new-user-label"
-    = text_field :user, :sid, class: "new-user-input"
+    = text_field :user, :sid, class: "new-user-input", autocomplete: :off
 
     #new-user-buttons-container.buttons-container
       = submit_tag 'Sign Up', id: "new-user-add", class: "button button-blue"
