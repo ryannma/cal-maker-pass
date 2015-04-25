@@ -35,8 +35,6 @@ end
 
 gem 'jquery-rails'
 gem 'sprockets'
-gem 'jquery-validation-rails'
-
 
 #views
 gem 'haml'
