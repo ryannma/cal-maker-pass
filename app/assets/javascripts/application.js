@@ -45,6 +45,9 @@ $(document).ready( function () {
 				document.querySelector('#new-item-cancel').addEventListener('click', function(event) {
 			    $('#modal').fadeOut(500);
 				});
+				document.querySelector('#modal-overlay').addEventListener('click', function(event) {
+			    $('#modal').fadeOut(500);
+				});
 				document.querySelector('#new-item-add').addEventListener('click', function(event) {
 					var name = document.getElementById('item_name').value;
 					var price = document.getElementById('item_price').value;
@@ -227,6 +230,9 @@ function showItem( id ) {
 			document.querySelector('#show-item-back').addEventListener('click', function(event) {
 		    $('#modal').fadeOut(500);
 			});
+			document.querySelector('#modal-overlay').addEventListener('click', function(event) {
+			    $('#modal').fadeOut(500);
+				});
 			document.querySelector('#show-item-delete').addEventListener('click', function(event) {
 				$.ajax({
 					url: '/items/' + item_id+'/delete',
