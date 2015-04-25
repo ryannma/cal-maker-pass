@@ -57,24 +57,13 @@ $(document).ready( function () {
 						method: 'POST',
 						data: {
 							item: item_dict
-						},
-						success: function() {
-
 						}
 					});
 				});
 			}
 		});
 	});
-	$('#show-item-back').click( function () {
-		$('#modal').fadeOut(500);
-	});
-	$('#show-item-update').click( function () {
-		$('#modal').fadeOut(500);
-	});
-	$('#modal-overlay').click( function () {
-		$('#modal').fadeOut(500);
-	});
+	
 	// $('#cart-panel').on('click', '#cart-button', function () {
 	// 	manageCart();
 	// });
@@ -179,33 +168,10 @@ $(document).ready( function () {
 				additional += 1;
 			}
 		}
-
-		// var line_items = document.getElementsByClassName('line_item_expanded');
-		// var visible_line_items = false;
-		// var line_item_headers = document.getElementsByClassName('line_item_headers');
-		// for (i = 0; i < line_items.length; i++) {
-		// 	if (line_items[i].style.display) {
-		// 		visible_line_items = true;
-		// 	}
-		// }
-		// if (visible_line_items == false) {
-		// 	for (i = 0; i < line_item_headers.length; i++) {
-		// 		line_item_headers[i].style.visibility = "hidden";
-		// 	}
-		// }
-		// else {
-		// 	for (i = 0; i < line_item_headers.length; i++) {
-		// 		line_item_headers[i].style.visibility = "visibile";
-		// 	}
-		// }
-
-
 	});
-	// $('#new-item-container').click( function (e) {
-	// 	e.stopPropagation();
-	// })
-
 });
+
+
 
 document.onkeydown=function(){
     if(window.event.keyCode=='13'){
@@ -251,15 +217,35 @@ function updateCart( id ) {
 }
 
 function showItem( id ) {
-	// console.log(id);
 	$.ajax({
 		url: '/items/show_item',
 		data: { 'id' : id },
 		method: 'POST',
-		dataType: 'script'
+		dataType: 'script',
+		success: function() {
+			document.querySelector('#show-item-back').addEventListener('click', function(event) {
+		    $('#modal').fadeOut(500);
+			});
+			var item_id = id;
+			document.querySelector('#show-item-delete').addEventListener('click', function(event) {
+				$.ajax({
+					url: '/items/' + item_id+'/delete',
+					method: 'POST'
+				});
+			});
+		}
 	});
 }
 
+	// $('#show-item-back').click( function () {
+	// 		$('#modal').fadeOut(500);
+	// 	});
+	// 	$('#show-item-update').click( function () {
+	// 		$('#modal').fadeOut(500);
+	// 	});
+	// 	$('#modal-overlay').click( function () {
+	// 		$('#modal').fadeOut(500);
+	// 	});
 
 function search () {
 	$.ajax({
