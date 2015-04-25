@@ -41,19 +41,18 @@ $(document).ready( function () {
 			url: '/items/create_item',
 			method: 'POST',
 			dataType: 'script',
+			success: function () {
+				document.querySelector('#new-item-cancel').addEventListener('click', function(event) {
+			    $('#modal').fadeOut(500);
+				});
+				document.querySelector('')
+			}
 		});
-	});
-	$('#new-item-cancel').click( function () {
-		$('#modal').fadeOut(500);
 	});
 	$('#show-item-back').click( function () {
 		$('#modal').fadeOut(500);
 	});
-	// $('#show-item-back').on('click', '.buttons-container', function () {
-	// 	$('#modal').fadeOut(500);
-	// });
 	$('#show-item-update').click( function () {
-		console.log("thing");
 		$('#modal').fadeOut(500);
 	});
 	$('#modal-overlay').click( function () {
