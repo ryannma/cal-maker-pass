@@ -62,7 +62,7 @@ class TransactionsController < ApplicationController
     if admin.nil?
       admin = Admin.find(1)
     end
-    buyer = User.where(sid: params[:buyer])[0];
+    buyer = User.find_by_sid(params[:buyer]);
     purpose = params[:purpose]
     tx = Transaction.new(:purpose=>purpose);
     tx.user = buyer

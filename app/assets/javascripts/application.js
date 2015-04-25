@@ -113,36 +113,41 @@ $(document).ready( function () {
 	});
 
 	$('#checkout-button').click( function() {
-		var cart_items = document.getElementById('cart-items').getElementsByClassName('cart-item');
-		var bought_items = []
 		var checkout_button = document.getElementById('checkout-button').setAttribute('href', "/");
-		for (i = 0; i < cart_items.length; i++) {
-			var item = []
-			var cart_item = cart_items[i];
-			var quantity = cart_item.getElementsByClassName('cart-item-quantity')[0].value;
-			var item_name = cart_item.getElementsByClassName('cart-item-name')[0].innerHTML;
-			item.push(item_name);
-			item.push(quantity);
-			bought_items.push(item);
-		}
-		if (bought_items.length > 0) {
-			var user = document.getElementById('transaction_user').value;
-			var purpose = document.getElementById('transaction_purpose').value;
-			$.ajax({
-				url: '/transactions/checkout',
-		    method: 'post',
-		    data: {
-		      items: bought_items,
-		      buyer: user,
-		      purpose: purpose,
-		    },
-		    success: function () {
-		    }
-		  });
-		resetCart();
+		var user = document.getElementById('transaction_user').value;
+		if (user == null || user == '') {
+			showAlert("Must enter a SID");
 		}
 		else {
-			showAlert("No items to checkout");
+			var cart_items = document.getElementById('cart-items').getElementsByClassName('cart-item');
+			var bought_items = []
+			for (i = 0; i < cart_items.length; i++) {
+				var item = []
+				var cart_item = cart_items[i];
+				var quantity = cart_item.getElementsByClassName('cart-item-quantity')[0].value;
+				var item_name = cart_item.getElementsByClassName('cart-item-name')[0].innerHTML;
+				item.push(item_name);
+				item.push(quantity);
+				bought_items.push(item);
+			}
+			if (bought_items.length > 0) {
+				var purpose = document.getElementById('transaction_purpose').value;
+				$.ajax({
+					url: '/transactions/checkout',
+			    method: 'post',
+			    data: {
+			      items: bought_items,
+			      buyer: user,
+			      purpose: purpose,
+			    },
+			    success: function () {
+			    	resetCart();
+			    }
+			  });
+			}
+			else {
+				showAlert("No items to checkout");
+			}
 		}
 	});
 
