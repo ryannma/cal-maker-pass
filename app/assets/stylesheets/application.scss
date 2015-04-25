@@ -412,7 +412,7 @@ tbody tr {
 
 }
 
-#new-item-container {
+#item-container {
     background: $white;
     opacity: 0.9;
     position: absolute;
@@ -424,7 +424,7 @@ tbody tr {
     border-radius: 3px;
 }
 
-.new-item-label {
+.item-label {
     float: left;
     clear: left;
     width: 80px;
@@ -434,7 +434,7 @@ tbody tr {
     font-size: 18px;
 }
 
-.new-item-input {
+.item-input {
     float: left;
     clear: right;
     height: 28px;
@@ -560,6 +560,14 @@ tbody tr {
     width: 40px;
     font-size: 16px;
     text-align: center;
+}
+
+.cart-item-delete {
+    font-weight: 300;
+    font-size: 20px;
+    float: right;
+    line-height: 40px;
+    margin-right: 10px;
 }
 
 .cart-label {
