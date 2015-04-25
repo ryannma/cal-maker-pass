@@ -66,7 +66,7 @@ class ItemsController < ApplicationController
       errors = @item.errors.full_messages.join(". ")
       flash[:warning] = errors
     end
-    redirect_to items_path
+    render js: "window.location.href = '#{items_path}'"
   end
 
   def add_item

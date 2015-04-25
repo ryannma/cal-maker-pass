@@ -45,7 +45,24 @@ $(document).ready( function () {
 				document.querySelector('#new-item-cancel').addEventListener('click', function(event) {
 			    $('#modal').fadeOut(500);
 				});
-				document.querySelector('')
+				document.querySelector('#new-item-add').addEventListener('click', function(event) {
+					var name = document.getElementById('item_name').value;
+					var price = document.getElementById('item_price').value;
+					var quantity = document.getElementById('item_quantity').value;
+					var status = document.getElementById('item_status').value;
+					var kind = document.getElementById('item_kind').value;
+					item_dict = {'name': name, 'price': price, 'quantity': quantity, 'status':status, 'kind':kind};
+					$.ajax({
+						url: '/items',
+						method: 'POST',
+						data: {
+							item: item_dict
+						},
+						success: function() {
+
+						}
+					});
+				});
 			}
 		});
 	});
