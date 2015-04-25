@@ -361,6 +361,11 @@ tbody tr {
     border-bottom: 1px solid $blue-sea;
 }
 
+.inventory-table-link:visited, .inventory-table-link:active, .inventory-table-link:link {
+    color: $blue-dark;
+    border-bottom: 1px solid $blue-sea;
+}
+
 .add-svg {
     fill: $blue_sky;
     width: 30px;
