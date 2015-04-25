@@ -26,7 +26,7 @@ class ItemsController < ApplicationController
     @item.status = @updated_data[:status]
     @item.kind = @updated_data[:kind]
     @item.save!
-    redirect_to item_path
+    render js: "window.location.href = '#{items_path}'"
   end
 
   def delete
