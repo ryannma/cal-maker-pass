@@ -35,9 +35,15 @@ class ItemsController < ApplicationController
     redirect_to items_path
   end
 
-  def show
+  def show_item
+    puts "hi"*1000
     @item = Item.find(params[:id])
     @all_status = Item.all_status
+    @mode = "show"
+    puts @item
+    respond_to do |format|
+      format.js {}
+    end
   end
 
   def create

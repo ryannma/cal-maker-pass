@@ -11,6 +11,7 @@ Makerpass::Application.routes.draw do
   post "/items/:id/update", to: "items#update", as: "update_item"
   post "/items/:id/delete", to: "items#delete", as: "delete_item"
   post "/items/add_item", to: "items#add_item", as: "add_item"
+  post "/items/show_item", to: "items#show_item", as: "show_item"
   post "/items/sort", to: "items#sort", as: "sort"
   #search engine
   post "/items/find", to: "items#find", as: "find"

@@ -42,6 +42,13 @@ $(document).ready( function () {
 	$('#new-item-cancel').click( function () {
 		$('#modal').fadeOut(500);
 	});
+	$('#show-item-back').on('click', '.buttons-container', function () {
+		$('#modal').fadeOut(500);
+	});
+	$('#show-item-update').click( function () {
+		console.log("thing");
+		$('#modal').fadeOut(500);
+	});
 	$('#modal-overlay').click( function () {
 		$('#modal').fadeOut(500);
 	});
@@ -214,6 +221,16 @@ function expandCart() {
 function updateCart( id ) {
 	$.ajax({
 		url: '/items/add_item',
+		data: { 'id' : id },
+		method: 'POST',
+		dataType: 'script'
+	});
+}
+
+function showItem( id ) {
+	console.log(id);
+	$.ajax({
+		url: '/items/show_item',
 		data: { 'id' : id },
 		method: 'POST',
 		dataType: 'script'
