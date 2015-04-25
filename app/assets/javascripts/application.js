@@ -45,6 +45,7 @@ $(document).ready( function () {
 				document.querySelector('#new-item-cancel').addEventListener('click', function(event) {
 			    $('#modal').fadeOut(500);
 				});
+<<<<<<< HEAD
 				document.querySelector('#modal-overlay').addEventListener('click', function(event) {
 			    $('#modal').fadeOut(500);
 				});
@@ -66,7 +67,6 @@ $(document).ready( function () {
 			}
 		});
 	});
-	
 	// $('#cart-panel').on('click', '#cart-button', function () {
 	// 	manageCart();
 	// });
