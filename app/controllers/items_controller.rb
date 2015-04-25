@@ -32,7 +32,7 @@ class ItemsController < ApplicationController
   def delete
     @item = Item.find(params[:id])
     @item.destroy
-    redirect_to items_path
+    render js: "window.location.href = '#{items_path}'"
   end
 
   def create_item
