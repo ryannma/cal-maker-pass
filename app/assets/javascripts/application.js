@@ -37,14 +37,21 @@ $(document).ready( function () {
 	history.navigationMode = 'compatible';
 
 	$('#new-item-button').click( function () {
-		$('#modal').fadeIn(500);
+		$.ajax({
+			url: '/items/create_item',
+			method: 'POST',
+			dataType: 'script',
+		});
 	});
 	$('#new-item-cancel').click( function () {
 		$('#modal').fadeOut(500);
 	});
-	$('#show-item-back').on('click', '.buttons-container', function () {
+	$('#show-item-back').click( function () {
 		$('#modal').fadeOut(500);
 	});
+	// $('#show-item-back').on('click', '.buttons-container', function () {
+	// 	$('#modal').fadeOut(500);
+	// });
 	$('#show-item-update').click( function () {
 		console.log("thing");
 		$('#modal').fadeOut(500);
@@ -228,7 +235,7 @@ function updateCart( id ) {
 }
 
 function showItem( id ) {
-	console.log(id);
+	// console.log(id);
 	$.ajax({
 		url: '/items/show_item',
 		data: { 'id' : id },
