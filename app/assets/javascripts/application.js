@@ -229,6 +229,7 @@ function showItem( id ) {
 		method: 'POST',
 		dataType: 'script',
 		success: function() {
+<<<<<<< HEAD
 			var item_id = id;
 			document.querySelector('#show-item-back').addEventListener('click', function(event) {
 		    $('#modal').fadeOut(500);
@@ -236,12 +237,19 @@ function showItem( id ) {
 			document.querySelector('#modal-overlay').addEventListener('click', function(event) {
 			    $('#modal').fadeOut(500);
 				});
+=======
+			document.querySelector('#show-item-back').addEventListener('click', function(event) {
+		    $('#modal').fadeOut(500);
+			});
+			var item_id = id;
+>>>>>>> Show item back and delete work
 			document.querySelector('#show-item-delete').addEventListener('click', function(event) {
 				$.ajax({
 					url: '/items/' + item_id+'/delete',
 					method: 'POST'
 				});
 			});
+<<<<<<< HEAD
 			document.querySelector('#show-item-update').addEventListener('click', function(event) {
 					var name = document.getElementById('item_name').value;
 					var price = document.getElementById('item_price').value;
@@ -257,10 +265,21 @@ function showItem( id ) {
 						}
 					});
 				});
+=======
+>>>>>>> Show item back and delete work
 		}
 	});
 }
 
+	// $('#show-item-back').click( function () {
+	// 		$('#modal').fadeOut(500);
+	// 	});
+	// 	$('#show-item-update').click( function () {
+	// 		$('#modal').fadeOut(500);
+	// 	});
+	// 	$('#modal-overlay').click( function () {
+	// 		$('#modal').fadeOut(500);
+	// 	});
 
 function search () {
 	$.ajax({

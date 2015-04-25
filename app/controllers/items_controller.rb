@@ -56,10 +56,6 @@ class ItemsController < ApplicationController
   end
 
   def show_item
-<<<<<<< HEAD
-=======
-    # puts "hi"*1000
->>>>>>> Changed create item to ajax call to display modal
     @item = Item.find(params[:id])
     @all_status = Item.all_status
     @mode = "show"
