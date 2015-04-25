@@ -46,9 +46,12 @@ $(document).ready( function () {
 			    $('#modal').fadeOut(500);
 				});
 <<<<<<< HEAD
+<<<<<<< HEAD
 				document.querySelector('#modal-overlay').addEventListener('click', function(event) {
 			    $('#modal').fadeOut(500);
 				});
+=======
+>>>>>>> Create new item works
 				document.querySelector('#new-item-add').addEventListener('click', function(event) {
 					var name = document.getElementById('item_name').value;
 					var price = document.getElementById('item_price').value;
