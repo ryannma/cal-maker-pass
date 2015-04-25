@@ -258,15 +258,6 @@ function showItem( id ) {
 	});
 }
 
-	// $('#show-item-back').click( function () {
-	// 		$('#modal').fadeOut(500);
-	// 	});
-	// 	$('#show-item-update').click( function () {
-	// 		$('#modal').fadeOut(500);
-	// 	});
-	// 	$('#modal-overlay').click( function () {
-	// 		$('#modal').fadeOut(500);
-	// 	});
 
 function search () {
 	$.ajax({

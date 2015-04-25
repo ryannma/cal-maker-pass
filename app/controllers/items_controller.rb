@@ -46,7 +46,6 @@ class ItemsController < ApplicationController
   end
 
   def show_item
-    # puts "hi"*1000
     @item = Item.find(params[:id])
     @all_status = Item.all_status
     @mode = "show"
