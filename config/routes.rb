@@ -1,5 +1,6 @@
 Makerpass::Application.routes.draw do
-
+  post "/items/find", to: "items#find", as: "find"
+  # get "/items/find", to: "items#next_page", as: "next_page"
   resources :items, :transactions, :users
 
   # HOME
@@ -13,7 +14,6 @@ Makerpass::Application.routes.draw do
   post "/items/add_item", to: "items#add_item", as: "add_item"
   post "/items/sort", to: "items#sort", as: "sort"
   #search engine
-  post "/items/find", to: "items#find", as: "find"
   get "/query", to: "items#query", as: "query"
 
   #TRANSACTION

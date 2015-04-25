@@ -290,6 +290,7 @@ tbody tr {
 
 .items-panel-expanded {
     width: calc(100% - 60px) !important;
+    overflow-y: scroll
 }
 
 .table-container {
@@ -305,6 +306,7 @@ tbody tr {
     color: $blue-dark;
     width: 100%;
     margin-top: 80px;
+    margin-bottom: 30px;
 }
 
 .add-svg {
@@ -646,4 +648,11 @@ tbody tr {
     font-size: 18px;
     width: 150px;
     padding-left: 5px;
+}
+
+.pagination{
+    float:right;
+    position:absolute;
+    margin-top:20px;
+    margin-bottom:20px;
 }

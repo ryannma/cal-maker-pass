@@ -217,6 +217,8 @@ function search () {
 		} else {
 			$('.add-column').show();
 		}
+		$("#phrase").val("")
+		$(".tt-dropdown-menu").hide();
 	});
 }
 

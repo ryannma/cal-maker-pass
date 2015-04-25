@@ -1,8 +1,8 @@
 class ItemsController < ApplicationController
     
   def index
-    
-    @items = Item.all
+    get_inv_params
+    @items =  Item.order(@sort_by).page(params[:page]).per(20)
     @all_status = Item.all_status
     
     if session[:cart] == {} then session[:cart] = nil end
@@ -14,7 +14,7 @@ class ItemsController < ApplicationController
         @display_cart << {name: cart_item.name, quantity: cart_item.quantity}
       end
     end
-
+    save_inv_params
   end
 
   def update
@@ -71,11 +71,23 @@ class ItemsController < ApplicationController
   def find
     get_inv_params
     @all_status = Item.all_status
-    @phrase.blank? ? (@items = Item.all) : (@items = Item.search(@phrase, fields: [{name: :word_start}], misspelling: {edit_distance: 2}, operator: "or").results)
-    Item.sort(@items, @sort_by, @sort_type)
+    if @phrase.blank?
+       @items = Item.order("name").page(params[:page]).per(20)
+    else
+      @items= Item.search(@phrase, fields: [{name: :word_start}], misspelling: {edit_distance: 2}, operator: "or", per_page: 20, page: params[:page])
+    end
     respond_to do |format|
       format.js{}
+      format.html{render 'index'}
     end
+    save_inv_params
+  end
+
+  def next_page
+    get_inv_params
+    @phrase.blank? ? @items = Item.order("name").page(params[:page]).per(20) : @items = Item.search(@phrase, fields: [{name: :word_start}], misspelling: {edit_distance: 2}, operator: "or", per_page: 20, page: params[:page])
+    Item.sort(@items, @sort_by, @sort_type)
+    render 'find'
     save_inv_params
   end
 
@@ -112,7 +124,7 @@ class ItemsController < ApplicationController
   ## sorting logic
 
   def should_find?
-    (params.has_key?(:phrase)) || (session.has_key?(:phrase) && !session[:phrase].nil?) 
+    params.has_key?(:phrase) # || (session.has_key?(:phrase) && !session[:phrase].nil?) 
   end
 
   def should_sort?
@@ -144,16 +156,17 @@ class ItemsController < ApplicationController
     else
       @sort_by, @sort_type = nil, nil
     end
-    if should_find?
-      params.has_key?(:phrase) ? (@phrase = params[:phrase]) : (@phrase = session[:phrase])
-    else
-      @phrase = nil
-    end
+    # if should_find?
+    #   params.has_key?(:phrase) ? (@phrase = params[:phrase]) : (@phrase = session[:phrase])
+    # else
+    #   @phrase = nil
+    # end
+    @phrase = params[:phrase]
   end
 
   # remember recent inventory conditions (filter & order)
   def save_inv_params
-    session[:phrase] = @phrase
+    # session[:phrase] = @phrase
     session[:sort_by] = @sort_by
     session[:sort_type] = @sort_type
   end
