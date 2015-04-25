@@ -223,16 +223,31 @@ function showItem( id ) {
 		method: 'POST',
 		dataType: 'script',
 		success: function() {
+			var item_id = id;
 			document.querySelector('#show-item-back').addEventListener('click', function(event) {
 		    $('#modal').fadeOut(500);
 			});
-			var item_id = id;
 			document.querySelector('#show-item-delete').addEventListener('click', function(event) {
 				$.ajax({
 					url: '/items/' + item_id+'/delete',
 					method: 'POST'
 				});
 			});
+			document.querySelector('#show-item-update').addEventListener('click', function(event) {
+					var name = document.getElementById('item_name').value;
+					var price = document.getElementById('item_price').value;
+					var quantity = document.getElementById('item_quantity').value;
+					var status = document.getElementById('item_status').value;
+					var kind = document.getElementById('item_kind').value;
+					item_dict = {'name': name, 'price': price, 'quantity': quantity, 'status':status, 'kind':kind};
+					$.ajax({
+						url: '/items/'+item_id+'/update',
+						method: 'POST',
+						data: {
+							item: item_dict
+						}
+					});
+				});
 		}
 	});
 }
