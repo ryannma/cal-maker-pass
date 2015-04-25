@@ -232,6 +232,9 @@ function showItem( id ) {
 			document.querySelector('#show-item-back').addEventListener('click', function(event) {
 		    $('#modal').fadeOut(500);
 			});
+			document.querySelector('#modal-overlay').addEventListener('click', function(event) {
+			    $('#modal').fadeOut(500);
+				});
 			document.querySelector('#show-item-delete').addEventListener('click', function(event) {
 				$.ajax({
 					url: '/items/' + item_id+'/delete',
