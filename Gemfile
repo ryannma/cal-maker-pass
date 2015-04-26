@@ -13,8 +13,6 @@ group :test, :development do
   gem 'simplecov'
   gem 'factory_girl_rails'
 
-  gem 'faker'
-  gem 'populator'
 end
 
 group :production do
@@ -43,6 +41,10 @@ gem 'sprockets'
 gem 'haml'
 gem 'inline_svg'
 gem 'turbolinks'
+
+#fake data TODO: remove after the app is finally deployed since they will not be needed
+gem 'faker'
+gem 'populator'
 
 #search engine and suggestion engine
 gem 'twitter-typeahead-rails'
