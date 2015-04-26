@@ -33,6 +33,14 @@ class Cart
     end
   end
 
+  def delete_item( id )
+    if id.empty? then return end
+    id = id.to_i
+    @cart_items.delete_if { |cart_item|
+      cart_item.item_id == id
+    }
+  end
+
   def clean_cart
   	new_cart = []
   	@cart_items.each do |cart_item|

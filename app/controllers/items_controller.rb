@@ -89,6 +89,17 @@ class ItemsController < ApplicationController
     session[:cart] = cart
   end
 
+  def delete_cart_item
+    cart = session[:cart] || return
+    cart.delete_item(params[:id])
+    @cart_items = cart.cart_items
+    @cart_total = cart.total
+    respond_to do |format|
+      format.js {}
+    end
+    session[:cart] = cart
+  end
+
   def find
     get_inv_params
     @all_status = Item.all_status
