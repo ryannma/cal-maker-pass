@@ -152,6 +152,7 @@ $(document).ready( function () {
 	});
 
 	$('.transaction-arrow').click( function () {
+		alert("Arrow");
 		var transactionArrow = $(this);
 		var parentRow = this.parentElement.parentElement;
 		var row_index = parentRow.rowIndex;
