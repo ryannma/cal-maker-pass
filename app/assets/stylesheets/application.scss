@@ -337,6 +337,7 @@ tbody tr {
 
 .items-panel-expanded {
     width: calc(100% - 60px) !important;
+    overflow-y: scroll
 }
 
 .table-container {
@@ -352,6 +353,12 @@ tbody tr {
     color: $blue-dark;
     width: 100%;
     margin-top: 80px;
+    margin-bottom: 30px;
+}
+
+.inventory-table-link:visited, .inventory-table-link:active, .inventory-table-link:link {
+    color: $blue-dark;
+    border-bottom: 1px solid $blue-sea;
 }
 
 .inventory-table-link:visited, .inventory-table-link:active, .inventory-table-link:link {
@@ -410,7 +417,7 @@ tbody tr {
 
 }
 
-#new-item-container {
+#item-container {
     background: $white;
     opacity: 0.9;
     position: absolute;
@@ -422,7 +429,7 @@ tbody tr {
     border-radius: 3px;
 }
 
-.new-item-label {
+.item-label {
     float: left;
     clear: left;
     width: 80px;
@@ -432,7 +439,7 @@ tbody tr {
     font-size: 18px;
 }
 
-.new-item-input {
+.item-input {
     float: left;
     clear: right;
     height: 28px;
@@ -444,6 +451,7 @@ tbody tr {
 .buttons-container {
     clear: both;
     text-align: center;
+    padding-top: 10px;
 }
 
 .button {
@@ -558,6 +566,14 @@ tbody tr {
     width: 40px;
     font-size: 16px;
     text-align: center;
+}
+
+.cart-item-delete {
+    font-weight: 300;
+    font-size: 20px;
+    float: right;
+    line-height: 40px;
+    margin-right: 10px;
 }
 
 .cart-label {
@@ -718,6 +734,14 @@ tbody tr {
 .new-user-input:focus {
     border-color: $blue-dark;
 }
+
+.pagination{
+    float:right;
+    position:absolute;
+    margin-top:20px;
+    margin-bottom:20px;
+}
+
 
 #transactions-buttons-container {
     margin-bottom: 50px;

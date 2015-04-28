@@ -37,14 +37,36 @@ $(document).ready( function () {
 	history.navigationMode = 'compatible';
 
 	$('#new-item-button').click( function () {
-		$('#modal').fadeIn(500);
+		$.ajax({
+			url: '/items/create_item',
+			method: 'POST',
+			dataType: 'script',
+			success: function () {
+				document.querySelector('#new-item-cancel').addEventListener('click', function(event) {
+			    $('#modal').fadeOut(500);
+				});
+				document.querySelector('#modal-overlay').addEventListener('click', function(event) {
+			    $('#modal').fadeOut(500);
+				});
+				document.querySelector('#new-item-add').addEventListener('click', function(event) {
+					var name = document.getElementById('item_name').value;
+					var price = document.getElementById('item_price').value;
+					var quantity = document.getElementById('item_quantity').value;
+					var status = document.getElementById('item_status').value;
+					var kind = document.getElementById('item_kind').value;
+					item_dict = {'name': name, 'price': price, 'quantity': quantity, 'status':status, 'kind':kind};
+					$.ajax({
+						url: '/items',
+						method: 'POST',
+						data: {
+							item: item_dict
+						}
+					});
+				});
+			}
+		});
 	});
-	$('#new-item-cancel').click( function () {
-		$('#modal').fadeOut(500);
-	});
-	$('#modal-overlay').click( function () {
-		$('#modal').fadeOut(500);
-	});
+	
 	// $('#cart-panel').on('click', '#cart-button', function () {
 	// 	manageCart();
 	// });
@@ -149,33 +171,10 @@ $(document).ready( function () {
 				additional += 1;
 			}
 		}
-
-		// var line_items = document.getElementsByClassName('line_item_expanded');
-		// var visible_line_items = false;
-		// var line_item_headers = document.getElementsByClassName('line_item_headers');
-		// for (i = 0; i < line_items.length; i++) {
-		// 	if (line_items[i].style.display) {
-		// 		visible_line_items = true;
-		// 	}
-		// }
-		// if (visible_line_items == false) {
-		// 	for (i = 0; i < line_item_headers.length; i++) {
-		// 		line_item_headers[i].style.visibility = "hidden";
-		// 	}
-		// }
-		// else {
-		// 	for (i = 0; i < line_item_headers.length; i++) {
-		// 		line_item_headers[i].style.visibility = "visibile";
-		// 	}
-		// }
-
-
 	});
-	// $('#new-item-container').click( function (e) {
-	// 	e.stopPropagation();
-	// })
-
 });
+
+
 
 document.onkeydown=function(){
     if(window.event.keyCode=='13'){
@@ -220,6 +219,54 @@ function updateCart( id ) {
 	});
 }
 
+function showItem( id ) {
+	$.ajax({
+		url: '/items/show_item',
+		data: { 'id' : id },
+		method: 'POST',
+		dataType: 'script',
+		success: function() {
+			var item_id = id;
+			document.querySelector('#show-item-back').addEventListener('click', function(event) {
+		    $('#modal').fadeOut(500);
+			});
+			document.querySelector('#modal-overlay').addEventListener('click', function(event) {
+			    $('#modal').fadeOut(500);
+				});
+			document.querySelector('#show-item-delete').addEventListener('click', function(event) {
+				$.ajax({
+					url: '/items/' + item_id+'/delete',
+					method: 'POST'
+				});
+			});
+			document.querySelector('#show-item-update').addEventListener('click', function(event) {
+					var name = document.getElementById('item_name').value;
+					var price = document.getElementById('item_price').value;
+					var quantity = document.getElementById('item_quantity').value;
+					var status = document.getElementById('item_status').value;
+					var kind = document.getElementById('item_kind').value;
+					item_dict = {'name': name, 'price': price, 'quantity': quantity, 'status':status, 'kind':kind};
+					$.ajax({
+						url: '/items/'+item_id+'/update',
+						method: 'POST',
+						data: {
+							item: item_dict
+						}
+					});
+				});
+		}
+	});
+}
+
+	// $('#show-item-back').click( function () {
+	// 		$('#modal').fadeOut(500);
+	// 	});
+	// 	$('#show-item-update').click( function () {
+	// 		$('#modal').fadeOut(500);
+	// 	});
+	// 	$('#modal-overlay').click( function () {
+	// 		$('#modal').fadeOut(500);
+	// 	});
 
 function search () {
 	$.ajax({
@@ -246,6 +293,8 @@ function search () {
 		} else {
 			$('.add-column').show();
 		}
+		$("#phrase").val("")
+		$(".tt-dropdown-menu").hide();
 	});
 }
 

@@ -12,6 +12,9 @@ group :test, :development do
   gem 'rspec-rails', '~> 2.14.0'
   gem 'simplecov'
   gem 'factory_girl_rails'
+
+  gem 'faker'
+  gem 'populator'
 end
 
 group :production do
@@ -41,6 +44,7 @@ gem 'haml'
 gem 'inline_svg'
 gem 'turbolinks'
 
+#search engine and suggestion engine
 gem 'twitter-typeahead-rails'
 gem 'searchkick'
 gem 'elasticsearch-model'
@@ -48,5 +52,10 @@ gem 'elasticsearch-rails'
 gem 'bonsai-elasticsearch-rails'
 
 
+#pagination
+gem 'kaminari'
+
+#authentication
 gem 'rubycas-client'
+
 

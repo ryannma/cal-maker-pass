@@ -9,7 +9,7 @@
         / #warning.message= flash[:warning]
         :javascript
           showAlert("#{flash[:warning]}");
-    = form_tag(find_path, :id => "search_form") do
+      / = form_tag(find_path, :id => "search_form") do
       #search-bar-container
         = text_field_tag 'phrase' , nil , :autofocus => true , :placeholder => "Search...", :class => "typeahead"
         = inline_svg "eye.svg", class: "eye-svg"
@@ -19,6 +19,7 @@
         = inline_svg "plus.svg", class: "plus-svg svg"
     #inventory-wrapper
       =render partial: "inventory_table"
-    
-=render partial: "new_item"
+    #pagination-wrapper
+      =render partial: "pagination"
+=render partial: "modal"
 =render partial: "cart"
