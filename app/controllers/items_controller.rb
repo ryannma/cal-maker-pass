@@ -45,8 +45,17 @@ class ItemsController < ApplicationController
     end
   end
 
-  def show_item
+  def create_item
     # puts "hi"*1000
+    @item = nil
+    @mode = "create"
+    @all_status = Item.all_status
+    respond_to do |format|
+      format.js {}
+    end
+  end
+
+  def show_item
     @item = Item.find(params[:id])
     @all_status = Item.all_status
     @mode = "show"
@@ -72,6 +81,17 @@ class ItemsController < ApplicationController
   def add_item
     cart = session[:cart] || Cart.new
     cart.add_item(params[:id])
+    @cart_items = cart.cart_items
+    @cart_total = cart.total
+    respond_to do |format|
+      format.js {}
+    end
+    session[:cart] = cart
+  end
+
+  def delete_cart_item
+    cart = session[:cart] || return
+    cart.delete_item(params[:id])
     @cart_items = cart.cart_items
     @cart_total = cart.total
     respond_to do |format|

@@ -1,0 +1,3 @@
+$('#cart-items').html(
+	"<%= escape_javascript render(:partial => 'cart_items', :locals => {:cart_items => @cart_items, :cart_total => @cart_total}) %>"
+);
