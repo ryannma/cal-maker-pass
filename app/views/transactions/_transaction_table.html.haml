@@ -14,7 +14,10 @@
           %td
             .transaction-arrow
           %td= link_to transaction.created_at.strftime("%I:%M%P %m/%d/%Y "), transaction_path(transaction)
-          %td= transaction.user.name()
+          - if transaction.user != nil
+            %td= transaction.user.name()
+          - else
+            %td= "Unknown"
           %td= transaction.purpose
           %td
           %td
