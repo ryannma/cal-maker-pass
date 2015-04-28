@@ -59,4 +59,5 @@ gem 'kaminari'
 #authentication
 gem 'rubycas-client'
 
+gem 'jquery-turbolinks'
 
