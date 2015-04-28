@@ -119,6 +119,7 @@ thead {
 
 #inventory-table .sorter {
     cursor: pointer;
+    padding: 0px 10px;
 /*
     width: 100%;
     display: block;
@@ -136,7 +137,7 @@ thead tr {
 }
 
 tbody tr {
-    height: 35px;
+    height: 40px;
 }
 
 #inventory-table .sort-hide {
