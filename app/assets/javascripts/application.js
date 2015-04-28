@@ -66,7 +66,6 @@ $(document).ready( function () {
 			}
 		});
 	});
-	
 	// $('#cart-panel').on('click', '#cart-button', function () {
 	// 	manageCart();
 	// });
@@ -236,6 +235,9 @@ function showItem( id ) {
 		dataType: 'script',
 		success: function() {
 			var item_id = id;
+			document.querySelector('#modal-overlay').addEventListener('click', function(event) {
+			    $('#modal').fadeOut(500);
+				});
 			document.querySelector('#show-item-back').addEventListener('click', function(event) {
 		    $('#modal').fadeOut(500);
 			});
