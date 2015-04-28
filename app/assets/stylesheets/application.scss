@@ -356,12 +356,14 @@ tbody tr {
     margin-bottom: 30px;
 }
 
-.inventory-table-link:visited, .inventory-table-link:active, .inventory-table-link:link {
-    color: $blue-dark;
-    border-bottom: 1px solid $blue-sea;
+#inventory-table td:first-child {
+    max-width: 100px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow-x: hidden;
 }
 
-.inventory-table-link:visited, .inventory-table-link:active, .inventory-table-link:link {
+.inventory-table-name:visited, .inventory-table-name:active, .inventory-table-name:link {
     color: $blue-dark;
     border-bottom: 1px solid $blue-sea;
 }
@@ -556,6 +558,10 @@ tbody tr {
     line-height: 40px;
     float: right;
     clear: left;
+    text-overflow: ellipsis;
+    overflow-y: hidden;
+    white-space: nowrap;
+    width: 100px;
 }
 
 .cart-item-quantity {
@@ -574,6 +580,12 @@ tbody tr {
     float: right;
     line-height: 40px;
     margin-right: 10px;
+    transition: .3s;
+    color: $blue-dark;
+}
+
+.cart-item-delete:hover {
+    transform:rotate(90deg);
 }
 
 .cart-label {

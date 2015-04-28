@@ -20,7 +20,7 @@
   %tbody
     - @items.each do |item|
       %tr
-        %td= link_to_function item.name, "showItem(#{item.id})", class: "inventory-table-link"
+        %td= link_to_function item.name, "showItem(#{item.id})", class: "inventory-table-name", title: item.name
         %td= item.quantity
         %td= item.price 
         %td= item.kind

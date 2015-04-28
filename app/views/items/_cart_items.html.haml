@@ -4,5 +4,5 @@
     .cart-item 
       = link_to_function "x", "deleteCartItem(#{cart_item.item_id})", class: "cart-item-delete"
       = text_field "item#{index}", :quantity, value: cart_item.quantity, class: "cart-item-quantity"
-      = label "item#{index}", :name, cart_item.name, class: "cart-item-name"
+      = label "item#{index}", :name, cart_item.name, class: "cart-item-name", title: cart_item.name
       - index = index + 1
