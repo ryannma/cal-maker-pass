@@ -275,15 +275,49 @@ function showItem( id ) {
 	});
 }
 
-	// $('#show-item-back').click( function () {
-	// 		$('#modal').fadeOut(500);
-	// 	});
-	// 	$('#show-item-update').click( function () {
-	// 		$('#modal').fadeOut(500);
-	// 	});
-	// 	$('#modal-overlay').click( function () {
-	// 		$('#modal').fadeOut(500);
-	// 	});
+function editUser(id) {
+    setupModal('user', id, 'edit', ['first_name', 'last_name', 'sid', 'email', 'privilege'], 'GET');
+}
+
+function setupModal(controller, id, method, form_attributes, ajax_method) {
+	$.ajax({
+		url: '/'+controller+'s/'+id+'/'+method,
+		data: { 'id' : id },
+		method: ajax_method,
+		dataType: 'script',
+		success: function() {
+			var obj_id = id;
+			document.querySelector('#modal-overlay').addEventListener('click', function(event) {
+			    $('#modal').fadeOut(500);
+				});
+			document.querySelector('#'+method+'-'+controller+'-back').addEventListener('click', function(event) {
+		    $('#modal').fadeOut(500);
+			});
+			document.querySelector('#modal-overlay').addEventListener('click', function(event) {
+			    $('#modal').fadeOut(500);
+				});
+			document.querySelector('#'+method+'-'+controller+'-delete').addEventListener('click', function(event) {
+				$.ajax({
+					url: '/'+controller+'s/'+obj_id+'/delete',
+					method: 'POST'
+				});
+			});
+			document.querySelector('#'+method+'-'+controller+'-update').addEventListener('click', function(event) {
+                obj_dict = {}
+                for (var key in form_attributes) {
+                    obj_dict.key = document.getElementById(controller+'_'+key).value;
+                }
+                $.ajax({
+                    url: '/'+controller+'s/'+obj_id+'/update',
+                    method: 'POST',
+                    data: {
+                        controller: obj_dict
+                    }
+                });
+            });
+		}
+	});
+}
 
 function search () {
 	$.ajax({

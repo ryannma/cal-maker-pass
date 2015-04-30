@@ -10,12 +10,20 @@ class User < ActiveRecord::Base
   end
 
   def admin?
-    admin = Admin.where(user_id: @id)
-    if admin.empty?
+    if admins.empty?
       return false
-    else
-      return true
     end
+    return true
   end
 
+  def privilege_lvl
+    lvl = 0
+    if admin?
+      lvl = 1
+      if not admins.where(superadmin = true).empty?
+        lvl = 2
+      end
+    end
+    lvl
+  end
 end

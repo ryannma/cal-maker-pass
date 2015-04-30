@@ -1,0 +1,21 @@
+#users-panel.users-panel-expanded
+  .table-container
+    #info-container
+      - if flash[:notice]
+        :javascript
+          showAlert("#{flash[:notice]}");
+      - elsif flash[:warning]
+        :javascript
+          showAlert("#{flash[:warning]}");
+    #search-bar-container
+      = text_field_tag 'phrase' , nil , :autofocus => true , :placeholder => "Search...", :class => "typeahead"
+      = inline_svg "eye.svg", class: "eye-svg"
+    #users-buttons-container.buttons-container
+      = link_to 'All', users_path(:privilege=>nil), class: 'button button-blue'
+      = link_to 'Sellers', users_path(:privilege=>'admin'), class: 'button button-red'
+      = link_to 'Managers', users_path(:privilege=>'superadmin'), class: 'button button-red'
+    #users-wrapper
+      =render partial: "user_table"
+    #pagination-wrapper
+      =render partial: "pagination"
+=render partial: "modal"

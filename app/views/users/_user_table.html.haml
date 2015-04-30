@@ -1,0 +1,21 @@
+%table#user-table
+  %thead
+    %tr
+      %th First Name
+      %th Last Name
+      %th SID
+      %th Email
+      %th Privilege
+    %tbody
+      - @users.each do |user|
+        %tr
+          %td= link_to_function user.first_name, "editUser(#{user.id})", class: "user-table-link"
+          %td= user.last_name
+          %td= user.sid
+          %td= user.email
+          - if user.privilege_lvl==0
+            %td= "None"
+          - elsif user.privilege_lvl==1
+            %td= "Seller"
+          - else
+            %td= "Manager"
