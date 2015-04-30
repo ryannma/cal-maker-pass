@@ -22,5 +22,6 @@ Makerpass::Application.routes.draw do
   #TRANSACTION
   post "/transactions/new/:cart", to: "transactions#new", as: "new_transaction"
   post "/transactions/checkout", to: "transactions#checkout", as: "checkout"
+  post "/transactions/sort", to: "transactions#sort", as: "trans_sort"
 
 end

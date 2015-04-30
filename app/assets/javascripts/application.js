@@ -99,6 +99,29 @@ $(document).ready( function () {
 		});
 	});
 
+	$('#transaction-table').on('click', '.sorter', function () {
+		var sort_trans_by = $(this).prop('id');
+		$.ajax({
+			url: '/transactions/sort',
+			data: { 'sort_trans_by' : sort_trans_by },
+			method: 'POST',
+			dataType: 'script'
+		}).done( function () {
+			var sort_trans_type = $('#transaction-table').attr('data-sort-trans-type');
+			var id = '#' + sort_trans_by;
+			var svg = id + ' svg';
+			var span = id + ' span';
+			$(id).addClass('hilite');
+			if (sort_trans_type == 'ascending') {
+				$(span).addClass('sort-align')
+				$(svg).attr('class', 'sort-show-down');
+			} else if (sort_type == 'descending') {
+				$(span).addClass('sort-align')
+				$(svg).attr('class', 'sort-show-up');
+			}		
+		});
+	});
+
 	$('#phrase.typeahead').typeahead({
 		  hint: true,
 		  highlight: true,

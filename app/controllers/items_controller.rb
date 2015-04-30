@@ -14,6 +14,7 @@ class ItemsController < ApplicationController
         @display_cart << {name: cart_item.name, quantity: cart_item.quantity}
       end
     end
+    
     save_inv_params
   end
 

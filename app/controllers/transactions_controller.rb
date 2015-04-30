@@ -4,54 +4,14 @@ class TransactionsController < ApplicationController
     current_user = User.where(uid: session[:cas_user])[0]
     admin_user = Admin.find_by_user_id(current_user.id)
 
-    if params.has_key?(:sort)
-      @sort = params[:sort]
-      session[:sort] = params[:sort]
-    elsif session.has_key?(:sort)
-      @sort = session[:sort]
-      need_redirect = true
-    else
-      @sort = nil
-    end
+    get_trans_params
+    @transactions = Transaction.order(@sort_trans_by)
+    save_trans_params
 
-    if params.has_key?(:all)
-      @all = params[:all]
-      session[:all] = params[:all]
-    elsif session.has_key?(:all)
-      @all = session[:all]
-      need_redirect = true
-    else
-      @all = false
-      session[:all] = false
-    end
-
-    if (@all == false && admin_user != nil) || (@all == "false" && admin_user != nil)
-      if @sort == 'customer'
-        @transactions = Transaction.where(admin_id: admin_user.id).includes(:user).order("users.last_name")
-      elsif @sort == 'purpose'
-        @transactions = Transaction.where(admin_id: admin_user.id).order(:purpose)
-      elsif @sort == 'date'
-        @transactions = Transaction.where(admin_id: admin_user.id).order(:created_at)
-      else
-        unless admin_user.nil?
-          @transactions = Transaction.where(admin_id: admin_user.id)
-        else
-          @transactions = []
-        end
-      end
-    elsif @all == true || @all == "true"
-      if @sort == 'customer'
-        @transactions = Transaction.includes(:user).order("users.last_name")
-      elsif @sort == 'purpose'
-        @transactions = Transaction.order(:purpose)
-      elsif @sort == 'date'
-        @transactions = Transaction.order(:created_at)
-      else
-        @transactions = Transaction.all
-      end
-    else
-      @transactions = []
-    end
+    puts("@@@@@ INDEX @TRANSACTIONS @@@@@")
+    puts(@transactions)
+    puts("@@@@@ THISSSS @@@@@@")
+    puts(@transactions[0].to_s)
   end
 
 
@@ -86,4 +46,74 @@ class TransactionsController < ApplicationController
   def show
     @transaction = Transaction.find(params[:id])
   end
+
+  def sort
+    puts("@@@@@ SORT @TRANSACTIONS @@@@@")
+    puts(@transactions)
+    get_trans_params
+    @transactions = Transaction.all
+    Transaction.sort(@transactions, @sort_trans_by, @sort_trans_type, @all, @admin_user)
+    respond_to do |format|
+      format.js{}
+    end
+    save_trans_params
+  end
+
+  private
+
+  ## sorting logic
+
+  def should_find?
+    false
+    #params.has_key?(:phrase) # || (session.has_key?(:phrase) && !session[:phrase].nil?) 
+  end
+
+  def should_sort?
+    params.has_key?(:sort_trans_by)
+  end
+
+  def sorted_before?
+    session.has_key?(:sort_trans_by) && !session[:sort_trans_by].nil?
+  end
+
+  # gets @sort_by, @sort_type, and @phrase
+  def get_trans_params
+    if should_sort?
+      @sort_trans_by = params[:sort_trans_by]
+      # accounts for first time sorting in current session
+      if !sorted_before?
+        @sort_trans_type = 'ascending'
+      # accounts for clicking an already sorted column to change the sort type (ascending <-> descending)  
+      elsif sorted_before? && (params[:sort_trans_by] == session[:sort_trans_by])
+        session[:sort_trans_type] == 'ascending' ? (@sort_trans_type = 'descending') : (@sort_trans_type = 'ascending')
+      # accounts for having sorted one column and now sorting a different column
+      elsif sorted_before? && (params[:sort_trans_by] != session[:sort_trans_by])
+        @sort_trans_type = 'ascending'
+      end
+    elsif sorted_before?
+      @sort_trans_by, @sort_trans_type = session[:sort_trans_by], session[:sort_trans_type]
+      # only store state of previous request
+      #session[:sort_by], session[:sort_type] = nil, nil
+    else
+      @sort_trans_by, @sort_trans_type = nil, nil
+    end
+    # if should_find?
+    #   params.has_key?(:phrase) ? (@phrase = params[:phrase]) : (@phrase = session[:phrase])
+    # else
+    #   @phrase = nil
+    # end
+    # @phrase = params[:phrase]
+    @all = params[:all] || session[:all]
+    @admin_user = params[:admin_user] || session[:admin_user]
+  end
+
+  # remember recent transaction conditions (filter & order)
+  def save_trans_params
+    # session[:phrase] = @phrase
+    session[:sort_by] = @sort_by
+    session[:sort_type] = @sort_type
+    session[:all] = @all
+    session[:admin_user] = @admin_user
+  end
+
 end

@@ -140,8 +140,8 @@ tbody tr {
 }
 
 #inventory-table .sort-hide {
-    width: 20px;
-    height: 20px;
+    width: 14px;
+    height: 23px;
     fill: white;
     position: relative;
     top: 5px;
@@ -149,7 +149,7 @@ tbody tr {
 }
 
 #inventory-table .sort-show-down {
-    width: 23px;
+    width: 14px;
     height: 23px;
     fill: $blue-dark;
     position: relative;
@@ -157,12 +157,32 @@ tbody tr {
 }
 
 #inventory-table .sort-show-up {
-    width: 23px;
+    width: 14px;
     height: 23px;
     fill: $blue-dark;
     position: relative;
     top: 2px;
     transform: rotate(180deg);
+}
+
+.sorter#name {
+    min-width: 200px;
+}
+
+.sorter#quantity {
+    min-width: 120px;
+}
+
+.sorter#price {
+    min-width: 100px;
+}
+
+.sorter#kind {
+    min-width: 100px;
+}
+
+.sorter#status {
+    min-width: 110px;
 }
 
 .sort-align {

@@ -1,36 +1,43 @@
-%table#transaction-table
+%table#transaction-table{ data: {sort_trans_by: @sort_trans_by, sort_trans_type: @sort_trans_type} }
   %thead
     %tr
-      %th{:style => "visibility: hidden;"}
-      %th{:class => ('hilite' if @sort == 'date') , :id => 'title_header'}= link_to "Date", transactions_path(:sort => 'date')
-      %th{:class => ('hilite' if @sort == 'customer'), :id => 'title_header'}= link_to "Customer", transactions_path(:sort => 'customer')
-      %th{:class => ('hilite' if @sort == 'purpose'), :id => 'title_header'}= link_to "Purpose", transactions_path(:sort => 'purpose')
+
+      %th.sorter#date
+        %span Date
+        = inline_svg "sort.svg", class: "sort-hide"
+      %th.sorter#customer
+        %span Customer
+        = inline_svg "sort.svg", class: "sort-hide"
+      %th.sorter#purpose
+        %span Purpose
+        = inline_svg "sort.svg", class: "sort-hide"
       %th{:class => "line_item_headers", :style => "visibility: visible;"} Item
       %th{:class => "line_item_headers", :style => "visibility: visible;"} Quantity
       %th{:class => "line_item_headers", :style => "visibility: visible;"} Action
-    %tbody
-      - @transactions.each do |transaction|
-        %tr{:class =>'clickable_row'}
+
+  %tbody
+    - @transactions.each do |transaction|
+      %tr{:class =>'clickable_row'}
+        %td
+          .transaction-arrow
+        %td= link_to transaction.created_at.strftime("%I:%M%P %m/%d/%Y "), transaction_path(transaction)
+        - if transaction.user != nil
+          %td= transaction.user.name()
+        - else
+          %td= "Unknown"
+        %td= transaction.purpose
+        %td
+        %td
+        %td
+      - transaction.line_items.each do |line_item|
+        %tr{:class=>'line_item_row', :style=>"display: none;"}
           %td
-            .transaction-arrow
-          %td= link_to transaction.created_at.strftime("%I:%M%P %m/%d/%Y "), transaction_path(transaction)
-          - if transaction.user != nil
-            %td= transaction.user.name()
-          - else
-            %td= "Unknown"
-          %td= transaction.purpose
           %td
           %td
           %td
-        - transaction.line_items.each do |line_item|
-          %tr{:class=>'line_item_row', :style=>"display: none;"}
-            %td
-            %td
-            %td
-            %td
-            %td= line_item.item.name
-            %td= line_item.quantity
-            %td= line_item.action
-        
-            
+          %td= line_item.item.name
+          %td= line_item.quantity
+          %td= line_item.action
+      
+          
 
