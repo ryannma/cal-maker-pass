@@ -3,9 +3,7 @@ rvm:
   - 1.9.3
 env:
   - DB=postgresql
-addons:
-  code_climate:
-    report_token: 620976b86463d8b3d0a4192ed64835ad39fde91ae36c1a4b1085b33fb8c5ba55
+  - CODECLIMATE_REPO_TOKEN=620976b86463d8b3d0a4192ed64835ad39fde91ae36c1a4b1085b33fb8c5ba55
 before_script:
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
