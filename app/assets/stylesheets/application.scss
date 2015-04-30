@@ -417,7 +417,8 @@ tbody tr {
 
 }
 
-#item-container {
+#item-container,
+#user-container {
     background: $white;
     opacity: 0.9;
     position: absolute;
@@ -429,7 +430,8 @@ tbody tr {
     border-radius: 3px;
 }
 
-.item-label {
+.item-label,
+.user-label {
     float: left;
     clear: left;
     width: 80px;
@@ -439,7 +441,8 @@ tbody tr {
     font-size: 18px;
 }
 
-.item-input {
+.item-input,
+.user-input {
     float: left;
     clear: right;
     height: 28px;
@@ -508,7 +511,8 @@ tbody tr {
     width: 80px;
 }
 
-.show-item-input {
+.show-item-input,
+.edit-user-input {
     float: left;
     clear: right;
     height: 28px;
