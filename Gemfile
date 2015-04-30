@@ -13,7 +13,7 @@ group :test, :development do
   gem 'simplecov'
   gem 'factory_girl_rails'
   gem 'selenium-webdriver', '~> 2.45.0'
-
+  gem 'codeclimate-test-reporter', :require=>nil
 end
 
 group :production do
