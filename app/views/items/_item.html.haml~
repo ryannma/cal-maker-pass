@@ -1,0 +1,23 @@
+#item-container
+	= label :item, :name, 'Name', class: "item-label"
+	= text_field :item, :name, class: "item-input"
+	= label :item, :price, 'Price', class: "item-label"
+	= text_field :item, :price, class: "item-input"
+
+	= label :item, :quantity, 'Quantity', class: "item-label"
+	= text_field :item, :quantity, class: "item-input"
+
+	= label :item, :status, 'Status', class: "item-label"
+	= select :item, :status, @all_status.each {|t| [t.capitalize, t ] }, {}, {class: "item-input"}
+
+	= label :item, :kind, 'Type', class: "item-label"
+	= text_field :item, :kind, class: "item-input"
+
+	.buttons-container
+		- if @mode == "show"
+			#show-item-back.button.button-red Back
+			#show-item-update.button.button-blue 	Update
+			#show-item-delete.button.button-red 	Delete
+		- else
+			%a{ href: "#", id: "new-item-add" }#new-item-add.button.button-blue Add
+			#new-item-cancel.button.button-red Cancel
