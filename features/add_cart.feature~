@@ -1,8 +1,8 @@
-Feature: Checkout items
+Feature: Add item to cart
 
   As an admin
-  I want to be able to checkout an order
-  So that I can sell items to customers
+  I want to add items that I wish to lend or sell to a cart
+  So that I can preview all my items before checking 
 
 Background: items have been added to the database
   
@@ -14,21 +14,15 @@ Background: items have been added to the database
   | screw | 3.0 | 0 | lend | EE |
 
   And a user is logged in
-  And a user is also an admin
 
 @javascript
-Scenario: SID required
-  Given I add "capacitor" to cart
-  When I click the checkout button
-  Then I should see an alert
+Scenario: add an item to cart
+  When I add "capacitor" to cart
+  Then I should see "capacitor" in cart
 
 @javascript
-Scenario: Checkout items
+Scenario: remove an item from cart
   Given I add "capacitor" to cart
     And I add "resistor" to cart
-    And I add "conductor" to cart
-  When I enter 234234 as my SID
-    And I click the checkout button
-  Then I should be on the items page
-
-
+  When I remove "capacitor" from cart
+  Then I should not see "capacitor" in cart

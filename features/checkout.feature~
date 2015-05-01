@@ -30,5 +30,3 @@ Scenario: Checkout items
   When I enter 234234 as my SID
     And I click the checkout button
   Then I should be on the items page
-
-

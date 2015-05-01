@@ -42,8 +42,8 @@ Scenario: view own sales
 Scenario: transactions are sortable
   Given I go to the transactions page
   When I sort by date
-  And I sort by customer
-  And I sort by purpose
+    And I sort by customer
+    And I sort by purpose
   Then I should see 2 transactions
 
 

@@ -23,6 +23,6 @@ Scenario: add an item to cart
 @javascript
 Scenario: remove an item from cart
   Given I add "capacitor" to cart
-    And I add "resistor" to cart
+  And I add "resistor" to cart
   When I remove "capacitor" from cart
   Then I should not see "capacitor" in cart
