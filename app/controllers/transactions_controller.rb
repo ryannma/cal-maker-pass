@@ -91,13 +91,13 @@ class TransactionsController < ApplicationController
   end
 
   def show
-    @transactions = Transaction.find(params[:id])
+    @transaction = Transaction.find(params[:id])
   end
 
   def balances
     respond_to do |format|
-      format.csv { send_data Transaction.balances_csv(@transactions) }
-      format.xls { send_data Transaction.balances_csv(@transactions, col_sep: "\t") }
+      format.csv { send_data Transaction.balances_csv(@transaction) }
+      format.xls { send_data Transaction.balances_csv(@transaction, col_sep: "\t") }
     end
   end
 
