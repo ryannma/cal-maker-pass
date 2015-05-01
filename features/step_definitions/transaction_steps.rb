@@ -29,9 +29,9 @@ When /^(?:|I )click checkout$/ do
   if have_css(".cart-panel-hidden") != nil
     find("#cart-button").click
   end
-  Capybara.ignore_hidden_elements = true
-  find("#checkout-button").click
   Capybara.ignore_hidden_elements = false
+  find("#checkout-button").click
+  Capybara.ignore_hidden_elements = true
 end
 
 When /^(?:|I )click all$/ do 
