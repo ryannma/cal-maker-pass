@@ -26,12 +26,12 @@ When /^(?:|I )remove "(.*)" from cart$/ do |item|
 end
 
 When /^(?:|I )click checkout$/ do
-  if have_css(".cart-panel-hidden") != nil
+  if !have_css("div.cart-panel-hidden")
     find("#cart-button").click
   end
-  Capybara.ignore_hidden_elements = false
-  find("#checkout-button").click
   Capybara.ignore_hidden_elements = true
+  find("#checkout-button").click
+  Capybara.ignore_hidden_elements = false
 end
 
 When /^(?:|I )click all$/ do 
@@ -54,11 +54,20 @@ When /^(?:|I )click transaction (\d+)$/ do |transaction_id|
   end
 end
 
-When /^(?:|I )sort by (.*)$/ do |sort_key|
+When /^(?:|I )sort transactions by (.*)$/ do |sort_key|
   within('#transaction-table') do
     page.find(:xpath, "//a[@href='/transactions?sort=#{sort_key}']").click
   end
 end
+
+When /^(?:|I )export balances$/ do
+  page.find(:xpath, "//a[@href='/transactions/balances.csv']").click
+end
+
+When /^(?:|I )export transactions$/ do
+  page.find(:xpath, "//a[@href='/transactions.csv']").click
+end
+
 
 Then /^(?:|I )should see an alert$/ do
   page.driver.browser.switch_to.alert.accept
@@ -74,4 +83,12 @@ end
 
 Then /^(?:|I )should see (\d+) (?:transaction|transactions)$/ do |number_of_rows|
   expect(page).to have_selector('.clickable_row', count: number_of_rows)
+end
+
+Then /^I should receive a file(?: "([^"]*)")?/ do |file|
+  result = page.response_headers['Content-Type'].should == "application/octet-stream"
+  if result
+    result = page.response_headers['Content-Disposition'].should =~ /#{file}/
+  end
+  result
 end

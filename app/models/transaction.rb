@@ -11,7 +11,11 @@ class Transaction < ActiveRecord::Base
 			transactions.each do |transaction|
 				super_row = []
 				super_row << transaction.created_at
-				super_row << transaction.user.name
+				if (transaction.user == nil)
+					super_row << "unknown"
+				else
+					super_row << transaction.user.name
+				end
 				super_row << transaction.purpose
 				transaction.line_items.each do |line_item|
 					sub_row = Array.new(super_row)
@@ -30,10 +34,12 @@ class Transaction < ActiveRecord::Base
 			csv << csv_headers
 			Transaction.unique_users.each do |user|
 				row = []
-				row << user.sid
-				row << user.name
-				row << user.balance.to_s
-				csv << row
+				if user != nil
+					row << user.sid
+					row << user.name
+					row << user.balance.to_s
+					csv << row
+				end
 			end
 		end
 	end

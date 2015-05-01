@@ -25,8 +25,6 @@ Scenario: SID required
 @javascript
 Scenario: Checkout items
   Given I add "capacitor" to cart
-    And I add "resistor" to cart
-    And I add "conductor" to cart
   When I enter 234234 as my SID
     And I click checkout
   Then I should be on the items page

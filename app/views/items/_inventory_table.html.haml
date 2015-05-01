@@ -1,19 +1,19 @@
 %table#inventory-table{ data: {sort_by: @sort_by, sort_type: @sort_type} }
   %thead
     %tr
-      %th.sorter#name
+      %th.sorter#name-header
         %span Item
         = inline_svg "sort.svg", class: "sort-hide"
-      %th.sorter#quantity
+      %th.sorter#quantity-header
         %span Quantity
         = inline_svg "sort.svg", class: "sort-hide"
-      %th.sorter#price
+      %th.sorter#price-header
         %span Price
         = inline_svg "sort.svg", class: "sort-hide"
-      %th.sorter#kind
+      %th.sorter#kind-header
         %span Kind
         = inline_svg "sort.svg", class: "sort-hide"
-      %th.sorter#status
+      %th.sorter#status-header
         %span Status
         = inline_svg "sort.svg", class: "sort-hide"
       %th.add-column Add

@@ -41,9 +41,18 @@ Scenario: view own sales
 
 Scenario: transactions are sortable
   Given I go to the transactions page
-  When I sort by date
-    And I sort by customer
-    And I sort by purpose
+  When I sort transactions by date
+    And I sort transactions by customer
+    And I sort transactions by purpose
   Then I should see 2 transactions
+
+Scenario: transactions on all view are sortable
+  Given I go to the transactions page
+    And I click all
+  When I sort transactions by date
+    And I sort transactions by customer
+    And I sort transactions by purpose
+  Then I should see 2 transactions
+
 
 
