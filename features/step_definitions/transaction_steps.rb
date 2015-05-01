@@ -34,6 +34,10 @@ When /^(?:|I )click all$/ do
   find(".button-blue").click
 end
 
+When /^(?:|I )click own$/ do
+  find(".button-red").click
+end
+
 When /^(?:|I )enter (\d+) as my SID$/ do |sid|
   step "I go to the items page"
   find("#cart-button").click
@@ -43,6 +47,12 @@ end
 When /^(?:|I )click transaction (\d+)$/ do |transaction_id|
   within('#transaction-table') do
     page.find(:xpath, "//a[@href='/transactions/#{transaction_id}']").click
+  end
+end
+
+When /^(?:|I )sort by (.*)$/ do |sort_key|
+  within('#transaction-table') do
+    page.find(:xpath, "//a[@href='/transactions?sort=#{sort_key}']").click
   end
 end
 

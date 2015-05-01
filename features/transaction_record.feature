@@ -26,7 +26,7 @@ Background: items have been added to the database
 Scenario: see list of transactions
   When I go to the transactions page
     And I click all
-  Then I should see 2 transaction
+  Then I should see 2 transactions
 
 @javascript
 Scenario: view transaction details
@@ -35,5 +35,18 @@ Scenario: view transaction details
   When I click transaction 1
   Then I should be on the detail page for transaction 1
 
+@javascript
+Scenario: view own sales
+  Given I go to the transactions page
+  When I click own
+  Then I should see 2 transactions
+
+@javascript
+Scenario: transactions are sortable
+  Given I go to the transactions page
+  When I sort by date
+    And I sort by customer
+    And I sort by purpose
+  Then I should see 2 transactions
 
 
