@@ -13,3 +13,10 @@ And /a user is logged in/ do
   step "I press \"Sign Up\""
 
 end
+
+Given /a user is also an admin/ do
+  user = User.find(1)
+  admin = Admin.create()
+  admin.user = user
+  admin.save
+end

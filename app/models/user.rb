@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
 
   def admin?
     admin = Admin.where(user_id: @id)
-    if admin.empty?
+    if admin.nil?
       return false
     else
       return true

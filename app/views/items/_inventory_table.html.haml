@@ -26,5 +26,5 @@
         %td= item.kind
         %td= item.status
         %td.add-column
-          %a{ href: "#", onclick: "updateCart(#{item.id});" }
+          %a{ href: "#", id: "add-#{item.name.parameterize}", onclick: "updateCart(#{item.id});" }
             = inline_svg "plus.svg", class: "add-svg"

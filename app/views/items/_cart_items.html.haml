@@ -2,7 +2,7 @@
   - index = 0
   - @cart_items.each do |cart_item|
     .cart-item 
-      = link_to_function "x", "deleteCartItem(#{cart_item.item_id})", class: "cart-item-delete"
+      = link_to_function "x", "deleteCartItem(#{cart_item.item_id})", class: "cart-item-delete", id: "delete-#{cart_item.name.parameterize}"
       = text_field "item#{index}", :quantity, value: cart_item.quantity, class: "cart-item-quantity"
       = label "item#{index}", :name, cart_item.name, class: "cart-item-name"
       - index = index + 1
