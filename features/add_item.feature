@@ -19,19 +19,22 @@ Background: items have been added to the database
 #     When I manually add item: capacitor, 3.0, 3, both, EE
 #     Then I should see 'duplicate item'
 
-
+@javascript
 Scenario: add a new item to inventory
     When I manually add item: ishere, 4.0, 10, sell, EE
     Then I should see "ishere"
 
+@javascript
 Scenario: add a item with invalid price
     When I manually add item: nothere, hello , 3, both, EE
     Then I should not see "nothere"
 
+@javascript
 Scenario: add a item with invalid quantity
     When I manually add item: nothere, 3.75 , hello, lend, EE
     Then I should not see "nothere"
 
+@javascript
 Scenario: add a item with invalid quantity
     When I manually add item: nothere, , 3, lend, EE
     Then I should not see "nothere"

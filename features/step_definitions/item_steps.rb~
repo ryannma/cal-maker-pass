@@ -4,6 +4,10 @@ Given /the following items exist/ do |items_table|
   end
 end
 
+Given /a user is calnet logged in/ do
+  CASClient::Frameworks::Rails::Filter.fake("homer")
+end
+
 And /a user is logged in/ do
   CASClient::Frameworks::Rails::Filter.fake("homer")
 
@@ -23,8 +27,8 @@ When /^(?:|I )manually add item: (.*), (.*), (.*), (.*), (.*)/ do |name, price, 
   step "I fill in \"Name\" with \"#{name}\""
   step "I fill in \"Price\" with \"#{price}\""
   step "I fill in \"Quantity\" with \"#{quantity}\""
-  #step "I fill in \"Status\" with " + "\"" + status + "\""
   page.select(status, :from => 'Status')
   step "I fill in \"Type\" with \"#{kind}\""
-  step "I press \"Add\""
+  find("#new-item-add").click
+  page.driver.browser.switch_to.alert.accept
 end

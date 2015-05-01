@@ -1,19 +1,26 @@
 source 'https://rubygems.org'
 
 gem 'rails', '3.2.16'
-
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'sqlite3'
 
 group :test, :development do
+  gem 'sqlite3'
   gem 'cucumber-rails', :require=>false
   gem 'database_cleaner'
   gem 'rspec-rails', '~> 2.14.0'
   gem 'simplecov'
-  gem 'factory_girl'
+  gem 'factory_girl_rails'
+  gem 'selenium-webdriver'
+
 end
+
+group :production do
+  gem 'pg'
+end
+
+gem 'rake'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -28,18 +35,30 @@ group :assets do
 end
 
 gem 'jquery-rails'
+gem 'sprockets'
 
-# To use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.0.0'
+#views
+gem 'haml'
+gem 'inline_svg'
+gem 'turbolinks'
 
-# To use Jbuilder templates for JSON
-# gem 'jbuilder'
+#fake data TODO: remove after the app is finally deployed since they will not be needed
+gem 'faker'
+gem 'populator'
 
-# Use unicorn as the app server
-# gem 'unicorn'
+#search engine and suggestion engine
+gem 'twitter-typeahead-rails'
+gem 'searchkick'
+gem 'elasticsearch-model'
+gem 'elasticsearch-rails'
+gem 'bonsai-elasticsearch-rails'
 
-# Deploy with Capistrano
-# gem 'capistrano'
 
-# To use debugger
-# gem 'debugger'
+#pagination
+gem 'kaminari'
+
+#authentication
+gem 'rubycas-client'
+
+gem 'jquery-turbolinks'
+
