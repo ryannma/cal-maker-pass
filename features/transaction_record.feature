@@ -38,6 +38,7 @@ Scenario: view own sales
   When I click own
   Then I should see 2 transactions
 
+
 Scenario: transactions are sortable
   Given I go to the transactions page
   When I sort by date

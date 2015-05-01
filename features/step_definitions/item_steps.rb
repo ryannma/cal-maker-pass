@@ -15,3 +15,18 @@ When /^(?:|I )manually add item: (.*), (.*), (.*), (.*), (.*)/ do |name, price, 
   find("#new-item-add").click
   page.driver.browser.switch_to.alert.accept
 end
+
+When /^(?:|I )see details of (.*)$/ do |item|
+  find("#edit-#{item}").click
+end
+
+When /^(?:|I )edit (.*) of (.*) to (.*)$/ do |field_name, item, value|
+  step "I go to the items page"
+  step "I see details of #{item}"
+  step "I fill in \"#{field_name}\" with \"#{value}\""
+  find("#show-item-update").click
+end
+
+Then /^(?:|I )delete (.*)$/ do |item|
+  find("#show-item-delete").click
+end

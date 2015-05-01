@@ -26,7 +26,9 @@ When /^(?:|I )remove "(.*)" from cart$/ do |item|
 end
 
 When /^(?:|I )click checkout$/ do
-  find("#cart-button").click
+  if have_css(".cart-panel-hidden") != nil
+    page.find("#cart-button").click
+  end
   find("#checkout-button").click
 end
 
