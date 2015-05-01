@@ -15,8 +15,8 @@ Background: items have been added to the database
 
   And a user is logged in
 
- @javascript
- Scenario: add an item to cart
+@javascript
+Scenario: add an item to cart
   When I add "capacitor" to cart
   Then I should see "capacitor" in cart
 
