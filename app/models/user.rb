@@ -18,4 +18,12 @@ class User < ActiveRecord::Base
     end
   end
 
+  def balance
+    total = 0
+    self.transactions.each do |transaction|
+      total += transaction.cost
+    end
+    total
+  end
+
 end

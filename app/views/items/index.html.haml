@@ -18,8 +18,8 @@
       %a{ href: "#", id: "new-item-button" }
         = inline_svg "plus.svg", class: "plus-svg svg"
     #inventory-wrapper
-      =render partial: "inventory_table"
+      = render partial: "inventory_table"
     #pagination-wrapper
-      =render partial: "pagination"
-=render partial: "modal"
-=render partial: "cart"
+      = render partial: "pagination"
+= render partial: "modal"
+= render partial: "cart"

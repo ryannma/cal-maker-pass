@@ -1,4 +1,5 @@
 Makerpass::Application.routes.draw do
+  get "/transactions/balances", to: "transactions#balances", as: "balances"
   post "/items/find", to: "items#find", as: "find"
   # get "/items/find", to: "items#next_page", as: "next_page"
   resources :items, :transactions, :users
@@ -21,6 +22,6 @@ Makerpass::Application.routes.draw do
 
   #TRANSACTION
   post "/transactions/new/:cart", to: "transactions#new", as: "new_transaction"
-  post "/transactions/checkout", to: "transactions#checkout", as: "checkout"
+  post "/transactions/checkout", to: "transactions#checkout", as: "checkout"    
 
 end

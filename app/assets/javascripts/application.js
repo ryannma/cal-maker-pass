@@ -179,8 +179,6 @@ $(document).ready( function () {
 	});
 });
 
-
-
 document.onkeydown=function(){
     if(window.event.keyCode=='13'){
  		search();
@@ -314,7 +312,6 @@ function search () {
 		$(".tt-dropdown-menu").hide();
 	});
 }
-
 
 function showAlert( alert ) {
 	console.log('show alert');

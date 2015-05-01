@@ -52,6 +52,13 @@ class TransactionsController < ApplicationController
     else
       @transactions = []
     end
+
+    respond_to do |format|
+      format.html
+      format.csv { send_data Transaction.to_csv(@transactions) }
+      format.xls { send_data Transaction.to_csv(@transactions, col_sep: "\t") }
+    end
+
   end
 
 
@@ -84,6 +91,14 @@ class TransactionsController < ApplicationController
   end
 
   def show
-    @transaction = Transaction.find(params[:id])
+    @transactions = Transaction.find(params[:id])
   end
+
+  def balances
+    respond_to do |format|
+      format.csv { send_data Transaction.balances_csv(@transactions) }
+      format.xls { send_data Transaction.balances_csv(@transactions, col_sep: "\t") }
+    end
+  end
+
 end
