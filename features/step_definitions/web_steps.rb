@@ -120,6 +120,21 @@ Then /^(?:|I )should see \/([^\/]*)\/$/ do |regexp|
   end
 end
 
+Then /^I should see "([^\/]*)" "(.+)" times$/ do |regexp, times|
+  str = regexp
+  i = 1
+  while (i < times.to_i)
+    str = str + "(.+)" + regexp
+    i = i + 1
+  end
+  regexp = Regexp.new(str)
+  if page.respond_to? :should
+    page.should have_xpath('//*', :text => regexp)
+  else
+    assert page.has_xpath?('//*', :text => regexp)
+  end
+end
+
 Then /^(?:|I )should not see "([^"]*)"$/ do |text|
   if page.respond_to? :should
     page.should have_no_content(text)

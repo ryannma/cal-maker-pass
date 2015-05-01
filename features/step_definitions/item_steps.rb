@@ -13,7 +13,7 @@ When /^(?:|I )manually add item: (.*), (.*), (.*), (.*), (.*)/ do |name, price, 
   page.select(status, :from => 'Status')
   step "I fill in \"Type\" with \"#{kind}\""
   find("#new-item-add").click
-  page.driver.browser.switch_to.alert.accept
+  step "I accept the pop-up"
 end
 
 When /^(?:|I )see details of (.*)$/ do |item|

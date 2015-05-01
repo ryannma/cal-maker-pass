@@ -1,15 +1,15 @@
-Feature: Pagination
+Feature: Search for items
 
-  As a user
-  I want to be able to see a paginated inventory
-  So that it is easy to find and look around the inventory
+  As an admin
+  I would like to search items
+  So that I can edit, delete or sell them
 
-Background:
- 
+Background: items have been added to the database
+
     Given the following items exist:
-    | name | price | quantity | status | kind | 
-    | item1 | 4.0 | 5 | sell | EE |  
-    | item2 | 4.0 | 1 | sell | EE |  
+    | name | price | quantity | status | kind |
+    | item1 | 4.0 | 5 | sell | EE | 
+    | item2 | 4.0 | 5 | sell | EE | 
     | item3 | 3.0 | 0 | sell | EE |  
     | item4 | 3.0 | 0 | lend | EE |
     | item5 | 4.0 | 5 | sell | EE |  
@@ -29,21 +29,13 @@ Background:
     | item19 | 3.0 | 0 | lend | EE |
     | item20 | 4.0 | 5 | sell | EE |
     | item21 | 4.0 | 5 | sell | EE |
-    | item22 | 4.0 | 5 | sell | EE |
+    | specitem22 | 4.0 | 5 | sell | EE | 
 
-    And a user is logged in 
-
-Scenario: I should see first items only
-    I should see "item1"
-    I should see "item12"
-    I should see "item20"
-    I should not see "item21"
-
-@javascript
-Scenario: I should see other items on next page
-    I should see "item1"
-    find("2").click
-    Then I should see "item22"
-    And I should not see "item1"
  
 
+    
+    And a user is logged in  
+
+Scenario: search an item without pressing enter
+    When I fill in "phrase" with "spec"
+    Then I should see "specitem22"

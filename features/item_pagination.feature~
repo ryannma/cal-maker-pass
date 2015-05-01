@@ -42,7 +42,7 @@ Scenario: I should see first items only
 @javascript
 Scenario: I should see other items on next page
     I should see "item1"
-    find("2").click
+    click_on(2)
     Then I should see "item22"
     And I should not see "item1"
  
