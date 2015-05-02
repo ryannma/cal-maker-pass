@@ -1,6 +1,6 @@
 Given /the following items exist/ do |items_table|
   items_table.hashes.each do |item|
-	Item.create(item)
+  	Item.create(item)
   end
 end
 
@@ -36,3 +36,13 @@ When /^(?:|I )sort items by (.*)$/ do |sort_key|
     find("\##{sort_key}-header").click
   end
 end
+
+When /^(?:|I )click next page$/ do
+  click_link('Next')
+end
+
+When /^(?:|I )search for (.*)$/ do |item_name|
+  fill_in 'phrase', :with => item_name
+  find("#phrase").native.send_keys("\n") 
+end
+
