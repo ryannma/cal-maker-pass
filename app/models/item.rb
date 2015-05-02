@@ -4,8 +4,8 @@ class Item < ActiveRecord::Base
   has_many :line_items
   @@allowed_status = ["lend", "sell", "both"]
   validates :status, :inclusion=> { :in => @@allowed_status }
-  validates :name, :price, :quantity, :kind, presence: true
-  validates :price, :quantity, numericality: true
+  validates :name, :price, :quantity, :kind, presence: { message: "%{value} cannot be empty" }
+  validates :price, :quantity, numericality: { greater_than: 0, message: "%{value} must be a number" }
 
   # sort items array in place
   def self.sort(items, sort_by, sort_type)

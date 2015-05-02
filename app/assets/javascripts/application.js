@@ -18,6 +18,12 @@
 //= require turbolinks
 
 var items;
+var popup = "<div id='popup'>" + 
+	"<div id='popup-text'></div>" + 
+	"<div class='buttons-container'>" + 
+		"<div id='popup-back' class='button button-blue'>Ok</div" + 
+	"</div>" + 
+"</div>";
 
 items = new Bloodhound({
   datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
@@ -55,6 +61,7 @@ $(document).ready( function () {
 					var quantity = document.getElementById('item_quantity').value;
 					var status = document.getElementById('item_status').value;
 					var kind = document.getElementById('item_kind').value;
+					var modalCache = $('#modal-content').html();
 					item_dict = {'name': name, 'price': price, 'quantity': quantity, 'status':status, 'kind':kind};
 					$.ajax({
 						url: '/items',
@@ -62,12 +69,9 @@ $(document).ready( function () {
 						data: {
 							item: item_dict
 						},
-						success: function() {
-							console.log("thing");
-							if (flash_notice) {
-								showAlert(flash_notice);
-							} else if (flash_warning) {
-								showAlert(flash_warning);
+						statusCode: {
+							200: function () {
+								//do ajax call
 							}
 						}
 					});
@@ -319,6 +323,8 @@ function search () {
 }
 
 function showAlert( alert ) {
+	console.log(alert);
+	$('#modal-content').html(popup);
 	$('#popup-text').text(alert);
 	$('#modal').fadeIn(500);
 	document.querySelector('#modal-overlay').addEventListener('click', function(event) {

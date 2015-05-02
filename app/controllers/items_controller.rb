@@ -57,15 +57,26 @@ class ItemsController < ApplicationController
 
   def create
     @item = Item.new(params[:item])
+    @flash = nil
     if @item.valid?
       @item.save
       flash[:notice] = "Successfully added item"
+      @flash = flash[:notice]
     else
-      # errors = @item.errors.full_messages.join("<br>").html_safe
-      errors = @item.errors.full_messages.join(". ")
+      # errors = @item.errors.full_messages.join(". ")
+      errors = @item.errors.full_messages.first
       flash[:warning] = errors
+      @flash = flash[:warning]
     end
-    render js: "window.location.href = '#{items_path}'"
+    unless @flash.nil?
+      respond_to do |format|
+        format.js { render status: 404 }
+      end
+    else
+      respond_to do |format|
+        format.js { render status: 200 }
+      end
+    end
   end
 
   def add_item
@@ -73,8 +84,6 @@ class ItemsController < ApplicationController
     cart.add_item(params[:id])
     @cart_items = cart.cart_items
     @cart_total = cart.total
-    @flash_notice = flash[:notice]
-    @flash_warning = flash[:warning]
     respond_to do |format|
       format.js {}
     end

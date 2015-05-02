@@ -1,11 +1,4 @@
 #modal
 	#modal-overlay
 	#modal-content
-		=render partial: "layouts/popup"
-		- if flash[:notice]
-			:javascript
-			showAlert("#{flash[:notice]}");
-		- elsif flash[:warning]
-			:javascript 
-			showAlert("#{flash[:warning]}")
 
