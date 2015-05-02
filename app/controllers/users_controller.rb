@@ -2,15 +2,14 @@ class UsersController < ApplicationController
   before_filter :check_user_exists, :except => [:new, :create]
 
   def new
-    if not @user.nil?
-      redirect_to "/"
-    end
+    check_user_exists nil
+    filter_user 3
+    @user = User.new()
   end
 
   def create
-    if not @user.nil?
-      redirect_to "/"
-    end
+    check_user_exists nil
+    filter_user 3
     user_params = params[:user]
     user_params[:uid] = session[:cas_user]
     @user = User.new(user_params)
@@ -26,6 +25,7 @@ class UsersController < ApplicationController
   end
 
   def index
+    filter_user 1
     @privilege = params[:privilege]
     if @privilege.nil?
       query, method, model = {}, 'all', 'User'
@@ -101,9 +101,12 @@ private
     #
     # An example: User 1 wants to edit information for User 2 but doesn't have
     # seller access. Thus, User 1 will only be able to edit his/her information.
-    privilege_lvl = @user.privilege_lvl
-    if privilege_lvl >= minimum_privilege_lvl
+    if @user.nil?
+      return
+    elsif @user.privilege_lvl >= minimum_privilege_lvl
       @user = User.find(params[:id])
+    else
+      redirect_to "/"
     end
   end
 
