@@ -33,6 +33,7 @@ Background:
 
   And a user is logged in 
 
+@javascript
 Scenario: I should see first items only
   Given I am on the items page
   Then I should see "itemA"
@@ -40,6 +41,7 @@ Scenario: I should see first items only
     And I should see "itemT"
     And I should not see "itemU"
 
+@javascript
 Scenario: I should see other items on next page
   Given I am on the items page
   When I click next page

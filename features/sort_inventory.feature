@@ -15,6 +15,7 @@ Background: items have been added to the database
 
     And a user is logged in  
 
+@javascript
 Scenario: items are sortable
   Given I go to the items page
   When I sort items by name
