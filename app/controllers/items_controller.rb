@@ -120,11 +120,9 @@ class ItemsController < ApplicationController
   def sort
     get_inv_params
     @all_status = Item.all_status
-    @phrase.blank? ? (@items = Item.all) : (@items = Item.search(@phrase, fields: [{name: :word_start}], misspelling: {edit_distance: 2}, operator: "or").results)
+    get_searched_items
     Item.sort(@items, @sort_by, @sort_type)
-    respond_to do |format|
-      format.js{}
-    end
+    render 'find'
     save_inv_params
   end
 
@@ -193,6 +191,7 @@ class ItemsController < ApplicationController
     end
   end
 
+  # searched by @phrase and paginated
   def get_searched_items
     if @phrase.blank?  
       @items = Item.order("name").page(params[:page]).per(20)  
