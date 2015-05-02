@@ -1,9 +1,32 @@
 class TransactionsController < ApplicationController
 
+
+  
+
   def index
     current_user = User.where(uid: session[:cas_user])[0]
     admin_user = Admin.find_by_user_id(current_user.id)
 
+    @sort = sort_helper
+
+    @all = view_helper
+
+    if (@all == "false" && admin_user != nil)
+      @transactions = self_transaction_helper(@sort)
+    elsif @all == "true"
+      @transactions = all_transaction_helper(@sort)
+    else
+      @transactions = []
+    end
+
+    respond_to do |format|
+      format.html
+      format.csv { send_data Transaction.to_csv(@transactions) }
+      format.xls { send_data Transaction.to_csv(@transactions, col_sep: "\t") }
+    end
+  end
+
+  def sort_helper
     if params.has_key?(:sort)
       @sort = params[:sort]
       session[:sort] = params[:sort]
@@ -13,7 +36,9 @@ class TransactionsController < ApplicationController
     else
       @sort = nil
     end
+  end
 
+  def view_helper
     if params.has_key?(:all)
       @all = params[:all]
       session[:all] = params[:all]
@@ -24,41 +49,30 @@ class TransactionsController < ApplicationController
       @all = false
       session[:all] = false
     end
+  end
 
-    if (@all == false && admin_user != nil) || (@all == "false" && admin_user != nil)
-      if @sort == 'customer'
-        @transactions = Transaction.where(admin_id: admin_user.id).includes(:user).order("users.last_name")
-      elsif @sort == 'purpose'
-        @transactions = Transaction.where(admin_id: admin_user.id).order(:purpose)
-      elsif @sort == 'date'
-        @transactions = Transaction.where(admin_id: admin_user.id).order(:created_at)
-      else
-        unless admin_user.nil?
-          @transactions = Transaction.where(admin_id: admin_user.id)
-        else
-          @transactions = []
-        end
-      end
-    elsif @all == true || @all == "true"
-      if @sort == 'customer'
-        @transactions = Transaction.includes(:user).order("users.last_name")
-      elsif @sort == 'purpose'
-        @transactions = Transaction.order(:purpose)
-      elsif @sort == 'date'
-        @transactions = Transaction.order(:created_at)
-      else
-        @transactions = Transaction.all
-      end
+  def self_transaction_helper(sort)
+    if sort == 'customer'
+      @transactions = Transaction.where(admin_id: admin_user.id).includes(:user).order("users.last_name")
+    elsif sort == 'purpose'
+      @transactions = Transaction.where(admin_id: admin_user.id).order(:purpose)
+    elsif sort == 'date'
+      @transactions = Transaction.where(admin_id: admin_user.id).order(:created_at)
     else
-      @transactions = []
+      @transactions = Transaction.where(admin_id: admin_user.id)
     end
+  end
 
-    respond_to do |format|
-      format.html
-      format.csv { send_data Transaction.to_csv(@transactions) }
-      format.xls { send_data Transaction.to_csv(@transactions, col_sep: "\t") }
+  def all_transaction_helper(sort)
+    if sort == 'customer'
+      @transactions = Transaction.includes(:user).order("users.last_name")
+    elsif sort == 'purpose'
+      @transactions = Transaction.order(:purpose)
+    elsif sort == 'date'
+      @transactions = Transaction.order(:created_at)
+    else
+      @transactions = Transaction.all
     end
-
   end
 
 
