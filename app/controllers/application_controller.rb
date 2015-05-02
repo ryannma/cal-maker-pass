@@ -22,10 +22,6 @@ class ApplicationController < ActionController::Base
     if @user.nil?
       redirect_to "/signup"
     end
-    if not success_route.nil?
-      redirect_to success_route
-    end
   end
-
 
 end

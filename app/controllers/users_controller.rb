@@ -2,11 +2,15 @@ class UsersController < ApplicationController
   before_filter :check_user_exists, :except => [:new, :create]
 
   def new
-    check_user_exists("/")
+    if not @user.nil?
+      redirect_to "/"
+    end
   end
 
   def create
-    check_user_exists("/")
+    if not @user.nil?
+      redirect_to "/"
+    end
     user_params = params[:user]
     user_params[:uid] = session[:cas_user]
     @user = User.new(user_params)
