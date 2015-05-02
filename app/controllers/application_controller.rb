@@ -17,10 +17,10 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def check_user_exists(success_route = nil)
+  def check_user_exists(success_route = "/signup")
     @user = User.where(uid: session[:cas_user]).first
-    if @user.nil?
-      redirect_to "/signup"
+    if @user.nil? and not success_route.nil?
+      redirect_to success_route
     end
   end
 
