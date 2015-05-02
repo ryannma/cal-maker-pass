@@ -33,8 +33,8 @@ Background: items have been added to the database
 
     And a user is logged in  
 
-Scenario: search an item without pressing enter
-    When I fill in "phrase" with "spec"
-    Then I should see "specitem22"
+#Scenario: search an item without pressing enter
+    #When I fill in "phrase" with "spec"
+    #Then I should see "specitem22"
 
 
