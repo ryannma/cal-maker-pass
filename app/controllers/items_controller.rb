@@ -27,7 +27,6 @@ class ItemsController < ApplicationController
   end
 
   def create_item
-    # puts "hi"*1000
     @item = nil
     @mode = "create"
     @all_status = Item.all_status
@@ -40,7 +39,6 @@ class ItemsController < ApplicationController
     @item = Item.find(params[:id])
     @all_status = Item.all_status
     @mode = "show"
-    puts @item
     respond_to do |format|
       format.js {}
     end

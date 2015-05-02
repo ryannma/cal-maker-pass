@@ -33,7 +33,7 @@ end
 
 When /^(?:|I )sort items by (.*)$/ do |sort_key|
   within('#inventory-table') do
-    find("\##{sort_key}-header").click
+    find("\##{sort_key}.header").click
   end
 end
 
