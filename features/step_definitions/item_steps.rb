@@ -38,7 +38,7 @@ When /^(?:|I )sort items by (.*)$/ do |sort_key|
 end
 
 When /^(?:|I )click next page$/ do
-  click_link('Next')
+  click_link('Next >')
 end
 
 When /^(?:|I )search for (.*)$/ do |item_name|
