@@ -61,6 +61,14 @@ $(document).ready( function () {
 						method: 'POST',
 						data: {
 							item: item_dict
+						},
+						success: function() {
+							console.log("thing");
+							if (flash_notice) {
+								showAlert(flash_notice);
+							} else if (flash_warning) {
+								showAlert(flash_warning);
+							}
 						}
 					});
 				});
@@ -241,13 +249,10 @@ function showItem( id ) {
 			var item_id = id;
 			document.querySelector('#modal-overlay').addEventListener('click', function(event) {
 			    $('#modal').fadeOut(500);
-				});
+			});
 			document.querySelector('#show-item-back').addEventListener('click', function(event) {
 		    $('#modal').fadeOut(500);
 			});
-			document.querySelector('#modal-overlay').addEventListener('click', function(event) {
-			    $('#modal').fadeOut(500);
-				});
 			document.querySelector('#show-item-delete').addEventListener('click', function(event) {
 				$.ajax({
 					url: '/items/' + item_id+'/delete',
@@ -314,8 +319,14 @@ function search () {
 }
 
 function showAlert( alert ) {
-	console.log('show alert');
-	window.alert(alert);
+	$('#popup-text').text(alert);
+	$('#modal').fadeIn(500);
+	document.querySelector('#modal-overlay').addEventListener('click', function(event) {
+	    $('#modal').fadeOut(500);
+	});
+	document.querySelector('#popup-back').addEventListener('click', function(event) {
+	    $('#modal').fadeOut(500);
+	});
 }
 
 function resetCart() {

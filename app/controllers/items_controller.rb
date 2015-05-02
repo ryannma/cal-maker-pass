@@ -73,6 +73,8 @@ class ItemsController < ApplicationController
     cart.add_item(params[:id])
     @cart_items = cart.cart_items
     @cart_total = cart.total
+    @flash_notice = flash[:notice]
+    @flash_warning = flash[:warning]
     respond_to do |format|
       format.js {}
     end
