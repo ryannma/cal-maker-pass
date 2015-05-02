@@ -1,7 +1,43 @@
 class TransactionsController < ApplicationController
 
 
-  
+  def self_tx_helper(sort, admin_user)
+    if sort == 'customer'
+      @transactions = Transaction.where(admin_id: admin_user.id).includes(:user).order("users.last_name")
+    elsif sort == 'purpose'
+      @transactions = Transaction.where(admin_id: admin_user.id).order(:purpose)
+    elsif sort == 'date'
+      @transactions = Transaction.where(admin_id: admin_user.id).order(:created_at)
+    else
+      unless admin_user.nil?
+        @transactions = Transaction.where(admin_id: admin_user.id)
+      else
+        @transactions = []
+      end
+    end
+  end
+
+  def all_tx_helper(sort, admin_user)
+    if sort == 'customer'
+      @transactions = Transaction.includes(:user).order("users.last_name")
+    elsif sort == 'purpose'
+      @transactions = Transaction.order(:purpose)
+    elsif sort == 'date'
+      @transactions = Transaction.order(:created_at)
+    else
+      @transactions = Transaction.all
+    end
+  end
+
+  def tx_helper(all, sort, admin_user)
+    if (all == false && admin_user != nil) || (all == "false" && admin_user != nil)
+      @transactions = self_tx_helper(sort, admin_user)
+    elsif all == true || all == "true"
+      @transactions = all_tx_helper(sort, admin_user)
+    else
+      @transactions = []
+    end
+  end
 
   def index
     current_user = User.where(uid: session[:cas_user])[0]
@@ -11,33 +47,7 @@ class TransactionsController < ApplicationController
 
     @all = view_helper
 
-    if (@all == false && admin_user != nil) || (@all == "false" && admin_user != nil)
-      if @sort == 'customer'
-        @transactions = Transaction.where(admin_id: admin_user.id).includes(:user).order("users.last_name")
-      elsif @sort == 'purpose'
-        @transactions = Transaction.where(admin_id: admin_user.id).order(:purpose)
-      elsif @sort == 'date'
-        @transactions = Transaction.where(admin_id: admin_user.id).order(:created_at)
-      else
-        unless admin_user.nil?
-          @transactions = Transaction.where(admin_id: admin_user.id)
-        else
-          @transactions = []
-        end
-      end
-    elsif @all == true || @all == "true"
-      if @sort == 'customer'
-        @transactions = Transaction.includes(:user).order("users.last_name")
-      elsif @sort == 'purpose'
-        @transactions = Transaction.order(:purpose)
-      elsif @sort == 'date'
-        @transactions = Transaction.order(:created_at)
-      else
-        @transactions = Transaction.all
-      end
-    else
-      @transactions = []
-    end
+    @transactions = tx_helper(@all, @sort, admin_user)
 
     respond_to do |format|
       format.html
