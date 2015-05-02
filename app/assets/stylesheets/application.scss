@@ -107,6 +107,10 @@ thead {
     background: $blue-sky;
 }
 
+thead th a {
+    color: $blue-dark;
+}
+
 //inventory-sort
 
 #inventory-table th {
@@ -356,12 +360,7 @@ tbody tr {
     margin-bottom: 30px;
 }
 
-.inventory-table-link:visited, .inventory-table-link:active, .inventory-table-link:link {
-    color: $blue-dark;
-    border-bottom: 1px solid $blue-sea;
-}
-
-.inventory-table-link:visited, .inventory-table-link:active, .inventory-table-link:link {
+.link:visited, .link:active, .link:link {
     color: $blue-dark;
     border-bottom: 1px solid $blue-sea;
 }

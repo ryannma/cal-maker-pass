@@ -4,7 +4,9 @@ class Transaction < ActiveRecord::Base
 	belongs_to :admin
 	has_many :line_items
 
-	def self.to_csv(transactions, options = {})
+
+
+	def self.transactions_data(transactions, options = {})
 		csv_headers = ["Date", "User", "Purpose", "Item", "Quantity", "Action"]
 		CSV.generate(options) do |csv|
 			csv << csv_headers
@@ -28,7 +30,7 @@ class Transaction < ActiveRecord::Base
 		end
 	end
 
-	def self.balances_csv(transactions, options = {})
+	def self.balances_data(options = {})
 		csv_headers = ["SID", "User", "Balance"]
 		CSV.generate(options) do |csv|
 			csv << csv_headers

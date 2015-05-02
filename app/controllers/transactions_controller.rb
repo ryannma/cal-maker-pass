@@ -101,4 +101,24 @@ class TransactionsController < ApplicationController
     end
   end
 
+  def export
+    @transactions = Transaction.all
+    type = params[:type]
+    file_ext = params[:file_ext]
+    data = {
+      Transactions: {
+        CSV: Transaction.transactions_data(@transactions),
+        XLS: Transaction.transactions_data(@transactions, col_sep: "\t")
+      },
+      Balances: {
+        CSV: Transaction.balances_data,
+        XLS: Transaction.balances_data(col_sep: "\t")
+      }
+    }
+    respond_to do |format|
+      format.html { send_data data[type.to_sym][file_ext.to_sym] }
+    end  
+
+  end
+
 end
