@@ -36,3 +36,7 @@ When /^(?:|I )sort items by (.*)$/ do |sort_key|
     find("\##{sort_key}-header").click
   end
 end
+
+When /^(?:|I )click next page$/ do
+  click_link('Next')
+end
