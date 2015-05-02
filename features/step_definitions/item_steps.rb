@@ -43,5 +43,6 @@ end
 
 When /^(?:|I )search for (.*)$/ do |item_name|
   fill_in 'phrase', :with => item_name
+  find("#phrase").native.send_keys("\n") 
 end
 

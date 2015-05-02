@@ -15,10 +15,11 @@ Background: items have been added to the database
 
   And a user is logged in  
 
+@javascript
 Scenario: search an item
-  Given I am on the items path
-  When I search for "capacitor"
-  #When I fill in "phrase" with "spec"
-  #Then I should see "specitem22"
+  Given I am on the items page
+  When I search for capacitor
+  Then I should see "capacitor"
+    And I should not see "resistor"
 
 
