@@ -45,9 +45,19 @@ Scenario: transactions are sortable
     And I sort transactions by purpose
   Then I should see 2 transactions
 
-Scenario: transactions on all view are sortable
+@javascript
+Scenario: transactions on all view are sortable by all
   Given I go to the transactions page
     And I click all
+  When I sort transactions by date
+    And I sort transactions by customer
+    And I sort transactions by purpose
+  Then I should see 2 transactions
+
+@javascript
+Scenario: transactions on all view are sortable by own
+  Given I go to the transactions page
+    And I click own
   When I sort transactions by date
     And I sort transactions by customer
     And I sort transactions by purpose
