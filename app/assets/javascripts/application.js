@@ -43,19 +43,19 @@ $(document).ready( function () {
 			method: 'POST',
 			dataType: 'script',
 			success: function () {
-				document.querySelector('#new-item-cancel').addEventListener('click', function(event) {
+				document.querySelector('#new-item-cancel').addEventListener('click', function() {
 			    	$('#modal').fadeOut(500);
 				});
-				document.querySelector('#modal-overlay').addEventListener('click', function(event) {
+				document.querySelector('#modal-overlay').addEventListener('click', function() {
 			    	$('#modal').fadeOut(500);
 				});
-				document.querySelector('#new-item-add').addEventListener('click', function(event) {
+				document.querySelector('#new-item-add').addEventListener('click', function() {
 					var name = document.getElementById('item_name').value;
 					var price = document.getElementById('item_price').value;
 					var quantity = document.getElementById('item_quantity').value;
 					var status = document.getElementById('item_status').value;
 					var kind = document.getElementById('item_kind').value;
-					item_dict = {'name': name, 'price': price, 'quantity': quantity, 'status':status, 'kind':kind};
+					var item_dict = {'name': name, 'price': price, 'quantity': quantity, 'status':status, 'kind':kind};
 					$.ajax({
 						url: '/items',
 						method: 'POST',
@@ -84,11 +84,11 @@ $(document).ready( function () {
 			var svg = id + ' svg';
 			var span = id + ' span';
 			$(id).addClass('hilite');
-			if (sort_type == 'ascending') {
-				$(span).addClass('sort-align')
+			if (sort_type === 'ascending') {
+				$(span).addClass('sort-align');
 				$(svg).attr('class', 'sort-show-down');
-			} else if (sort_type == 'descending') {
-				$(span).addClass('sort-align')
+			} else if (sort_type === 'descending') {
+				$(span).addClass('sort-align');
 				$(svg).attr('class', 'sort-show-up');
 			}
 			if ($('#items-panel').hasClass('items-panel-expanded')) {
@@ -114,16 +114,16 @@ $(document).ready( function () {
 	});
 
 	$('#checkout-button').click( function() {
-		var checkout_button = document.getElementById('checkout-button').setAttribute('href', "/");
+		document.getElementById('checkout-button').setAttribute('href', "/");
 		var user = document.getElementById('transaction_user').value;
-		if (user == null || user == '') {
+		if (user === null || user === '') {
 			showAlert("Must enter a SID");
 		}
 		else {
 			var cart_items = document.getElementById('cart-items').getElementsByClassName('cart-item');
-			var bought_items = []
-			for (i = 0; i < cart_items.length; i++) {
-				var item = []
+			var bought_items = [];
+			for (var i = 0; i < cart_items.length; i++) {
+				var item = [];
 				var cart_item = cart_items[i];
 				var quantity = cart_item.getElementsByClassName('cart-item-quantity')[0].value;
 				var item_name = cart_item.getElementsByClassName('cart-item-name')[0].innerHTML;
@@ -180,10 +180,10 @@ $(document).ready( function () {
 });
 
 document.onkeydown=function(){
-    if(window.event.keyCode=='13'){
- 		search();
+    if(window.event.keyCode==='13'){
+	 		search();
     }
-}
+};
 
 
 function manageCart() {
@@ -239,28 +239,28 @@ function showItem( id ) {
 		dataType: 'script',
 		success: function() {
 			var item_id = id;
-			document.querySelector('#modal-overlay').addEventListener('click', function(event) {
+			document.querySelector('#modal-overlay').addEventListener('click', function() {
 			    $('#modal').fadeOut(500);
 				});
-			document.querySelector('#show-item-back').addEventListener('click', function(event) {
+			document.querySelector('#show-item-back').addEventListener('click', function() {
 		    $('#modal').fadeOut(500);
 			});
-			document.querySelector('#modal-overlay').addEventListener('click', function(event) {
+			document.querySelector('#modal-overlay').addEventListener('click', function() {
 			    $('#modal').fadeOut(500);
 				});
-			document.querySelector('#show-item-delete').addEventListener('click', function(event) {
+			document.querySelector('#show-item-delete').addEventListener('click', function() {
 				$.ajax({
 					url: '/items/' + item_id+'/delete',
 					method: 'POST'
 				});
 			});
-			document.querySelector('#show-item-update').addEventListener('click', function(event) {
+			document.querySelector('#show-item-update').addEventListener('click', function() {
 					var name = document.getElementById('item_name').value;
 					var price = document.getElementById('item_price').value;
 					var quantity = document.getElementById('item_quantity').value;
 					var status = document.getElementById('item_status').value;
 					var kind = document.getElementById('item_kind').value;
-					item_dict = {'name': name, 'price': price, 'quantity': quantity, 'status':status, 'kind':kind};
+					var item_dict = {'name': name, 'price': price, 'quantity': quantity, 'status':status, 'kind':kind};
 					$.ajax({
 						url: '/items/'+item_id+'/update',
 						method: 'POST',
@@ -296,11 +296,11 @@ function search () {
 		var svg = id + ' svg';
 		var span = id + ' span';
 		$(id).addClass('hilite');
-		if (sort_type == 'ascending') {
-			$(span).addClass('sort-align')
+		if (sort_type === 'ascending') {
+			$(span).addClass('sort-align');
 			$(svg).attr('class', 'sort-show-down');
-		} else if (sort_type == 'descending') {
-			$(span).addClass('sort-align')
+		} else if (sort_type === 'descending') {
+			$(span).addClass('sort-align');
 			$(svg).attr('class', 'sort-show-up');
 		}
 		if ($('#items-panel').hasClass('items-panel-expanded')) {
@@ -308,7 +308,7 @@ function search () {
 		} else {
 			$('.add-column').show();
 		}
-		$("#phrase").val("")
+		$("#phrase").val("");
 		$(".tt-dropdown-menu").hide();
 	});
 }
@@ -321,7 +321,7 @@ function showAlert( alert ) {
 function resetCart() {
 	manageCommentArrow();
 	hideCart();
-	$('#transaction_user').val('')
+	$('#transaction_user').val('');
 	$('#transaction_purpose').val('');
 	$('#cart-items').html('');
 }
