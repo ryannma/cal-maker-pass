@@ -4,16 +4,7 @@ class ItemsController < ApplicationController
     get_inv_params
     @items =  Item.order(@sort_by).page(params[:page]).per(20)
     @all_status = Item.all_status
-    
-    if session[:cart] == {} then session[:cart] = nil end
-    session[:cart] = session[:cart] || Cart.new
-    @cart = session[:cart]
-    @display_cart = []
-    unless @cart.cart_items.nil?
-      @cart.cart_items.each do |cart_item|
-        @display_cart << {name: cart_item.name, quantity: cart_item.quantity}
-      end
-    end
+    get_cart_display
     save_inv_params
   end
 
@@ -93,11 +84,7 @@ class ItemsController < ApplicationController
   def find
     get_inv_params
     @all_status = Item.all_status
-    if @phrase.blank?
-       @items = Item.order("name").page(params[:page]).per(20)
-    else
-      @items= Item.search(@phrase, fields: [{name: :word_start}], misspelling: {edit_distance: 2}, operator: "or", per_page: 20, page: params[:page])
-    end
+    get_searched_items
     respond_to do |format|
       format.js{}
       format.html{render 'index'}
@@ -107,7 +94,7 @@ class ItemsController < ApplicationController
 
   def next_page
     get_inv_params
-    @phrase.blank? ? @items = Item.order("name").page(params[:page]).per(20) : @items = Item.search(@phrase, fields: [{name: :word_start}], misspelling: {edit_distance: 2}, operator: "or", per_page: 20, page: params[:page])
+    get_searched_items
     Item.sort(@items, @sort_by, @sort_type)
     render 'find'
     save_inv_params
@@ -191,6 +178,27 @@ class ItemsController < ApplicationController
     # session[:phrase] = @phrase
     session[:sort_by] = @sort_by
     session[:sort_type] = @sort_type
+  end
+
+  # persist cart items to be displayed (by assigning @display_cart)
+  def get_cart_display
+    if session[:cart] == {} then session[:cart] = nil end
+    session[:cart] = session[:cart] || Cart.new
+    @cart = session[:cart]
+    @display_cart = []
+    unless @cart.cart_items.nil?
+      @cart.cart_items.each do |cart_item|
+        @display_cart << {name: cart_item.name, quantity: cart_item.quantity}
+      end
+    end
+  end
+
+  def get_searched_items
+    if @phrase.blank?  
+      @items = Item.order("name").page(params[:page]).per(20)  
+    else
+      @items = Item.search(@phrase, fields: [{name: :word_start}], misspelling: {edit_distance: 2}, operator: "or", per_page: 20, page: params[:page])
+    end
   end
 
 end
