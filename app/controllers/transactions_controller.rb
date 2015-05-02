@@ -11,10 +11,30 @@ class TransactionsController < ApplicationController
 
     @all = view_helper
 
-    if (@all == "false" && admin_user != nil)
-      @transactions = self_transaction_helper(@sort)
-    elsif @all == "true"
-      @transactions = all_transaction_helper(@sort)
+    if (@all == false && admin_user != nil) || (@all == "false" && admin_user != nil)
+      if @sort == 'customer'
+        @transactions = Transaction.where(admin_id: admin_user.id).includes(:user).order("users.last_name")
+      elsif @sort == 'purpose'
+        @transactions = Transaction.where(admin_id: admin_user.id).order(:purpose)
+      elsif @sort == 'date'
+        @transactions = Transaction.where(admin_id: admin_user.id).order(:created_at)
+      else
+        unless admin_user.nil?
+          @transactions = Transaction.where(admin_id: admin_user.id)
+        else
+          @transactions = []
+        end
+      end
+    elsif @all == true || @all == "true"
+      if @sort == 'customer'
+        @transactions = Transaction.includes(:user).order("users.last_name")
+      elsif @sort == 'purpose'
+        @transactions = Transaction.order(:purpose)
+      elsif @sort == 'date'
+        @transactions = Transaction.order(:created_at)
+      else
+        @transactions = Transaction.all
+      end
     else
       @transactions = []
     end
@@ -48,30 +68,6 @@ class TransactionsController < ApplicationController
     else
       @all = false
       session[:all] = false
-    end
-  end
-
-  def self_transaction_helper(sort)
-    if sort == 'customer'
-      @transactions = Transaction.where(admin_id: admin_user.id).includes(:user).order("users.last_name")
-    elsif sort == 'purpose'
-      @transactions = Transaction.where(admin_id: admin_user.id).order(:purpose)
-    elsif sort == 'date'
-      @transactions = Transaction.where(admin_id: admin_user.id).order(:created_at)
-    else
-      @transactions = Transaction.where(admin_id: admin_user.id)
-    end
-  end
-
-  def all_transaction_helper(sort)
-    if sort == 'customer'
-      @transactions = Transaction.includes(:user).order("users.last_name")
-    elsif sort == 'purpose'
-      @transactions = Transaction.order(:purpose)
-    elsif sort == 'date'
-      @transactions = Transaction.order(:created_at)
-    else
-      @transactions = Transaction.all
     end
   end
 
