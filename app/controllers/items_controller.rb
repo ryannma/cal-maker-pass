@@ -140,32 +140,31 @@ class ItemsController < ApplicationController
     session.has_key?(:sort_by) && !session[:sort_by].nil?
   end
 
+  def sort_type_helper
+    if !sorted_before?
+      @sort_type = 'ascending'
+    # accounts for clicking an already sorted column to change the sort type (ascending <-> descending)  
+    elsif sorted_before? && (params[:sort_by] == session[:sort_by])
+      session[:sort_type] == 'ascending' ? (@sort_type = 'descending') : (@sort_type = 'ascending')
+    # accounts for having sorted one column and now sorting a different column
+    elsif sorted_before? && (params[:sort_by] != session[:sort_by])
+      @sort_type = 'ascending'
+    end
+    return @sort_type
+  end
+
   # gets @sort_by, @sort_type, and @phrase
   def get_inv_params
     if should_sort?
       @sort_by = params[:sort_by]
       # accounts for first time sorting in current session
-      if !sorted_before?
-        @sort_type = 'ascending'
-      # accounts for clicking an already sorted column to change the sort type (ascending <-> descending)  
-      elsif sorted_before? && (params[:sort_by] == session[:sort_by])
-        session[:sort_type] == 'ascending' ? (@sort_type = 'descending') : (@sort_type = 'ascending')
-      # accounts for having sorted one column and now sorting a different column
-      elsif sorted_before? && (params[:sort_by] != session[:sort_by])
-        @sort_type = 'ascending'
-      end
+      @sort_type = sort_type_helper
     elsif sorted_before?
       @sort_by, @sort_type = session[:sort_by], session[:sort_type]
       # only store state of previous request
-      #session[:sort_by], session[:sort_type] = nil, nil
     else
       @sort_by, @sort_type = nil, nil
     end
-    # if should_find?
-    #   params.has_key?(:phrase) ? (@phrase = params[:phrase]) : (@phrase = session[:phrase])
-    # else
-    #   @phrase = nil
-    # end
     @phrase = params[:phrase]
   end
 
