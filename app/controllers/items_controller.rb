@@ -197,4 +197,12 @@ class ItemsController < ApplicationController
     end
   end
 
+  # get @items according to inventory parameters (@sort_by, @sort_type, @phrase)
+  def get_inv_items
+    if @phrase.blank?  
+      @items = Item.order("name").page(params[:page]).per(20)  
+    else
+      @items = Item.search(@phrase, fields: [{name: :word_start}], misspelling: {edit_distance: 2}, operator: "or", per_page: 20, page: params[:page])
+    end
+  end
 end
