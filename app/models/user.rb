@@ -11,11 +11,19 @@ class User < ActiveRecord::Base
 
   def admin?
     admin = Admin.where(user_id: @id)
-    if admin.empty?
+    if admin.nil?
       return false
     else
       return true
     end
+  end
+
+  def balance
+    total = 0
+    self.transactions.each do |transaction|
+      total += transaction.cost
+    end
+    total
   end
 
 end

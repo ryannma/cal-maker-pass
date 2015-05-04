@@ -3,18 +3,8 @@ class ItemsController < ApplicationController
   def index
     get_inv_params
     @items =  Item.order(@sort_by).page(params[:page]).per(20)
-    @all_status = Item.all_status
-    
-    if session[:cart] == {} then session[:cart] = nil end
-    session[:cart] = session[:cart] || Cart.new
-    @cart = session[:cart]
-    @display_cart = []
-    unless @cart.cart_items.nil?
-      @cart.cart_items.each do |cart_item|
-        @display_cart << {name: cart_item.name, quantity: cart_item.quantity}
-      end
-    end
-    
+    @all_status = Item.all_status    
+    get_cart_display
     save_inv_params
   end
 
@@ -37,17 +27,6 @@ class ItemsController < ApplicationController
   end
 
   def create_item
-    # puts "hi"*1000
-    @item = nil
-    @mode = "create"
-    @all_status = Item.all_status
-    respond_to do |format|
-      format.js {}
-    end
-  end
-
-  def create_item
-    # puts "hi"*1000
     @item = nil
     @mode = "create"
     @all_status = Item.all_status
@@ -60,7 +39,6 @@ class ItemsController < ApplicationController
     @item = Item.find(params[:id])
     @all_status = Item.all_status
     @mode = "show"
-    puts @item
     respond_to do |format|
       format.js {}
     end
@@ -104,11 +82,7 @@ class ItemsController < ApplicationController
   def find
     get_inv_params
     @all_status = Item.all_status
-    if @phrase.blank?
-       @items = Item.order("name").page(params[:page]).per(20)
-    else
-      @items= Item.search(@phrase, fields: [{name: :word_start}], misspelling: {edit_distance: 2}, operator: "or", per_page: 20, page: params[:page])
-    end
+    get_searched_items
     respond_to do |format|
       format.js{}
       format.html{render 'index'}
@@ -118,7 +92,7 @@ class ItemsController < ApplicationController
 
   def next_page
     get_inv_params
-    @phrase.blank? ? @items = Item.order("name").page(params[:page]).per(20) : @items = Item.search(@phrase, fields: [{name: :word_start}], misspelling: {edit_distance: 2}, operator: "or", per_page: 20, page: params[:page])
+    get_searched_items
     Item.sort(@items, @sort_by, @sort_type)
     render 'find'
     save_inv_params
@@ -144,11 +118,9 @@ class ItemsController < ApplicationController
   def sort
     get_inv_params
     @all_status = Item.all_status
-    @phrase.blank? ? (@items = Item.all) : (@items = Item.search(@phrase, fields: [{name: :word_start}], misspelling: {edit_distance: 2}, operator: "or").results)
+    get_searched_items
     Item.sort(@items, @sort_by, @sort_type)
-    respond_to do |format|
-      format.js{}
-    end
+    render 'find'
     save_inv_params
   end
 
@@ -168,32 +140,31 @@ class ItemsController < ApplicationController
     session.has_key?(:sort_by) && !session[:sort_by].nil?
   end
 
+  def sort_type_helper
+    if !sorted_before?
+      @sort_type = 'ascending'
+    # accounts for clicking an already sorted column to change the sort type (ascending <-> descending)  
+    elsif sorted_before? && (params[:sort_by] == session[:sort_by])
+      session[:sort_type] == 'ascending' ? (@sort_type = 'descending') : (@sort_type = 'ascending')
+    # accounts for having sorted one column and now sorting a different column
+    elsif sorted_before? && (params[:sort_by] != session[:sort_by])
+      @sort_type = 'ascending'
+    end
+    return @sort_type
+  end
+
   # gets @sort_by, @sort_type, and @phrase
   def get_inv_params
     if should_sort?
       @sort_by = params[:sort_by]
       # accounts for first time sorting in current session
-      if !sorted_before?
-        @sort_type = 'ascending'
-      # accounts for clicking an already sorted column to change the sort type (ascending <-> descending)  
-      elsif sorted_before? && (params[:sort_by] == session[:sort_by])
-        session[:sort_type] == 'ascending' ? (@sort_type = 'descending') : (@sort_type = 'ascending')
-      # accounts for having sorted one column and now sorting a different column
-      elsif sorted_before? && (params[:sort_by] != session[:sort_by])
-        @sort_type = 'ascending'
-      end
+      @sort_type = sort_type_helper
     elsif sorted_before?
       @sort_by, @sort_type = session[:sort_by], session[:sort_type]
       # only store state of previous request
-      #session[:sort_by], session[:sort_type] = nil, nil
     else
       @sort_by, @sort_type = nil, nil
     end
-    # if should_find?
-    #   params.has_key?(:phrase) ? (@phrase = params[:phrase]) : (@phrase = session[:phrase])
-    # else
-    #   @phrase = nil
-    # end
     @phrase = params[:phrase]
   end
 
@@ -202,6 +173,28 @@ class ItemsController < ApplicationController
     # session[:phrase] = @phrase
     session[:sort_by] = @sort_by
     session[:sort_type] = @sort_type
+  end
+
+  # persist cart items to be displayed (by assigning @display_cart)
+  def get_cart_display
+    if session[:cart] == {} then session[:cart] = nil end
+    session[:cart] = session[:cart] || Cart.new
+    @cart = session[:cart]
+    @display_cart = []
+    unless @cart.cart_items.nil?
+      @cart.cart_items.each do |cart_item|
+        @display_cart << {name: cart_item.name, quantity: cart_item.quantity}
+      end
+    end
+  end
+
+  # searched by @phrase and paginated
+  def get_searched_items
+    if @phrase.blank?  
+      @items = Item.order("name").page(params[:page]).per(20)  
+    else
+      @items = Item.search(@phrase, fields: [{name: :word_start}], misspelling: {edit_distance: 2}, operator: "or", per_page: 20, page: params[:page])
+    end
   end
 
 end

@@ -13,12 +13,13 @@ module NavigationHelpers
   def path_to(page_name)
     case page_name
 
-    when /^the (RottenPotatoes )?home\s?page$/ then '/movies'
-    when /^the movies page$/ then '/movies'
-
     when /^the items page$/ then '/items'
     #when /^the new item page$/ then '/items#'
     when /^signup page$/ then '/signup'
+
+    when /^the detail page for transaction (\d+)/
+      tx = Transaction.find($1)
+      transaction_path(tx)
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:

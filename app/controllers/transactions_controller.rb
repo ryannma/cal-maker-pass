@@ -3,17 +3,83 @@ class TransactionsController < ApplicationController
   def index
     current_user = User.where(uid: session[:cas_user])[0]
     admin_user = Admin.find_by_user_id(current_user.id)
-
     get_trans_params
     @transactions = Transaction.order(@sort_trans_by)
     save_trans_params
 
-    puts("@@@@@ INDEX @TRANSACTIONS @@@@@")
-    puts(@transactions)
-    puts("@@@@@ THISSSS @@@@@@")
-    puts(@transactions[0].to_s)
+    @sort = sort_helper
+    @all = view_helper
+    @transactions = tx_helper(@all, @sort, admin_user)
+
+    respond_to do |format|
+      format.html
+      format.csv { send_data Transaction.to_csv(@transactions) }
+      format.xls { send_data Transaction.to_csv(@transactions, col_sep: "\t") }
+    end
   end
 
+  def sort_helper
+    if params.has_key?(:sort)
+      @sort = params[:sort]
+      session[:sort] = params[:sort]
+    elsif session.has_key?(:sort)
+      @sort = session[:sort]
+      need_redirect = true
+    else
+      @sort = nil
+    end
+  end
+
+  def view_helper
+    if params.has_key?(:all)
+      @all = params[:all]
+      session[:all] = params[:all]
+    elsif session.has_key?(:all)
+      @all = session[:all]
+      need_redirect = true
+    else
+      @all = false
+      session[:all] = false
+    end
+  end
+
+  def tx_helper(all, sort, admin_user)
+    if (all == false && admin_user != nil) || (all == "false" && admin_user != nil)
+      @transactions = self_tx_helper(sort, admin_user)
+    elsif all == true || all == "true"
+      @transactions = all_tx_helper(sort, admin_user)
+    else
+      @transactions = []
+    end
+  end
+
+  def self_tx_helper(sort, admin_user)
+    if sort == 'customer'
+      @transactions = Transaction.where(admin_id: admin_user.id).includes(:user).order("users.last_name")
+    elsif sort == 'purpose'
+      @transactions = Transaction.where(admin_id: admin_user.id).order(:purpose)
+    elsif sort == 'date'
+      @transactions = Transaction.where(admin_id: admin_user.id).order(:created_at)
+    else
+      unless admin_user.nil?
+        @transactions = Transaction.where(admin_id: admin_user.id)
+      else
+        @transactions = []
+      end
+    end
+  end
+
+  def all_tx_helper(sort, admin_user)
+    if sort == 'customer'
+      @transactions = Transaction.includes(:user).order("users.last_name")
+    elsif sort == 'purpose'
+      @transactions = Transaction.order(:purpose)
+    elsif sort == 'date'
+      @transactions = Transaction.order(:created_at)
+    else
+      @transactions = Transaction.all
+    end
+  end
 
   def checkout
     items = params[:items]
@@ -48,8 +114,6 @@ class TransactionsController < ApplicationController
   end
 
   def sort
-    puts("@@@@@ SORT @TRANSACTIONS @@@@@")
-    puts(@transactions)
     get_trans_params
     @transactions = Transaction.all
     Transaction.sort(@transactions, @sort_trans_by, @sort_trans_type, @all, @admin_user)
@@ -114,6 +178,13 @@ class TransactionsController < ApplicationController
     session[:sort_type] = @sort_type
     session[:all] = @all
     session[:admin_user] = @admin_user
+  end
+
+  def balances
+    respond_to do |format|
+      format.csv { send_data Transaction.balances_csv(@transaction) }
+      format.xls { send_data Transaction.balances_csv(@transaction, col_sep: "\t") }
+    end
   end
 
 end

@@ -29,15 +29,20 @@
         %td
         %td
         %td
-      - transaction.line_items.each do |line_item|
-        %tr{:class=>'line_item_row', :style=>"display: none;"}
-          %td
-          %td
-          %td
-          %td
-          %td= line_item.item.name
-          %td= line_item.quantity
-          %td= line_item.action
-      
-          
-
+        - transaction.line_items.each do |line_item|
+          %tr{:class=>'line_item_row', :style=>"display: none;"}
+            %td
+            %td
+            %td
+            %td
+            %td= line_item.item.name
+            %td= line_item.quantity
+            %td= line_item.action
+%div 
+  Export Transactions:
+  %button.download= link_to "CSV", transactions_path(format: "csv")
+  %button.download= link_to "XLS", transactions_path(format: "xls")
+%div 
+  Export Balances:
+  %button.download= link_to "CSV", '/transactions/balances.csv'
+  %button.download= link_to "XLS", '/transactions/balances.xls'

@@ -14,6 +14,12 @@ describe User do
     a = FactoryGirl.create(:admin)
     a.user = u
     a.save
+    u.admin?.should == true
     u.admins[0].should == a
+  end
+
+  it "should have a full name" do
+    u = FactoryGirl.create(:user)
+    u.name.should == "first last"
   end
 end

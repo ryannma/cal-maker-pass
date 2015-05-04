@@ -12,6 +12,11 @@ group :test, :development do
   gem 'rspec-rails', '~> 2.14.0'
   gem 'simplecov'
   gem 'factory_girl_rails'
+<<<<<<< HEAD
+=======
+  gem 'selenium-webdriver', '~> 2.45.0'
+  gem 'codeclimate-test-reporter', :require=>nil
+>>>>>>> master
 end
 
 group :production do

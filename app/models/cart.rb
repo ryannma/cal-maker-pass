@@ -65,5 +65,6 @@ class Cart
     @cart_items.each{ |cart_item| 
       sum += ( cart_item.price * cart_item.quantity )
     }
+    return sum
   end
 end

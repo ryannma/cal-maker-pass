@@ -1,8 +1,8 @@
-Feature: Remove item from cart
+Feature: Checkout items
 
   As an admin
-  I want to remove items from my cart
-  So that I will have the correct items that I want to check out
+  I want to be able to checkout an order
+  So that I can sell items to customers
 
 Background: items have been added to the database
   
@@ -14,10 +14,17 @@ Background: items have been added to the database
   | screw | 3.0 | 0 | lend | EE |
 
   And a user is logged in
+  And a user is also an admin
 
 @javascript
-Scenario: remove an item from cart
+Scenario: SID required
   Given I add "capacitor" to cart
-    And I add "resistor" to cart
-  When I remove "capacitor" from cart
-  Then I should not see "capacitor" in cart
+  When I click checkout
+  Then I should see an alert
+
+@javascript
+Scenario: Checkout items
+  Given I add "capacitor" to cart
+  When I enter 234234 as my SID
+    And I click checkout
+  Then I should be on the items page
