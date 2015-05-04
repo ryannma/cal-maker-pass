@@ -177,13 +177,13 @@ $(document).ready( function () {
 			}
 		}
 	});
-});
-
-document.onkeydown=function(){
-    if(window.event.keyCode==='13'){
+	document.onkeydown=function(){
+    if(window.event.keyCode === 13){
 	 		search();
     }
 };
+});
+
 
 
 function manageCart() {
