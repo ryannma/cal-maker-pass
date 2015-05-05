@@ -18,9 +18,9 @@
         %tr{:class =>'clickable_row'}
           %td
             .transaction-arrow
-          %td= link_to transaction.created_at.strftime("%I:%M%P %m/%d/%Y "), transaction_path(transaction)
+          %td= link_to transaction.created_at.strftime("%I:%M%P %m/%d/%Y "), transaction_path(transaction), class: "link"
           - if transaction.user != nil
-            %td= transaction.user.name()
+            %td= transaction.user.name
           - else
             %td= "Unknown"
           %td= transaction.purpose
@@ -36,11 +36,3 @@
             %td= line_item.item.name
             %td= line_item.quantity
             %td= line_item.action
-%div 
-  Export Transactions:
-  %button.download= link_to "CSV", transactions_path(format: "csv")
-  %button.download= link_to "XLS", transactions_path(format: "xls")
-%div 
-  Export Balances:
-  %button.download= link_to "CSV", '/transactions/balances.csv'
-  %button.download= link_to "XLS", '/transactions/balances.xls'

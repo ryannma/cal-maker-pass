@@ -26,8 +26,8 @@ class Transaction < ActiveRecord::Base
 		end
 	end
 
-	def self.to_csv(transactions, options = {})
-		csv_headers = ['Date', 'User', 'Purpose', 'Item', 'Quantity', 'Action']
+	def self.transactions_data(transactions, options = {})
+		csv_headers = ["Date", "User", "Purpose", "Item", "Quantity", "Action"]
 		CSV.generate(options) do |csv|
 			csv << csv_headers
 			transactions.each do |transaction|
@@ -50,8 +50,8 @@ class Transaction < ActiveRecord::Base
 		end
 	end
 
-	def self.balances_csv(transactions, options = {})
-		csv_headers = ['SID', 'User', 'Balance']
+	def self.balances_data(options = {})
+		csv_headers = ["SID", "User", "Balance"]
 		CSV.generate(options) do |csv|
 			csv << csv_headers
 			Transaction.unique_users.each do |user|

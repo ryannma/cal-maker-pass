@@ -7,12 +7,6 @@ class TransactionsController < ApplicationController
     #get_transactions
     @transactions = Transaction.all
     save_trans_params
-
-    respond_to do |format|
-      format.html
-      format.csv { send_data Transaction.to_csv(@transactions) }
-      format.xls { send_data Transaction.to_csv(@transactions, col_sep: "\t") }
-    end
   end
 
   def checkout
@@ -54,14 +48,26 @@ class TransactionsController < ApplicationController
     save_trans_params
   end
 
-  private
-
-  def balances
+  def export
+    @transactions = Transaction.all
+    type = params[:type]
+    file_ext = params[:file_ext]
+    data = {
+      Transactions: {
+        CSV: Transaction.transactions_data(@transactions),
+        XLS: Transaction.transactions_data(@transactions, col_sep: "\t")
+      },
+      Balances: {
+        CSV: Transaction.balances_data,
+        XLS: Transaction.balances_data(col_sep: "\t")
+      }
+    }
     respond_to do |format|
-      format.csv { send_data Transaction.balances_csv(@transaction) }
-      format.xls { send_data Transaction.balances_csv(@transaction, col_sep: "\t") }
-    end
+      format.html { send_data data[type.to_sym][file_ext.to_sym] }
+    end  
   end
+
+  private
 
   ## sorting logic
 

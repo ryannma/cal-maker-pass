@@ -1,6 +1,6 @@
 Makerpass::Application.routes.draw do
 
-  get "/transactions/balances", to: "transactions#balances", as: "balances"
+  get "/transactions/export", to: "transactions#export", as: "export"
   post "/items/find", to: "items#find", as: "find"
   #post "/items/inventory", to: "items#inventory", as: "inventory", defaults: { :format => 'js' }
   #get "/items/find", to: "items#next_page", as: "next_page"

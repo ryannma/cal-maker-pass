@@ -64,7 +64,7 @@ a {
 .navbar-menu-item {
     float: left;
     text-align: center;
-    width: 120px;
+    width: 160px;
     transition: 0.3s;
     text-decoration: none;
     color: $white;
@@ -105,6 +105,10 @@ th, td {
 
 thead {
     background: $blue-sky;
+}
+
+thead th a {
+    color: $blue-dark;
 }
 
 //inventory-sort
@@ -388,12 +392,7 @@ tbody tr {
     margin-bottom: 30px;
 }
 
-.inventory-table-link:visited, .inventory-table-link:active, .inventory-table-link:link {
-    color: $blue-dark;
-    border-bottom: 1px solid $blue-sea;
-}
-
-.inventory-table-link:visited, .inventory-table-link:active, .inventory-table-link:link {
+.link:visited, .link:active, .link:link {
     color: $blue-dark;
     border-bottom: 1px solid $blue-sea;
 }
@@ -511,6 +510,17 @@ tbody tr {
 }
 .button-red {
     background-color: $red;   
+}
+.dropdown {
+    height: 35px;
+    display: inline-block;
+    border-radius: 3px;
+    font-size: 16px;
+    font-weight: 300px;
+    margin: 0px 5px;
+    font-weight: 300;
+    border: 0px;
+    background: $blue-sky;
 }
 
 #show-container {
