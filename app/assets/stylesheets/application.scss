@@ -64,7 +64,7 @@ a {
 .navbar-menu-item {
     float: left;
     text-align: center;
-    width: 120px;
+    width: 160px;
     transition: 0.3s;
     text-decoration: none;
     color: $white;
@@ -478,6 +478,17 @@ tbody tr {
 }
 .button-red {
     background-color: $red;   
+}
+.dropdown {
+    height: 35px;
+    display: inline-block;
+    border-radius: 3px;
+    font-size: 16px;
+    font-weight: 300px;
+    margin: 0px 5px;
+    font-weight: 300;
+    border: 0px;
+    background: $blue-sky;
 }
 
 #show-container {

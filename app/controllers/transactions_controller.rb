@@ -21,8 +21,8 @@ class TransactionsController < ApplicationController
       @all = session[:all]
       need_redirect = true
     else
-      @all = false
-      session[:all] = false
+      @all = true
+      session[:all] = true
     end
 
     if (@all == false && admin_user != nil) || (@all == "false" && admin_user != nil)
@@ -118,7 +118,6 @@ class TransactionsController < ApplicationController
     respond_to do |format|
       format.html { send_data data[type.to_sym][file_ext.to_sym] }
     end  
-
   end
 
 end

@@ -31,8 +31,3 @@
             %td= line_item.item.name
             %td= line_item.quantity
             %td= line_item.action
-
-= select_tag :type, options_for_select([['Transactions', (@type = 'Transactions')], ['Balances', (@type = 'Balances')]])
-= select_tag :file_ext, options_for_select([['CSV', (@file_ext = 'CSV')], ['XLS', (@file_ext = 'XLS')]])
-= link_to 'Export', export_path(type: @type, file_ext: @file_ext)    
-

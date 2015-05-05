@@ -29,8 +29,8 @@ items = new Bloodhound({
 
 items.initialize();
 $('.cart-item').bind('input propertychange', function(){
-	  alert($(this).val());
-	});
+	alert($(this).val());
+});
 
 $(document).ready( function () {
 

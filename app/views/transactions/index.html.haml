@@ -6,6 +6,7 @@
       - elsif flash[:warning]
         @warning.message= flash[:warning]
     #transactions-buttons-container.buttons-container
-      = link_to 'All', transactions_path(:all=>true), class: 'button button-blue'
-      = link_to 'Own', transactions_path(:all=>false), class: 'button button-red'
+      = select_tag :type, options_for_select([['Transactions', (@type = 'Transactions')], ['Balances', (@type = 'Balances')]]), class: 'dropdown'
+      = select_tag :file_ext, options_for_select([['CSV', (@file_ext = 'CSV')], ['XLS', (@file_ext = 'XLS')]]), class: 'dropdown'
+      = link_to 'Export', export_path(type: @type, file_ext: @file_ext), class: 'button button-blue'    
     = render partial: "transaction_table"
