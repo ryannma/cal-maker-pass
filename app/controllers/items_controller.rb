@@ -2,7 +2,8 @@ class ItemsController < ApplicationController
     
   def index
     get_inv_params
-    @items =  Item.order(@sort_by).page(params[:page]).per(20)
+    @items = Item.all
+    paginate_inv_items
     @all_status = Item.all_status    
     get_cart_display
     save_inv_params
@@ -80,32 +81,27 @@ class ItemsController < ApplicationController
   end
 
   def find
-    puts "@@@@@ WE'RE IN #FIND @@@@@"
-    get_inv_params
     @all_status = Item.all_status
-    get_searched_items
-    respond_to do |format|
-      format.js{}
-      format.html{render 'index'}
-    end
+    get_inv_params
+    get_inv_items
+    paginate_inv_items
+    render 'inventory'
     save_inv_params
   end
 
   def next_page
+    @all_status = Item.all_status
     get_inv_params
-    get_searched_items
-    Item.sort(@items, @sort_by, @sort_type)
-    render 'find'
+    get_inv_items
+    paginate_inv_items
+    render 'inventory'
     save_inv_params
   end
 
   def query
     # Get the search terms from the q parameter and do a search
     # Generates the list of suggested search items below the search bar
-    puts "@@@@@ WE'RE IN #QUERY @@@@@"
     search = Item.search(params[:q],fields: [{name: :word_start}], misspelling: {edit_distance: 2} , operator: "or")
-    puts search
-    puts "what's going on"
     respond_to do |format|
       format.json do
         # Create an array from the search results.
@@ -120,64 +116,23 @@ class ItemsController < ApplicationController
   end
 
   def sort
-    get_inv_params
     @all_status = Item.all_status
-    get_searched_items
-    Item.sort(@items, @sort_by, @sort_type)
-    render 'find'
+    get_inv_params
+    get_inv_items
+    paginate_inv_items
+    render 'inventory'
     save_inv_params
   end
 
+=begin
+  def render_inventory
+    respond_to do |format|
+      format.js{}
+    end
+  end
+=end
+
   private
-
-  ## sorting logic
-
-  def should_find?
-    params.has_key?(:phrase) # || (session.has_key?(:phrase) && !session[:phrase].nil?) 
-  end
-
-  def should_sort?
-    params.has_key?(:sort_by)
-  end
-
-  def sorted_before?
-    session.has_key?(:sort_by) && !session[:sort_by].nil?
-  end
-
-  def sort_type_helper
-    if !sorted_before?
-      @sort_type = 'ascending'
-    # accounts for clicking an already sorted column to change the sort type (ascending <-> descending)  
-    elsif sorted_before? && (params[:sort_by] == session[:sort_by])
-      session[:sort_type] == 'ascending' ? (@sort_type = 'descending') : (@sort_type = 'ascending')
-    # accounts for having sorted one column and now sorting a different column
-    elsif sorted_before? && (params[:sort_by] != session[:sort_by])
-      @sort_type = 'ascending'
-    end
-    return @sort_type
-  end
-
-  # gets @sort_by, @sort_type, and @phrase
-  def get_inv_params
-    if should_sort?
-      @sort_by = params[:sort_by]
-      # accounts for first time sorting in current session
-      @sort_type = sort_type_helper
-    elsif sorted_before?
-      @sort_by, @sort_type = session[:sort_by], session[:sort_type]
-      # only store state of previous request
-    else
-      @sort_by, @sort_type = nil, nil
-    end
-    @phrase = params[:phrase]
-  end
-
-  # remember recent inventory conditions (filter & order)
-  def save_inv_params
-    # session[:phrase] = @phrase
-    session[:sort_by] = @sort_by
-    session[:sort_type] = @sort_type
-  end
 
   # persist cart items to be displayed (by assigning @display_cart)
   def get_cart_display
@@ -192,6 +147,67 @@ class ItemsController < ApplicationController
     end
   end
 
+  ## sorting logic
+
+  # get @sort_by, @sort_type, @phrase, @page
+  def get_inv_params
+
+    if should_find?
+      @phrase = params[:phrase] || session[:phrase]
+    else
+      @phrase = nil
+    end
+
+    if should_sort?
+      @sort_by = params[:sort_by]
+      @sort_type = get_sort_type
+    elsif sorted_before?
+      @sort_by, @sort_type = session[:sort_by], session[:sort_type]
+    else
+      @sort_by, @sort_type = nil, nil
+    end
+
+    if params[:page]
+      @page = params[:page]
+    else
+      @page = 1
+    end
+
+  end
+
+  def should_find?
+    params.has_key?(:phrase) || session.has_key?(:phrase) # && !session[:phrase].nil?) 
+  end
+
+  def should_sort?
+    params.has_key?(:sort_by)
+  end
+
+  def sorted_before?
+    session.has_key?(:sort_by) # && !session[:sort_by].nil?
+  end
+
+  def get_sort_type
+    if !sorted_before?
+      # accounts for first time sorting in current session
+      @sort_type = 'ascending'  
+    elsif sorted_before? && (params[:sort_by] == session[:sort_by])
+      # accounts for clicking an already sorted column to change the sort type (ascending <-> descending)
+      session[:sort_type] == 'ascending' ? (@sort_type = 'descending') : (@sort_type = 'ascending')
+    elsif sorted_before? && (params[:sort_by] != session[:sort_by])
+      # accounts for having sorted one column and now sorting a different column
+      @sort_type = 'ascending'
+    end
+  end
+
+  # remember recent inventory conditions (filter & order)
+  def save_inv_params
+    session[:phrase] = @phrase
+    session[:sort_by] = @sort_by
+    session[:sort_type] = @sort_type
+    session[:page] = @page
+  end
+
   # searched by @phrase and paginated
   def get_searched_items
     if @phrase.blank?  
@@ -201,12 +217,24 @@ class ItemsController < ApplicationController
     end
   end
 
-  # get @items according to inventory parameters (@sort_by, @sort_type, @phrase)
+  # get @items
   def get_inv_items
+    # according to search phrase
+    filter_inv_items
+    # according to sorting params
+    Item.sort(@items, @sort_by, @sort_type)
+  end
+
+  def filter_inv_items
     if @phrase.blank?  
-      @items = Item.order("name").page(params[:page]).per(20)  
+      @items = Item.all  
     else
-      @items = Item.search(@phrase, fields: [{name: :word_start}], misspelling: {edit_distance: 2}, operator: "or", per_page: 20, page: params[:page])
+      @items = Item.search(@phrase, fields: [{name: :word_start}], misspelling: {edit_distance: 2}, operator: "or")
     end
   end
+
+  def paginate_inv_items
+      @items = Kaminari.paginate_array(@items).page(@page).per(20)
+  end
+
 end
