@@ -204,6 +204,10 @@ $(document).ready( function () {
 	    }
 	});
 
+	$('#pagination-wrapper').on('ajax:success', function(event, xhr, status, error) {
+		search();
+	});
+
 });
 
 function manageCart() {

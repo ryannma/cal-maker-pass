@@ -1,10 +1,10 @@
 class ItemsController < ApplicationController
     
   def index
-    get_inv_params
-    @items = Item.all
-    paginate_inv_items
     @all_status = Item.all_status    
+    get_inv_params
+    get_inv_items
+    paginate_inv_items
     get_cart_display
     save_inv_params
   end
@@ -89,15 +89,6 @@ class ItemsController < ApplicationController
     save_inv_params
   end
 
-  def next_page
-    @all_status = Item.all_status
-    get_inv_params
-    get_inv_items
-    paginate_inv_items
-    render 'inventory'
-    save_inv_params
-  end
-
   def query
     # Get the search terms from the q parameter and do a search
     # Generates the list of suggested search items below the search bar
@@ -124,13 +115,17 @@ class ItemsController < ApplicationController
     save_inv_params
   end
 
-=begin
-  def render_inventory
+  def inventory
+    @all_status = Item.all_status
+    get_inv_params
+    get_inv_items
+    paginate_inv_items
     respond_to do |format|
       format.js{}
+      format.html{render 'index'}
     end
+    save_inv_params
   end
-=end
 
   private
 
@@ -167,8 +162,8 @@ class ItemsController < ApplicationController
       @sort_by, @sort_type = nil, nil
     end
 
-    if params[:page]
-      @page = params[:page]
+    if params[:page] || session[:page]
+      @page = params[:page] || session[:page]
     else
       @page = 1
     end
@@ -227,9 +222,9 @@ class ItemsController < ApplicationController
 
   def filter_inv_items
     if @phrase.blank?  
-      @items = Item.all  
+      @items = Item.all
     else
-      @items = Item.search(@phrase, fields: [{name: :word_start}], misspelling: {edit_distance: 2}, operator: "or")
+      @items = Item.search(@phrase, fields: [{name: :word_start}], misspelling: {edit_distance: 2}, operator: "or").to_ary     
     end
   end
 
