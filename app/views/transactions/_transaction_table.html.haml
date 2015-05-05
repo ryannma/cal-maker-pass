@@ -1,6 +1,7 @@
 %table#transaction-table{ data: {sort_trans_by: @sort_trans_by, sort_trans_type: @sort_trans_type} }
   %thead
     %tr
+      %th{:style => "visibility: hidden;"}
       %th.sorter#date
         %span Date
         = inline_svg "sort.svg", class: "sort-hide"
