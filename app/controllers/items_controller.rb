@@ -80,6 +80,7 @@ class ItemsController < ApplicationController
   end
 
   def find
+    puts "@@@@@ WE'RE IN #FIND @@@@@"
     get_inv_params
     @all_status = Item.all_status
     get_searched_items
@@ -100,8 +101,11 @@ class ItemsController < ApplicationController
 
   def query
     # Get the search terms from the q parameter and do a search
-    # as we seen in the previous part of the article.
+    # Generates the list of suggested search items below the search bar
+    puts "@@@@@ WE'RE IN #QUERY @@@@@"
     search = Item.search(params[:q],fields: [{name: :word_start}], misspelling: {edit_distance: 2} , operator: "or")
+    puts search
+    puts "what's going on"
     respond_to do |format|
       format.json do
         # Create an array from the search results.

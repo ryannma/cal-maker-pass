@@ -67,9 +67,6 @@ $(document).ready( function () {
 			}
 		});
 	});
-	// $('#cart-panel').on('click', '#cart-button', function () {
-	// 	manageCart();
-	// });
 
 	$('#inventory-wrapper').on('click', '.sorter', function () {
 		var sort_by = $(this).prop('id');
@@ -200,11 +197,15 @@ $(document).ready( function () {
 			}
 		}
 	});
+
+	$()
+
 });
 
 document.onkeydown=function(){
     if(window.event.keyCode==='13'){
-	 		search();
+    	console.log("we make it this far :3");
+	 	search();
     }
 };
 
@@ -295,16 +296,6 @@ function showItem( id ) {
 		}
 	});
 }
-
-	// $('#show-item-back').click( function () {
-	// 		$('#modal').fadeOut(500);
-	// 	});
-	// 	$('#show-item-update').click( function () {
-	// 		$('#modal').fadeOut(500);
-	// 	});
-	// 	$('#modal-overlay').click( function () {
-	// 		$('#modal').fadeOut(500);
-	// 	});
 
 function search () {
 	$.ajax({
