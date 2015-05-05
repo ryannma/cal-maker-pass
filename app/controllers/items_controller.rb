@@ -122,7 +122,6 @@ class ItemsController < ApplicationController
     paginate_inv_items
     respond_to do |format|
       format.js{}
-      format.html{render 'index'}
     end
     save_inv_params
   end

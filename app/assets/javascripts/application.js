@@ -96,7 +96,7 @@ $(document).ready( function () {
 		});
 	});
 
-	$('#transaction-table').on('click', '.sorter', function () {
+	$('#transactions-table-wrapper').on('click', '.sorter', function () {
 		var sort_trans_by = $(this).prop('id');
 		$.ajax({
 			url: '/transactions/sort',
@@ -112,7 +112,7 @@ $(document).ready( function () {
 			if (sort_trans_type == 'ascending') {
 				$(span).addClass('sort-align')
 				$(svg).attr('class', 'sort-show-down');
-			} else if (sort_type == 'descending') {
+			} else if (sort_trans_type == 'descending') {
 				$(span).addClass('sort-align')
 				$(svg).attr('class', 'sort-show-up');
 			}		

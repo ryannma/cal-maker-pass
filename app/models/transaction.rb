@@ -1,8 +1,8 @@
 class Transaction < ActiveRecord::Base
-  attr_accessible :purpose, :line_items
-  belongs_to :user
-  belongs_to :admin
-  has_many :line_items
+	attr_accessible :purpose, :line_items
+	belongs_to :user
+	belongs_to :admin
+	has_many :line_items
 
 	# sort transactions array in place
 	def self.sort(transactions, sort_trans_by, sort_trans_type, all, admin_user)

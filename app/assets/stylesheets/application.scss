@@ -117,7 +117,7 @@ thead {
     background-color: $blue-sea;
 }
 
-#inventory-table .sorter {
+.sorter {
     cursor: pointer;
 /*
     width: 100%;
@@ -139,7 +139,7 @@ tbody tr {
     height: 35px;
 }
 
-#inventory-table .sort-hide {
+.sort-hide {
     width: 14px;
     height: 23px;
     fill: white;
@@ -148,7 +148,7 @@ tbody tr {
     display: none;
 }
 
-#inventory-table .sort-show-down {
+.sort-show-down {
     width: 14px;
     height: 23px;
     fill: $blue-dark;
@@ -156,7 +156,7 @@ tbody tr {
     top: 2px;
 }
 
-#inventory-table .sort-show-up {
+.sort-show-up {
     width: 14px;
     height: 23px;
     fill: $blue-dark;
@@ -183,6 +183,18 @@ tbody tr {
 
 .sorter#status {
     min-width: 110px;
+}
+
+.sorter#date {
+    
+}
+
+.sorter#customer {
+    
+}
+
+.sorter#purpose {
+    
 }
 
 .sort-align {

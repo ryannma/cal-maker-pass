@@ -8,4 +8,5 @@
     #transactions-buttons-container.buttons-container
       = link_to 'All', transactions_path(:all=>true), class: 'button button-blue'
       = link_to 'Own', transactions_path(:all=>false), class: 'button button-red'
-    = render partial: "transaction_table"
+    #transactions-table-wrapper
+      = render partial: "transaction_table"
