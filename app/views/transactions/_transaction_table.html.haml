@@ -13,20 +13,20 @@
       %th{:class => "line_item_headers", :style => "visibility: visible;"} Item
       %th{:class => "line_item_headers", :style => "visibility: visible;"} Quantity
       %th{:class => "line_item_headers", :style => "visibility: visible;"} Action
-  %tbody
-    - @transactions.each do |transaction|
-      %tr{:class =>'clickable_row'}
-        %td
-          .transaction-arrow
-        %td= link_to transaction.created_at.strftime("%I:%M%P %m/%d/%Y "), transaction_path(transaction)
-        - if transaction.user != nil
-          %td= transaction.user.name()
-        - else
-          %td= "Unknown"
-        %td= transaction.purpose
-        %td
-        %td
-        %td
+    %tbody
+      - @transactions.each do |transaction|
+        %tr{:class =>'clickable_row'}
+          %td
+            .transaction-arrow
+          %td= link_to transaction.created_at.strftime("%I:%M%P %m/%d/%Y "), transaction_path(transaction)
+          - if transaction.user != nil
+            %td= transaction.user.name()
+          - else
+            %td= "Unknown"
+          %td= transaction.purpose
+          %td
+          %td
+          %td
         - transaction.line_items.each do |line_item|
           %tr{:class=>'line_item_row', :style=>"display: none;"}
             %td

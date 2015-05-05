@@ -76,7 +76,7 @@ class TransactionsController < ApplicationController
 =end
     if should_sort?
       @sort_trans_by = params[:sort_trans_by]
-      @sort_trans_type = get_sort_type
+      @sort_trans_type = get_sort_trans_type
     elsif sorted_before?
       @sort_trans_by, @sort_trans_type = session[:sort_trans_by], session[:sort_trans_type]
     else
@@ -91,7 +91,6 @@ class TransactionsController < ApplicationController
 =end
     @all = params[:all] || session[:all]
     @admin_user = params[:admin_user] || session[:admin_user]
-
   end
 =begin
   def should_find?
@@ -106,7 +105,7 @@ class TransactionsController < ApplicationController
     session.has_key?(:sort_trans_by) # && !session[:sort_trans_by].nil?
   end
 
-  def get_sort_type
+  def get_sort_trans_type
     if !sorted_before?
       # accounts for first time sorting in current session
       @sort_trans_type = 'ascending'  
@@ -135,7 +134,8 @@ class TransactionsController < ApplicationController
     #filter_transactions
     # according to sorting params
     @transactions = Transaction.all
-    Transaction.sort(@items, @sort_trans_by, @sort_trans_type, @all, @admin_user)
+    puts @sort_trans_by
+    Transaction.sort(@transactions, @sort_trans_by, @sort_trans_type, @all, @admin_user)
   end
 
 =begin
