@@ -1,0 +1,4 @@
+$('#modal-content').html(
+	"<%= escape_javascript render(:partial => 'edit', :locals => {:user => @user, :available_privileges => @available_privileges}) %>"
+);
+$('#modal').fadeIn(500);
