@@ -38,6 +38,10 @@ class UsersController < ApplicationController
       query, method, model = {:superadmin => true}, 'where', 'Admin'
       @active_user_button = 'managers'
     end
+    @admin_ids = []
+    @user.admins.each do |admin|
+      @admin_ids << admin.id
+    end
     @users = model.constantize.method(method).call(query)
   end
 
@@ -63,14 +67,15 @@ class UsersController < ApplicationController
   end
 
   def update
+    admin_privilege_lvl, admin_user_id = @user.privilege_lvl, @user.id
     sanity_check_privilege; return if performed?
     @user.first_name = params[:first_name]
     @user.last_name = params[:last_name]
     @user.sid = params[:sid]
     @user.email = params[:email]
-    if @user.id != params[:id].to_i
+    if @user.id != admin_user_id
       @user.grant_privilege params[:privilege].to_i
-    elsif params[:privilege].to_i != @user.privilege_lvl
+    elsif params[:privilege].to_i != admin_privilege_lvl
       flash[:warning] = "Cannot modify your own privleges"
     end
     @user.save!
