@@ -28,10 +28,34 @@ class User < ActiveRecord::Base
     lvl = 0
     if admin?
       lvl = 1
-      if not admins.where(superadmin = true).empty?
+      if not admins.where(superadmin: true).empty?
         lvl = 2
       end
     end
     lvl
   end
+
+  def delete
+    Admin.delete(admins)
+    super
+  end
+
+  def grant_privilege(new_privilege_lvl)
+    is_superadmin = new_privilege_lvl == 2
+    if new_privilege_lvl == privilege_lvl
+      return
+    elsif new_privilege_lvl == 0
+      Admin.delete(admins)
+    elsif admin?
+      admins.each do |admin|
+        admin.superadmin = is_superadmin
+        admin.save
+      end
+    else
+      admin = Admin.new(:superadmin => is_superadmin)
+      admin.user_id = id
+      admin.save
+    end
+  end
+
 end

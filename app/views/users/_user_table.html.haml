@@ -9,9 +9,16 @@
     %tbody
       - @users.each do |user|
         %tr
-          %td= link_to_function user.first_name, "editUser(#{user.id})", class: "user-table-link"
-          %td= user.last_name
-          %td= user.sid
+          - if (@user.privilege_lvl > user.privilege_lvl) or (@user.id == user.id)
+            %td= link_to_function user.first_name, "editUser(#{user.id})", class: "user-table-link"
+            %td= link_to_function user.last_name, "editUser(#{user.id})", class: "user-table-link"
+          - else
+            %td= user.first_name
+            %td= user.last_name
+          - if @user.privilege_lvl > 0
+            %td= user.sid
+          - else
+            %td
           %td= user.email
           - if user.privilege_lvl==0
             %td= "None"

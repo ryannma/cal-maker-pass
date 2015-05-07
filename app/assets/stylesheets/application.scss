@@ -369,11 +369,11 @@ tbody tr {
     height: 100%;
     width: calc(100% - 240px);
     transition: 0.3s;
+    overflow-y: scroll;
 }
 
 .items-panel-expanded {
     width: calc(100% - 60px) !important;
-    overflow-y: scroll
 }
 
 .table-container {
@@ -562,6 +562,28 @@ tbody tr {
     width: 85px;
     padding-left: 5px;
 }
+
+//users
+
+.users-wrapper {
+    position: absolute;
+    width: 700px;
+    left: 50%;
+    margin-left: -350px;
+    top: 100px;
+}
+
+#user-table {
+    text-align: center;
+    color: $blue-dark;
+    width: 100%;
+}
+
+#users-buttons-container {
+    margin-bottom: 50px;
+}
+
+// end users
 
 #cart-panel {
     position: absolute;

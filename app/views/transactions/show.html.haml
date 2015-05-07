@@ -4,7 +4,7 @@
   = text_field :transaction, :created_at, value: @transaction.created_at, class: "attribute-value", readonly: true
 
   = label :transaction, :admin, 'Seller', class: "attribute-label"
-  = text_field :transaction, :admin, value: @transaction.admin.user.name, class: "attribute-value", readonly: true
+  = text_field :transaction, :admin, value: @transaction.admin.name, class: "attribute-value", readonly: true
 
   = label :transaction, :user, 'Customer', class: "attribute-label"
   = text_field :transaction, :user, value: @transaction.user.name, class: "attribute-value", readonly: true

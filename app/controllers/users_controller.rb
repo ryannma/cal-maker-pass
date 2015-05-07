@@ -3,13 +3,12 @@ class UsersController < ApplicationController
 
   def new
     check_user_exists nil
-    filter_user 3
-    @user = User.new()
+    filter_user 3 or return
   end
 
   def create
     check_user_exists nil
-    filter_user 3
+    filter_user 3 or return
     user_params = params[:user]
     user_params[:uid] = session[:cas_user]
     @user = User.new(user_params)
@@ -25,67 +24,68 @@ class UsersController < ApplicationController
   end
 
   def index
-    filter_user 1
     @privilege = params[:privilege]
-    if @privilege.nil?
+    if @privilege.nil? and @user.privilege_lvl > 0
       query, method, model = {}, 'all', 'User'
+      @active_user_button = 'all'
+    elsif @privilege == 'self' or (@user.privilege_lvl == 0 and @privilege.nil?)
+      query, method, model = {:id => @user.id}, 'where', 'User'
+      @active_user_button = 'self'
     elsif @privilege == 'admin'
       query, method, model = {}, 'where', 'Admin'
+      @active_user_button = 'sellers'
     else
       query, method, model = {:superadmin => true}, 'where', 'Admin'
+      @active_user_button = 'managers'
     end
     @users = model.constantize.method(method).call(query)
   end
 
   def edit
-    privilege_lvl = @user.privilege_lvl
-    filter_user 1
+    admin_privilege_lvl = @user.privilege_lvl
+    sanity_check_privilege; return if performed?
+    user_privilege_lvl = @user.privilege_lvl
     privileges = ['None', 'Seller', 'Manager']
     @available_privileges = []
     privileges.each_with_index do |privilege, index|
-      if index <= privilege_lvl
-        @available_privileges << [privilege, index]
+      if index <= admin_privilege_lvl
+        is_selected = user_privilege_lvl == index
+        @available_privileges << [privilege, index, is_selected]
       else
         break
       end
     end
+    @admin_privilege = admin_privilege_lvl
+    @user_privilege = user_privilege_lvl
     respond_to do |format|
       format.js {}
     end
   end
 
   def update
-    passes = sanity_check_privilege
-    if not passes
-      flash[:warning] = "You don't have the privilege to promote that user"
-      redirect_to action: "edit", flash: flash
-    end
-    filter_user 1
-    @updated_data = params[:user]
-    @user.first_name = @updated_data[:first_name]
-    @user.last_name = @updated_data[:last_name]
-    @user.sid = @updated_data[:sid]
-    @user.email = @updated_data[:email]
-    if @user.id != params[:id] or @user.privilege_lvl == params[:privilege]
-      grant_privilege params[:privilege]
+    sanity_check_privilege; return if performed?
+    @user.first_name = params[:first_name]
+    @user.last_name = params[:last_name]
+    @user.sid = params[:sid]
+    @user.email = params[:email]
+    if @user.id != params[:id].to_i
+      @user.grant_privilege params[:privilege].to_i
+    elsif params[:privilege].to_i != @user.privilege_lvl
+      flash[:warning] = "Cannot modify your own privleges"
     end
     @user.save!
-    # IMPLEMENT: Render something here
   end
 
   def show
-    filter_user 1
+    filter_user 1 or return
   end
 
   def destroy
-    filter_user 2
-    if @user.id == params[:id]
-      @user.destroy
-      flash[:notice] = "Successfully deleted user"
-    else
-      flash[:warning] = "You don't have permissions to delete user"
-    end
-    redirect_to action: "index", flash: flash
+    admin_user_id = @user.id
+    sanity_check_privilege true; return if performed?
+    user_id = @user.id
+    @user.delete
+    flash[:notice] = "Successfully deleted user"
   end
 
   def find
@@ -102,32 +102,36 @@ private
     # An example: User 1 wants to edit information for User 2 but doesn't have
     # seller access. Thus, User 1 will only be able to edit his/her information.
     if @user.nil?
-      return
+      @user = User.new()
     elsif @user.privilege_lvl >= minimum_privilege_lvl
-      @user = User.find(params[:id])
-    else
-      redirect_to "/"
-    end
-  end
-
-  def sanity_check_privilege
-    return params[:privilege] <= @user.privilege_lvl
-  end
-
-  def grant_privilege(new_privilege_lvl)
-    is_superadmin = new_privilege_lvl == 2
-    if new_privilege_lvl == 0
-      @user.admins.delete
-    elsif @user.admin?
-      @user.admins.each do |admin|
-        admin.superadmin = is_superadmin
-        admin.save
+      if not params[:id].nil?
+        @user = User.find(params[:id])
       end
     else
-      admin = Admin.new(:superadmin => is_superadmin)
-      admin.user = @user
-      admin.save
+      redirect_to(action: "index", status: 303, flash: flash) and return
     end
   end
 
+  def sanity_check_privilege(strict=false)
+    admin_privilege_lvl = @user.privilege_lvl
+    admin_user_id = @user.id
+    @user = User.find(params[:id])
+    user_id = @user.id
+    user_privilege_lvl = @user.privilege_lvl
+    if strict
+      checker = (user_privilege_lvl >= admin_privilege_lvl)
+    elsif
+      checker = (user_privilege_lvl >= admin_privilege_lvl and admin_user_id != user_id)
+    end
+    if checker
+      flash[:warning] = "You don't have permission to modify this user"
+      redirect_to(action: "index", status: 303, flash: flash) and return
+    end
+  end
+
+  def print(printable)
+    puts "@@@@@@@@@@@@@@@@@@@@@@"
+    puts printable
+    puts "######################"
+  end
 end

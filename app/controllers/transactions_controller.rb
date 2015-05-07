@@ -5,7 +5,11 @@ class TransactionsController < ApplicationController
     admin_user = Admin.find_by_user_id(current_user.id)
     get_trans_params
     #get_transactions
-    @transactions = Transaction.all
+    if current_user.admin?
+      @transactions = Transaction.all
+    else
+      @transactions = Transaction.where(user_id: current_user.id)
+    end
     save_trans_params
   end
 
@@ -39,6 +43,9 @@ class TransactionsController < ApplicationController
 
   def show
     @transaction = Transaction.find(params[:id])
+    if not @user.admin? and @transaction.user_id != @user.id
+      redirect_to action: "index"
+    end
   end
 
   def sort

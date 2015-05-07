@@ -13,9 +13,13 @@
         = text_field :user, :email, value: @user.email, class: "attribute-value"
 
         = label :user, :privilege, 'Privilege', class: "attribute-label"
-        = select_tag :privilege, options_for_select(@available_privileges, params[:privilege]), class: "edit-user-input"
+        %select{class: "edit-user-input", id: "user_privilege", name: "user[privilege]"}
+            - @available_privileges.each do |option|
+                - text, value, is_selected = option
+                %option{ :value => value, :selected => is_selected }= text
 
-        #buttons-container
-        = submit_tag 'Update', class: "button button-blue" 
-        = link_to 'Back', "/users", class: 'button button-red'
-        = link_to 'Delete', "/users/#{@user.id}", method: :post, class: 'button button-red'
+    .buttons-container
+        #edit-user-back.button.button-red Back
+        #edit-user-update.button.button-blue Update
+        - if @admin_privilege > @user_privilege
+            #edit-user-delete.button.button-red Delete
