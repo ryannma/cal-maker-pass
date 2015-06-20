@@ -4,7 +4,6 @@ gem 'rails', '3.2.16'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-
 group :test, :development do
   gem 'sqlite3'
   gem 'cucumber-rails', :require=>false
@@ -52,7 +51,6 @@ gem 'searchkick'
 gem 'elasticsearch-model'
 gem 'elasticsearch-rails'
 gem 'bonsai-elasticsearch-rails'
-
 
 #pagination
 gem 'kaminari'
