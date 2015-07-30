@@ -22,6 +22,8 @@ Makerpass::Application.routes.draw do
 
   #TRANSACTION
   post "/transactions/new/:cart", to: "transactions#new", as: "new_transaction"
-  post "/transactions/checkout", to: "transactions#checkout", as: "checkout"    
+  post "/transactions/checkout", to: "transactions#checkout", as: "checkout"
+
+  mount Resque::Server, :at => "/resque"
 
 end

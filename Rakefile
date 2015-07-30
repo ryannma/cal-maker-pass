@@ -4,4 +4,9 @@
 
 require File.expand_path('../config/application', __FILE__)
 
+require 'resque/tasks' #loads all the resque tasks
+require 'resque/scheduler/tasks'
+
+task "resque:preload" => :environment #it will load resque environment
+
 Makerpass::Application.load_tasks

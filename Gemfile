@@ -62,3 +62,11 @@ gem 'rubycas-client'
 
 gem 'jquery-turbolinks'
 
+#scheduling/mailing
+
+gem 'resque'
+gem 'resque_mailer'
+gem 'resque-scheduler'
+gem 'resque-status'
+gem 'rest_client'
+

@@ -178,10 +178,10 @@ $(document).ready( function () {
 		}
 	});
 	document.onkeydown=function(){
-    if(window.event.keyCode === 13){
-	 		search();
-    }
-};
+	    if(window.event.keyCode === 13){
+		 		search();
+	    }
+	};
 });
 
 
