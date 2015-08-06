@@ -1,10 +1,10 @@
 class Cart
-  attr_accessor :user, :cart_items, :comment
+  attr_accessor :sid, :cart_items, :purpose
 
   def initialize
-    @user = nil
+    @sid = nil
     @cart_items = []
-    @comment = ""
+    @purpose = ""
     self
   end
 
@@ -55,9 +55,9 @@ class Cart
   end
 
   def clear
-    @user = nil
+    @sid = nil
     @cart_items = nil
-    @comment = nil
+    @purpose = nil
   end
 
   def total

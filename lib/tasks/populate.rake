@@ -3,7 +3,7 @@ namespace :db do
   task :populate => :environment do
     require 'populator'
     require 'faker'
-      Item.populate 100 do |item|
+      Item.populate 23 do |item|
         item.name = Faker::Commerce.product_name
         item.quantity = Faker::Number.number(2)
         item.price = Faker::Commerce.price 

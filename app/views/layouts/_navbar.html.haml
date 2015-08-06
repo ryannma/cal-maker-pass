@@ -1,7 +1,16 @@
-#navbar
-  #title b-labs
-  #navbar-menu
-    = link_to 'Inventory', items_path, id: 'inventory-menu', class: 'navbar-menu-item'
-    = link_to 'Transactions', transactions_path, id: 'transactions-menu', class: 'navbar-menu-item'
-    = link_to 'Students', users_path, id: 'students-menu', class: 'navbar-menu-item'
-    = link_to 'Log out', logout_path, id: 'logout', class: 'navbar-menu-item'
+- if @currently_admin
+  #navbar
+    #title B-Labs
+    #navbar-menu
+      = link_to 'Inventory', items_path, id: 'inventory-menu', class: 'navbar-menu-item'
+      = link_to 'Transactions', transactions_path, id: 'transactions-menu', class: 'navbar-menu-item'
+      = link_to 'Users', users_path, id: 'students-menu', class: 'navbar-menu-item'
+      = link_to 'Log out', logout_path, id: 'logout', class: 'navbar-menu-item'
+- else
+  #navbar
+    #title B-Labs
+    #navbar-menu
+      = link_to 'Inventory', items_path, id: 'inventory-menu', class: 'navbar-menu-item'
+      = link_to 'My Transactions', transactions_path, id: 'transactions-menu', class: 'navbar-menu-item'
+      = link_to 'Profile', users_path, id: 'students-menu', class: 'navbar-menu-item'
+      = link_to 'Log out', logout_path, id: 'logout', class: 'navbar-menu-item'

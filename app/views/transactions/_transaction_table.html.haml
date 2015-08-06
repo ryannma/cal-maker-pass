@@ -1,4 +1,4 @@
-%table#transaction-table{ data: {sort_trans_by: @sort_trans_by, sort_trans_type: @sort_trans_type} }
+%table#transaction-table{ data: {tsort_by: @tsort_by, tsort_type: @tsort_type} }
   %thead
     %tr
       %th{:style => "visibility: hidden;"}
@@ -11,9 +11,9 @@
       %th.sorter#purpose
         %span Purpose
         = inline_svg "sort.svg", class: "sort-hide"
-      %th{:class => "line_item_headers", :style => "visibility: visible;"} Item
-      %th{:class => "line_item_headers", :style => "visibility: visible;"} Quantity
-      %th{:class => "line_item_headers", :style => "visibility: visible;"} Action
+      %th#titem{:class => "line_item_headers", :style => "visibility: visible;"} Item
+      %th#tquantity{:class => "line_item_headers", :style => "visibility: visible;"} Quantity
+      %th#taction{:class => "line_item_headers", :style => "visibility: visible;"} Action
     %tbody
       - @transactions.each do |transaction|
         %tr{:class =>'clickable_row'}

@@ -16,8 +16,8 @@
       %th.sorter.header#status
         %span Status
         = inline_svg "sort.svg", class: "sort-hide"
-      %th.add-column Add
-  %tbody
+      %th.add-column >
+  %tbody#items
     - @items.each do |item|
       %tr
         %td= link_to_function item.name, "showItem(#{item.id})", class: "link", id: "edit-#{item.name.parameterize}"
@@ -25,6 +25,7 @@
         %td= item.price 
         %td= item.kind
         %td= item.status
-        %td.add-column
-          %a{ href: "#", id: "add-#{item.name.parameterize}", onclick: "updateCart(#{item.id});" }
-            = inline_svg "plus.svg", class: "add-svg"
+        - if @currently_admin
+          %td.add-column
+            %a{ href: "#", id: "add-#{item.name.parameterize}", onclick: "updateCart(#{item.id});" }
+              = inline_svg "plus.svg", class: "add-svg"

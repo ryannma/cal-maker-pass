@@ -1,0 +1,30 @@
+$('#inventory-wrapper').html(
+    "<%= escape_javascript render(:partial => 'inventory_table') %>"
+);
+$('#pagination-wrapper').html(
+    "<%= escape_javascript render(:partial => 'pagination') %>"
+);
+
+$(document).ready( function () {
+
+    var sort_type = $('#inventory-table').attr('data-sort-type');
+    var sort_by = $('#inventory-table').attr('data-sort-by');
+    var id = '#' + sort_by;
+    var svg = id + ' svg';
+    var span = id + ' span';
+    $(id).addClass('hilite');
+    if (sort_type === 'ascending') {
+        $(span).addClass('sort-align');
+        $(svg).attr('class', 'sort-show-down');
+    } else if (sort_type === 'descending') {
+        $(span).addClass('sort-align');
+        $(svg).attr('class', 'sort-show-up');
+    }
+    
+    if ($('#items-panel').hasClass('items-panel-expanded')) {
+        $('.add-column').hide();
+    } else {
+        $('.add-column').show();
+    }
+
+});

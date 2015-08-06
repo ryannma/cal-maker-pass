@@ -1,27 +1,42 @@
 class TransactionsController < ApplicationController
+  respond_to :html, :json, :js
 
   def index
-    current_user = User.where(uid: session[:cas_user])[0]
-    admin_user = Admin.find_by_user_id(current_user.id)
+    clear_sort_session
     get_trans_params
-    #get_transactions
-    if current_user.admin?
-      @transactions = Transaction.all
-    else
-      @transactions = Transaction.where(user_id: current_user.id)
-    end
+    get_trans
+    paginate_trans
     save_trans_params
   end
 
+  # buyer, items, & purpose in params sent from cart.js
   def checkout
-    items = params[:items]
+    # look up admin by uid found in cas FIGURE THIS OUT
     admin_user = User.where(uid: session[:cas_user])[0]
     admin = Admin.where(user_id: admin_user.id)[0]
     if admin.nil?
       admin = Admin.find(1)
     end
-    buyer = User.find_by_sid(params[:buyer]);
+
+    # if user doesn't exist in system, return error
+    buyer = User.where(sid: params[:buyer])[0]
+    if buyer.nil?
+      render :nothing => true, :status => :unauthorized
+      return
+    end
+
+    # if requested item quantities aren't availible, return error.
+    items = params[:items] # hash of index, [name, quantity]
+    if !Item.quant_avail(items)
+      render :nothing => true, :status => :bad_request
+      return
+    end
+    # update items in db
+    Item.update_quant(items)
+
     purpose = params[:purpose]
+
+    # make transaction
     tx = Transaction.new(:purpose=>purpose);
     tx.user = buyer
     tx.admin = admin
@@ -36,24 +51,20 @@ class TransactionsController < ApplicationController
       lineitem.transaction = tx
       lineitem.save
       index += 1
-    end
-    session[:cart] = Cart.new
-    render :nothing => true
+    end    
+
+    session[:cart] = Cart.new   
+    render js: "window.location.href = '#{items_path}'"
   end
 
+=begin
   def show
     @transaction = Transaction.find(params[:id])
     if not @user.admin? and @transaction.user_id != @user.id
       redirect_to action: "index"
     end
   end
-
-  def sort
-    get_trans_params
-    get_transactions
-    render 'trans_table'
-    save_trans_params
-  end
+=end
 
   def export
     @transactions = Transaction.all
@@ -74,135 +85,150 @@ class TransactionsController < ApplicationController
     end  
   end
 
-  private
+  # triggered by twitter typeahead
+  def tquery
+    # Get the search terms from the q parameter and do a search
+    # Generates the list of suggested search items below the search bar
+    current_user = User.where(uid: session[:cas_user])[0]
 
-  ## sorting logic
-
-   # get @sort_trans_by, @sort_trans_type, @all, @admin_user
-  def get_trans_params
-=begin
-    if should_find?
-      @phrase = params[:phrase] || session[:phrase]
+    if current_user.admin?
+      search = Transaction.search(params[:q],fields: [{purpose: :word_start}], misspelling: {edit_distance: 2} , operator: "or")
     else
-      @phrase = nil
+      search = Transaction.where(user_id: current_user.id).search(params[:q],fields: [{purpose: :word_start}], misspelling: {edit_distance: 2} , operator: "or")
     end
-=end
-    if should_sort?
-      @sort_trans_by = params[:sort_trans_by]
-      @sort_trans_type = get_sort_trans_type
-    elsif sorted_before?
-      @sort_trans_by, @sort_trans_type = session[:sort_trans_by], session[:sort_trans_type]
-    else
-      @sort_trans_by, @sort_trans_type = nil, nil
-    end
-=begin
-    if params[:page] || session[:page]
-      @page = params[:page] || session[:page]
-    else
-      @page = 1
-    end
-=end
-    @all = params[:all] || session[:all]
-    @admin_user = params[:admin_user] || session[:admin_user]
-  end
-=begin
-  def should_find?
-    params.has_key?(:phrase) || session.has_key?(:phrase) # && !session[:phrase].nil?) 
-  end
-=end
-  def should_sort?
-    params.has_key?(:sort_trans_by)
-  end
 
-  def sorted_before?
-    session.has_key?(:sort_trans_by) # && !session[:sort_trans_by].nil?
-  end
-
-  def get_sort_trans_type
-    if !sorted_before?
-      # accounts for first time sorting in current session
-      @sort_trans_type = 'ascending'  
-    elsif sorted_before? && (params[:sort_trans_by] == session[:sort_trans_by])
-      # accounts for clicking an already sorted column to change the sort type (ascending <-> descending)
-      session[:sort_trans_type] == 'ascending' ? (@sort_trans_type = 'descending') : (@sort_trans_type = 'ascending')
-    elsif sorted_before? && (params[:sort_trans_by] != session[:sort_trans_by])
-      # accounts for having sorted one column and now sorting a different column
-      @sort_trans_type = 'ascending'
-    end
-  end
-
-  # remember recent inventory conditions (filter & order)
-  def save_trans_params
-    #session[:phrase] = @phrase
-    session[:sort_trans_by] = @sort_trans_by
-    session[:sort_trans_type] = @sort_trans_type
-    #session[:page] = @page
-    session[:all] = @all
-    session[:admin_user] = @admin_user
-  end
-
-  # get @transactions
-  def get_transactions
-    # according to search phrase
-    #filter_transactions
-    # according to sorting params
-    @transactions = Transaction.all
-    puts @sort_trans_by
-    Transaction.sort(@transactions, @sort_trans_by, @sort_trans_type, @all, @admin_user)
-  end
-
-=begin
-  def filter_transactions
-    if @phrase.blank?  
-      @items = Transaction.all
-    else
-      @items = Transaction.search(@phrase, fields: [{name: :word_start}], misspelling: {edit_distance: 2}, operator: "or").to_ary     
-    end
-  end
-
-  def paginate_inv_items
-      @transactions = Kaminari.paginate_array(@transactions).page(@page).per(20)
-  end
-=end
-
-=begin
-  def tx_helper(all, sort, admin_user)
-    if (all == false && admin_user != nil) || (all == "false" && admin_user != nil)
-      @transactions = self_tx_helper(sort, admin_user)
-    elsif all == true || all == "true"
-      @transactions = all_tx_helper(sort, admin_user)
-    else
-      @transactions = []
-    end
-  end
-
-  def self_tx_helper(sort, admin_user)
-    if sort == 'customer'
-      @transactions = Transaction.where(admin_id: admin_user.id).includes(:user).order("users.last_name")
-    elsif sort == 'purpose'
-      @transactions = Transaction.where(admin_id: admin_user.id).order(:purpose)
-    elsif sort == 'date'
-      @transactions = Transaction.where(admin_id: admin_user.id).order(:created_at)
-    else
-      unless admin_user.nil?
-        @transactions = Transaction.where(admin_id: admin_user.id)
-      else
-        @transactions = []
+    respond_to do |format|
+      format.json do
+        # Create an array from the search results.
+        results = search.results.map do |transaction|
+          # Each element will be a hash containing only the title of the article.
+          # The name key is used by typeahead.js.
+          { purpose: transaction.purpose }
+        end
+        render json: results
       end
     end
   end
 
-  def all_tx_helper(sort, admin_user)
-    if sort == 'customer'
-      @transactions = Transaction.includes(:user).order("users.last_name")
-    elsif sort == 'purpose'
-      @transactions = Transaction.order(:purpose)
-    elsif sort == 'date'
-      @transactions = Transaction.order(:created_at)
+  # triggered on enter in search bar (queries db)
+  def find
+    clear_sort_session
+    load
+  end
+
+  # triggered on click on column headers & pagination links
+  def load
+    update_trans
+  end
+
+  def update_trans
+    get_trans_params
+    get_trans
+    paginate_trans
+    save_trans_params
+    render "tload"
+  end
+
+  private
+
+  ## @transactions sorting logic
+
+  def get_trans_params
+
+    # get @phrase
+    if should_find?
+      @tphrase = params[:tphrase] || session[:tphrase]
     else
-      @transactions = Transaction.all
+      @tphrase = nil
+    end
+
+    # get @sort_by and @sort_type
+    if should_sort?
+      @tsort_by = params[:tsort_by]
+      @tsort_type = get_sort_type
+    elsif sorted_before?
+      @tsort_by, @tsort_type = session[:tsort_by], session[:tsort_type]
+    else
+      @tsort_by, @tsort_type = nil, nil
+    end
+
+    # get @page
+    if params[:page]
+      @page = params[:page]
+    else
+      @page = 1
+    end
+
+  end
+
+  def should_find?
+    params.has_key?(:tphrase) || session.has_key?(:tphrase) 
+  end
+
+  def should_sort?
+    params.has_key?(:tsort_by)
+  end
+
+  def sorted_before?
+    session.has_key?(:tsort_by)
+  end
+
+  def get_sort_type
+    if !sorted_before?
+      # accounts for first time sorting in current session
+      @tsort_type = 'ascending'  
+    elsif sorted_before? && (params[:tsort_by] == session[:tsort_by])
+      # accounts for clicking an already sorted column to change the sort type (ascending <-> descending)
+      session[:tsort_type] == 'ascending' ? (@tsort_type = 'descending') : (@tsort_type = 'ascending')
+    elsif sorted_before? && (params[:tsort_by] != session[:tsort_by])
+      # accounts for having sorted one column and now sorting a different column
+      @tsort_type = 'ascending'
     end
   end
-=end
+
+  # remember recent inventory conditions (search & sort)
+  def save_trans_params
+    session[:tphrase] = @tphrase
+    session[:tsort_by] = @tsort_by
+    session[:tsort_type] = @tsort_type
+  end
+
+  def clear_sort_session
+    session[:tphrase] = nil
+    session[:tsort_by] = nil
+    session[:tsort_type] = nil
+  end
+
+  # get @transactions
+  def get_trans
+    # according to search phrase
+    get_searched_trans
+    # according to sorting params
+    Transaction.sort(@transactions, @tsort_by, @tsort_type)
+  end
+
+  # searched by @phrase
+  def get_searched_trans
+
+      current_user = User.where(uid: session[:cas_user])[0]
+
+    if @tphrase.blank?
+      if @currently_admin
+        @transactions = Transaction.all
+      else
+        @transactions = Transaction.where(user_id: current_user.id)
+      end
+    else
+      if @currently_admin
+        @transactions = Transaction.search(@tphrase, fields: [{purpose: :word_start}], misspelling: {edit_distance: 2}, operator: "or").to_ary
+      else
+        @transactions = Transaction.where(user_id: current_user.id).search(@tphrase, fields: [{purpose: :word_start}], misspelling: {edit_distance: 2}, operator: "or").to_ary
+      end
+    end
+  end
+
+  def paginate_trans
+    @transactions = Kaminari.paginate_array(@transactions).page(@page).per(12)
+  end
 
 end

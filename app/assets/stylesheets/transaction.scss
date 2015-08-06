@@ -1,0 +1,148 @@
+$blue-dark: #304269;
+$blue-sea: #91BED4;
+$blue-sky: #D9E8F5;
+$white: #FFFFFF;
+$orange: #F26101;
+$red: #de6868;
+$green: #78c272;
+
+th, td {
+    transition: 0.3s;
+}
+
+#transaction-table {
+    text-align: center;
+    color: $blue-dark;
+    width: 100%;
+}
+
+thead {
+    background: $blue-sky;
+}
+
+#transaction-table th.hilite {
+    background-color: $blue-sea;
+}
+
+thead tr {
+    height: 50px;
+}
+
+tbody tr {
+    height: 35px;
+}
+
+.transaction-arrow {
+    float: right;
+    margin-right: 5px;
+    margin-top: 5px;
+    width: 0; 
+    height: 0; 
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 15px solid $blue-dark;
+    transition: 0.2s;
+}
+
+.transaction-arrow-down {
+    transform: rotate(90deg);
+    -webkit-transform: rotate(90deg);
+}
+
+.transaction-arrow:hover {
+    border-left-color: $blue-sea;
+    cursor: pointer;
+}
+
+.line_item_headers {
+    width: 100px;
+}
+
+div#transaction-table-wrapper {
+    margin-top: 70px;
+}
+
+#tpagination-wrapper {
+    margin-top: 20px;
+}
+
+.buttons-container {
+    clear: both;
+    text-align: center;
+    padding-top: 10px;
+    margin-top: 10px;
+}
+
+.button {
+    width: 90px;
+    height: 35px;
+    line-height: 35px;
+    text-align: center;
+    display: inline-block;
+    border-radius: 3px;
+    font-size: 18px;
+    opacity: 0.6;
+    color: $white;
+    transition: 0.3s;
+    margin: 0px 5px;
+    font-weight: 300;
+    padding: 0;
+    border: 0;
+}
+
+.button:hover {
+    opacity: 0.9;
+}
+
+.button-blue {
+    background-color: $blue-dark;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+.button-red {
+    background-color: $red;   
+}
+
+.dropdown {
+    height: 35px;
+    display: inline-block;
+    border-radius: 3px;
+    font-size: 16px;
+    font-weight: 300px;
+    margin: 0px 5px;
+    font-weight: 300;
+    border: 0px;
+    background: $blue-sky;
+}
+
+#transaction-panel {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+}
+
+.sorter#date {
+    width: 100px;
+}
+
+.sorter#customer {
+    width: 125px;
+}
+
+.sorter#purpose {
+    width: 125px;
+}
+
+#titem {
+    width: 150px;
+}
+
+#tquantity {
+    width: 100px;
+}
+
+#taction {
+    width: 70px;
+}
+

@@ -1,0 +1,2 @@
+#paginator
+  = paginate @transactions, :remote => true , :params => {:controller => 'transactions', :action => 'load', :tsort_by => nil}

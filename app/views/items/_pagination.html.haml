@@ -1,1 +1,2 @@
-= paginate @items
+#paginator
+  = paginate @items, :remote => true , :params => {:controller => 'items', :action => 'load', :sort_by => nil}

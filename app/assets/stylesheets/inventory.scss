@@ -1,0 +1,173 @@
+$blue-dark: #304269;
+$blue-sea: #91BED4;
+$blue-sky: #D9E8F5;
+$white: #FFFFFF;
+$orange: #F26101;
+$red: #de6868;
+$green: #78c272;
+
+#main {
+    position: fixed;
+    top: 60px;
+    height: calc(100% - 60px);
+    width: 100%;
+}
+
+#info-container {
+    height: 40px;
+    line-height: 40px;
+    float: left;
+    font-size: 18px;
+    font-weight: 300;
+    margin-left: 20px;
+}
+
+#toolbar-container {
+    height: 40px;
+    width: 100px;
+    float: left;
+    clear: left;
+    margin-top: -22px;
+}
+
+// admin add item to inventory (db) button
+.plus-svg {
+    float: left;
+}
+
+#inventory-table {
+    text-align: center;
+    color: $blue-dark;
+    width: 100%;
+    margin-top: 80px;
+    margin-bottom: 30px;
+}
+
+#inventory-table th {
+    transition: 1s;
+}
+
+#inventory-table th.hilite {
+    background-color: $blue-sea;
+}
+
+#inventory-wrapper {
+    margin-top: -10px;
+}
+
+.sorter {
+    cursor: pointer;
+/*
+    width: 100%;
+    display: block;
+    height: 50px;
+    line-height: 50px;
+*/
+}
+
+#inventory-table th.header {
+    padding: 0px;
+}
+
+thead tr {
+    height: 50px;
+}
+
+tbody tr {
+    height: 35px;
+}
+
+.sort-hide {
+    width: 14px;
+    height: 23px;
+    fill: white;
+    position: relative;
+    top: 5px;
+    display: none;
+}
+
+.sort-show-down {
+    width: 14px;
+    height: 23px;
+    fill: $blue-dark;
+    position: relative;
+    top: 2px;
+}
+
+.sort-show-up {
+    width: 14px;
+    height: 23px;
+    fill: $blue-dark;
+    position: relative;
+    top: 2px;
+    transform: rotate(180deg);
+}
+
+.sorter#name {
+    width: 235px;
+}
+
+.sorter#quantity {
+    width: 120px;
+}
+
+.sorter#price {
+    width: 100px;
+}
+
+.sorter#kind {
+    width: 135px;
+}
+
+.sorter#status {
+    width: 110px;
+}
+
+.sort-align {
+    position: relative;
+    bottom: 4px;
+}
+
+#items-panel {
+    position: absolute;
+    height: 100%;
+    width: calc(100% - 260px);
+    transition: 0.3s;
+    overflow-y: scroll;
+}
+
+.items-panel-expanded {
+    width: calc(100% - 60px) !important;
+}
+
+.non-admin {
+    width: 100% !important;
+}
+
+.table-container {
+    position: absolute;
+    width: 700px;
+    left: 50%;
+    margin-left: -350px;
+    top: 15px;
+}
+
+// add item to cart button
+.add-svg {
+    fill: $blue_sky;
+    width: 30px;
+    height: 25px;
+    transition: 0.3s;
+}
+
+.add-svg:hover {
+    fill: $blue-dark;
+}
+
+.add-column {
+    display: none;
+}
+
+#pagination-wrapper {
+    margin-top: -10px;
+}

@@ -16,7 +16,7 @@
     .buttons-container
         - if @mode == "show"
             #show-item-back.button.button-red Back
-            - if @user.admin?
+            - if @currently_admin
                 #show-item-update.button.button-blue Update
                 #show-item-delete.button.button-red Delete
         - else

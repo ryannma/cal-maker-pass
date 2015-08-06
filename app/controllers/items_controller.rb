@@ -1,12 +1,15 @@
 class ItemsController < ApplicationController
-    
+  respond_to :html, :json, :js
+
   def index
-    @all_status = Item.all_status    
+    @all_status = Item.all_status   
+    clear_sort_session
     get_inv_params
     get_inv_items
     paginate_inv_items
-    get_cart_display
     save_inv_params
+
+    add_item # display cart
   end
 
   def update
@@ -18,12 +21,15 @@ class ItemsController < ApplicationController
     @item.status = @updated_data[:status]
     @item.kind = @updated_data[:kind]
     @item.save!
+    flash[:notice] = @item.name + " successfully updated."
     render js: "window.location.href = '#{items_path}'"
   end
 
   def delete
     @item = Item.find(params[:id])
+    name = @item.name
     @item.destroy
+    flash[:notice] = name + " successfully deleted."
     render js: "window.location.href = '#{items_path}'"
   end
 
@@ -31,25 +37,19 @@ class ItemsController < ApplicationController
     @item = nil
     @mode = "create"
     @all_status = Item.all_status
-    respond_to do |format|
-      format.js {}
-    end
   end
 
   def show_item
     @item = Item.find(params[:id])
     @all_status = Item.all_status
     @mode = "show"
-    respond_to do |format|
-      format.js {}
-    end
   end
 
   def create
     @item = Item.new(params[:item])
     if @item.valid?
       @item.save
-      flash[:notice] = "Successfully added item"
+      flash[:notice] = @item.name + " successfully added."
     else
       # errors = @item.errors.full_messages.join("<br>").html_safe
       errors = @item.errors.full_messages.join(". ")
@@ -58,14 +58,35 @@ class ItemsController < ApplicationController
     render js: "window.location.href = '#{items_path}'"
   end
 
+  # cart actions
   def add_item
     cart = session[:cart] || Cart.new
-    cart.add_item(params[:id])
+    
+    if params[:id]
+      cart.add_item(params[:id])
+    end
+    
     @cart_items = cart.cart_items
     @cart_total = cart.total
-    respond_to do |format|
-      format.js {}
+
+    if params[:cart_sid] && !params[:cart_sid].empty?
+      cart.sid = params[:cart_sid]
+      @cart_sid = params[:cart_sid]
+    elsif session[:cart]
+      @cart_sid = session[:cart].sid
+    else
+      @cart_sid = ""
     end
+
+    if params[:cart_purpose] && !params[:cart_purpose].empty?
+      cart.purpose = params[:cart_purpose]
+      @cart_purpose = params[:cart_purpose]
+    elsif session[:cart]
+      @cart_purpose = session[:cart].purpose
+    else
+      @cart_purpose = ""
+    end
+
     session[:cart] = cart
   end
 
@@ -74,21 +95,10 @@ class ItemsController < ApplicationController
     cart.delete_item(params[:id])
     @cart_items = cart.cart_items
     @cart_total = cart.total
-    respond_to do |format|
-      format.js {}
-    end
     session[:cart] = cart
   end
 
-  def find
-    @all_status = Item.all_status
-    get_inv_params
-    get_inv_items
-    paginate_inv_items
-    render 'inventory'
-    save_inv_params
-  end
-
+  # triggered by twitter typeahead
   def query
     # Get the search terms from the q parameter and do a search
     # Generates the list of suggested search items below the search bar
@@ -98,7 +108,7 @@ class ItemsController < ApplicationController
         # Create an array from the search results.
         results = search.results.map do |item|
           # Each element will be a hash containing only the title of the article.
-          # The title key is used by typeahead.js.
+          # The name key is used by typeahead.js.
           { name: item.name }
         end
         render json: results
@@ -106,52 +116,40 @@ class ItemsController < ApplicationController
     end
   end
 
-  def sort
-    @all_status = Item.all_status
-    get_inv_params
-    get_inv_items
-    paginate_inv_items
-    render 'inventory'
-    save_inv_params
+  # triggered on enter in search bar (queries db)
+  def find
+    clear_sort_session
+    load
   end
 
-  def inventory
+  # triggered on click on column headers & pagination links
+  def load
+    update_inventory
+  end
+
+  def update_inventory
     @all_status = Item.all_status
     get_inv_params
     get_inv_items
     paginate_inv_items
-    respond_to do |format|
-      format.js{}
-    end
     save_inv_params
+    render "load"
   end
 
   private
 
-  # persist cart items to be displayed (by assigning @display_cart)
-  def get_cart_display
-    if session[:cart] == {} then session[:cart] = nil end
-    session[:cart] = session[:cart] || Cart.new
-    @cart = session[:cart]
-    @display_cart = []
-    unless @cart.cart_items.nil?
-      @cart.cart_items.each do |cart_item|
-        @display_cart << {name: cart_item.name, quantity: cart_item.quantity}
-      end
-    end
-  end
+  ## inventory @items loading logic
 
-  ## sorting logic
-
-  # get @sort_by, @sort_type, @phrase, @page
   def get_inv_params
 
+    # get @phrase
     if should_find?
       @phrase = params[:phrase] || session[:phrase]
     else
       @phrase = nil
     end
 
+    # get @sort_by and @sort_type
     if should_sort?
       @sort_by = params[:sort_by]
       @sort_type = get_sort_type
@@ -161,8 +159,9 @@ class ItemsController < ApplicationController
       @sort_by, @sort_type = nil, nil
     end
 
-    if params[:page] || session[:page]
-      @page = params[:page] || session[:page]
+    # get @page
+    if params[:page]
+      @page = params[:page]
     else
       @page = 1
     end
@@ -170,7 +169,7 @@ class ItemsController < ApplicationController
   end
 
   def should_find?
-    params.has_key?(:phrase) || session.has_key?(:phrase) # && !session[:phrase].nil?) 
+    params.has_key?(:phrase) || session.has_key?(:phrase) 
   end
 
   def should_sort?
@@ -178,7 +177,7 @@ class ItemsController < ApplicationController
   end
 
   def sorted_before?
-    session.has_key?(:sort_by) # && !session[:sort_by].nil?
+    session.has_key?(:sort_by)
   end
 
   def get_sort_type
@@ -194,41 +193,38 @@ class ItemsController < ApplicationController
     end
   end
 
-  # remember recent inventory conditions (filter & order)
+  # remember recent inventory conditions (search & sort)
   def save_inv_params
     session[:phrase] = @phrase
     session[:sort_by] = @sort_by
     session[:sort_type] = @sort_type
-    session[:page] = @page
   end
 
-  # searched by @phrase and paginated
-  def get_searched_items
-    if @phrase.blank?  
-      @items = Item.order("name").page(params[:page]).per(20)  
-    else
-      @items = Item.search(@phrase, fields: [{name: :word_start}], misspelling: {edit_distance: 2}, operator: "or", per_page: 20, page: params[:page])
-    end
+  def clear_sort_session
+    session[:phrase] = nil
+    session[:sort_by] = nil
+    session[:sort_type] = nil
   end
 
   # get @items
   def get_inv_items
     # according to search phrase
-    filter_inv_items
+    get_searched_items
     # according to sorting params
     Item.sort(@items, @sort_by, @sort_type)
   end
 
-  def filter_inv_items
+  # searched by @phrase
+  def get_searched_items
     if @phrase.blank?  
       @items = Item.all
     else
-      @items = Item.search(@phrase, fields: [{name: :word_start}], misspelling: {edit_distance: 2}, operator: "or").to_ary     
+      @items = Item.search(@phrase, fields: [{name: :word_start}], misspelling: {edit_distance: 2}, operator: "or").to_ary
     end
   end
 
   def paginate_inv_items
-      @items = Kaminari.paginate_array(@items).page(@page).per(20)
+    @items = Kaminari.paginate_array(@items).page(@page).per(15)
   end
 
 end

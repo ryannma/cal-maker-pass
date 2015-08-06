@@ -7,6 +7,8 @@ class Item < ActiveRecord::Base
   validates :name, :price, :quantity, :kind, presence: true
   validates :price, :quantity, numericality: true
 
+  searchkick word_start: [:name]
+
   # sort items array in place
   def self.sort(items, sort_by, sort_type)
     if sort_by
@@ -17,8 +19,33 @@ class Item < ActiveRecord::Base
       end
     end
   end
-  
-  searchkick word_start: [:name]
+
+  # check if items are available in database
+  def self.quant_avail(items)
+    items.each do |index, stuff|
+      name = stuff[0]
+      quantity = stuff[1].to_i
+      db_item = Item.where(name: name)[0]
+      db_quant = db_item.quantity
+      if quantity > db_quant
+        return false
+      end
+    end
+    return true
+  end
+
+  # update items in db
+  def self.update_quant(items)
+    items.each do |index, stuff|
+      name = stuff[0]
+      quantity = stuff[1].to_i
+      db_item = Item.where(name: name)[0]
+      db_quant = db_item.quantity
+      new_quant = db_quant - quantity
+      db_item.quantity = new_quant
+      db_item.save
+    end
+  end
 
   def self.all_status
     @@allowed_status

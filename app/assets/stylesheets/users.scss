@@ -1,0 +1,68 @@
+$blue-dark: #304269;
+$blue-sea: #91BED4;
+$blue-sky: #D9E8F5;
+$white: #FFFFFF;
+$orange: #F26101;
+$red: #de6868;
+$green: #78c272;
+
+.users-wrapper {
+    position: absolute;
+    width: 700px;
+    left: 50%;
+    margin-left: -350px;
+    top: 100px;
+}
+
+#user-table {
+    text-align: center;
+    color: $blue-dark;
+    width: 100%;
+}
+
+#users-buttons-container {
+    margin-bottom: 50px;
+}
+
+#new-user-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: calc(-279px/2);
+    margin-left: calc(-376px/2);
+}
+
+.new-user-label {
+    float: left;
+    clear: left;
+    width: 100px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    text-align: right;
+    font-size: 18px;
+    line-height: 38px;
+}
+
+.new-user-input {
+    float: left;
+    clear: right;
+    height: 34px;
+    font-size: 18px;
+    width: 250px;
+    padding-left: 5px;
+    line-height: 32px;
+    border: 0px;
+    border-bottom: 1px solid $blue-sea;
+    transition: 1s;
+    color: $blue-dark;
+}
+
+.new-user-input:focus {
+    border-color: $blue-dark;
+}
+
+#new-user-buttons-container {
+    float: left;
+    width: 376px;
+    margin-top: 15px;
+}

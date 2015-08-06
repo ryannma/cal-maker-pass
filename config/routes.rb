@@ -1,11 +1,5 @@
 Makerpass::Application.routes.draw do
 
-  get "/transactions/export", to: "transactions#export", as: "export"
-  post "/items/find", to: "items#find", as: "find"
-  #post "/items/inventory", to: "items#inventory", as: "inventory", defaults: { :format => 'js' }
-  #get "/items/find", to: "items#next_page", as: "next_page"
-  resources :items, :transactions, :users
-
   # HOME
   root :to => "application#home"
   get "/logout", to: "application#logout", as: "logout"
@@ -18,14 +12,20 @@ Makerpass::Application.routes.draw do
   post "/items/delete_cart_item", to: "items#delete_cart_item", as: "delete_cart_item"
   post "/items/show_item", to: "items#show_item", as: "show_item"
   post "/items/create_item", to: "items#create_item", as: "create_item"
-  post "/items/sort", to: "items#sort", as: "sort"
-  #get "/items/inventory", to: "items#render_inventory", as: "render_inventory"
-  # search engine
+  get "/items/find", to: "items#find", as: "find"
+  get "/items/load", to: "items#load", as: "load"
+
+  # SEARCH ENGINE
   get "/query", to: "items#query", as: "query"
+  get "/tquery", to: "transactions#tquery", as: "tquery"
 
   # TRANSACTION
   post "/transactions/new/:cart", to: "transactions#new", as: "new_transaction"
   post "/transactions/checkout", to: "transactions#checkout", as: "checkout"
-  post "/transactions/sort", to: "transactions#sort", as: "trans_sort"
+  get "/transactions/export", to: "transactions#export", as: "export"
+  get "/transactions/find", to: "transactions#find", as: "tfind"
+  get "/transactions/load", to: "transactions#load", as: "tload"
+
+  resources :items, :transactions, :users
 
 end

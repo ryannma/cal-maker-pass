@@ -1,15 +1,15 @@
 #cart-panel.cart-panel-hidden
-  #cart-title Cart
+  #cart-title User Cart
   %a{ href: "#", id: "cart-button", onclick: "manageCart()" }
-    = inline_svg "shop.svg", class: "cart-svg svg"
+    = inline_svg "shop.svg", class: "svg cart-svg"
   #cart-info
-    = label :transaction, :user, "User", class: "cart-label"
-    = text_field :transaction, :user, class: "cart-input"
-    = label :transaction, :purpose, "Comment", class: "cart-label"
-    .comment-arrow
-    = text_area :transaction, :purpose, class: "cart-textarea", cols: "18", rows: "2"
-    = label :transaction, :items, 'Items', class: "cart-label"
+    = label :transaction, :user, "SID", class: "cart-label", id: "SID-label"
+    = text_field :transaction, :user, class: "cart-input", id: "SID-input", value: "#{@cart_sid}"
+    = label :transaction, :purpose, "Purpose", class: "cart-label", id: "comment-label"
+    = inline_svg "sort.svg", class: 'comment-arrow'
+    = text_area :transaction, :purpose, class: "cart-textarea", cols: "18", rows: "2", id: "comment-input", value: "#{@cart_purpose}"
+    = label :transaction, :items, 'Items', class: "cart-label", id: "items-label"
     #cart-items
       =render partial: "cart_items"
-    #checkout-footer
-      #checkout-button Checkout
+  #checkout-footer
+    #checkout-button Checkout

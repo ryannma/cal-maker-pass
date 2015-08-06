@@ -4,25 +4,18 @@ class Transaction < ActiveRecord::Base
 	belongs_to :admin
 	has_many :line_items
 
-	# sort transactions array in place
-	def self.sort(transactions, sort_trans_by, sort_trans_type, all, admin_user)
-		puts '@@@@ were in sort @@@@'
-		puts transactions
-		puts sort_trans_by
-		puts sort_trans_type
-		puts all
-		puts admin_user
-		puts '@@@@ done @@@@'
-		if all == true || all == 'true'
-			if sort_trans_by
-				if sort_trans_by == 'customer'
-					sort_trans_type == 'ascending' ? (transactions.sort! { |a,b| a.user.name.downcase <=> b.user.name.downcase }) : (transactions.sort! { |a,b| b.user.name.downcase <=> a.user.name.downcase })
-				elsif sort_trans_by == 'purpose'
-					sort_trans_type == 'ascending' ? (transactions.sort! { |a,b| a.purpose.downcase <=> b.purpose.downcase }) : (transactions.sort! { |a,b| b.purpose.downcase <=> a.purpose.downcase })
-				elsif sort_trans_by == 'date'
-					sort_trans_type == 'ascending' ? (transactions.sort! { |a,b| a.created_at <=> b.created_at}) : (transactions.sort! { |a,b| b.created_at <=> a.created_at})
-				end
-			end
+	searchkick word_start: [:purpose]
+
+	# sort items array in place
+	def self.sort(transactions, tsort_by, tsort_type)
+		if tsort_by
+		  if tsort_by == 'purpose'
+		    tsort_type == 'ascending' ? (transactions.sort! { |a,b| a[tsort_by].downcase <=> b[tsort_by].downcase }) : (transactions.sort! { |a,b| b[tsort_by].downcase <=> a[tsort_by].downcase })
+		  elsif tsort_by == 'date'
+		    tsort_type == 'ascending' ? (transactions.sort! { |a,b| a[:updated_at] <=> b[:updated_at]}) : (transactions.sort! { |a,b| b[:updated_at] <=> a[:updated_at]})		  	
+		  elsif tsort_by == 'customer'
+		    tsort_type == 'ascending' ? (transactions.sort! { |a,b| a.user.name <=> b.user.name}) : (transactions.sort! { |a,b| b.user.name <=> a.user.name})
+		  end
 		end
 	end
 
